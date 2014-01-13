@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+    <artifactId>TravelDream</artifactId>
+    <groupId>it.polimi.traveldream</groupId>
+    <version>1.0-SNAPSHOT</version>
+  </parent>
+
+    <groupId>it.polimi.traveldream</groupId>
+    <artifactId>TravelDream-Ear</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>ear</packaging>
+
+    <name>TravelDream-Ear</name>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>it.polimi.traveldream</groupId>
+            <artifactId>TravelDream-EJB</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <type>ejb</type>
+        </dependency>
+        <dependency>
+            <groupId>it.polimi.traveldream</groupId>
+            <artifactId>TravelDream-EJBClient</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>it.polimi.traveldream</groupId>
+            <artifactId>TravelDream-Web</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <type>war</type>
+        </dependency>
+    </dependencies>
+  
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-ear-plugin</artifactId>
+                <version>2.9</version>
+                <configuration>
+                    <version>7</version>
+                    <defaultLibBundleDir>lib</defaultLibBundleDir>
+                    <modules>
+                        <ejbModule>
+                            <groupId>it.polimi.traveldream</groupId>
+                            <artifactId>TravelDream-EJB</artifactId>
+                        </ejbModule>
+                        <jarModule>
+                            <groupId>it.polimi.traveldream</groupId>
+                            <artifactId>TravelDream-EJBClient</artifactId>
+                        </jarModule>
+                        <!-- Non sono sicuro sia il modo corretto, meglio suare un jar normale
+                        <ejbClientModule>
+                            <groupId>it.polimi.traveldream</groupId>
+                            <artifactId>TravelDream-EJBClient</artifactId>
+                        </ejbClientModule> -->
+                        <webModule>
+                            <groupId>it.polimi.traveldream</groupId>
+                            <artifactId>TravelDream-Web</artifactId>
+                            <contextRoot>/TDMS</contextRoot>
+                        </webModule>
+                    </modules>
+                    <!-- <generateApplicationXml>true</generateApplicationXml>
+                    <applicationXml>${basedir}/src/main/application/META-INF/application.xml</applicationXml> -->
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
