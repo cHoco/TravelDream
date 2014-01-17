@@ -13,6 +13,8 @@ public interface UserManager {
 
     public void save(UserDTO user);
 
+    public boolean emailAlreadyUsed(String email);
+
     public UserDTO getUserDTO();
 
 }

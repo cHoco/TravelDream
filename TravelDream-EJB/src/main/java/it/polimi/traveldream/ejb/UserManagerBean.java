@@ -8,7 +8,12 @@ import javax.annotation.Resource;
 import javax.ejb.EJBContext;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.UniqueConstraint;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,14 +40,37 @@ public class UserManagerBean implements UserManager {
     }
 
     @Override
+    public boolean emailAlreadyUsed(String email) {
+
+        User user = null;
+
+        try {
+            user = findByEmail(email);
+        }
+        catch (NoResultException e) {
+
+        }
+
+        return user!=null;
+    }
+
+    private User findByEmail(String email) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<User> c = cb.createQuery(User.class);
+        Root<User> member = c.from(User.class);
+        c.select(member).where(cb.equal(member.get("email"), email));
+        return em.createQuery(c).getSingleResult();
+    }
+
+    @Override
     public UserDTO getUserDTO() {
         UserDTO userDTO = convertToDTO(getPrincipalUser());
         return userDTO;
     }
 
 
-    public User find(String email) {
-        return em.find(User.class, email);
+    public User findByID(long id) {
+        return em.find(User.class, id);
     }
 
     public List<User> getAllUsers() {
@@ -50,8 +78,8 @@ public class UserManagerBean implements UserManager {
                 .getResultList();
     }
 
-    public void remove(String email) {
-        User user = find(email);
+    public void remove(long id) {
+        User user = findByID(id);
         em.remove(user);
     }
 
@@ -61,12 +89,12 @@ public class UserManagerBean implements UserManager {
 
 
     public User getPrincipalUser() {
-        return find(getPrincipalEmail());
+        return findByID(getPrincipalEmail());
     }
 
 
-    public String getPrincipalEmail() {
-        return context.getCallerPrincipal().getName();
+    public long getPrincipalEmail() {
+        return Long.parseLong(context.getCallerPrincipal().getName());
     }
 
     private UserDTO convertToDTO(User user) {
@@ -76,4 +104,5 @@ public class UserManagerBean implements UserManager {
         userDTO.setLastName(user.getLastName());
         return userDTO;
     }
+
 }

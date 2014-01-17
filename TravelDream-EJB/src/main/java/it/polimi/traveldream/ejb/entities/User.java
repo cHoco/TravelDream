@@ -24,6 +24,10 @@ public class User implements Serializable{
     public static final String FIND_ALL = "User.findAll";
 
     @Id
+    @GeneratedValue
+    private long id;
+
+    @Column(unique = true)
     private String email;
 
     private String firstName;
