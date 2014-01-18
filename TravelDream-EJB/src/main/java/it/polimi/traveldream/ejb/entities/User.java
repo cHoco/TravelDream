@@ -4,6 +4,8 @@ import it.polimi.traveldream.ejb.dtos.UserDTO;
 import org.apache.commons.codec.digest.DigestUtils;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -25,20 +27,30 @@ public class User implements Serializable{
 
     @Id
     @GeneratedValue
-    private long id;
+    private long id_user;
 
     @Column(unique = true)
+    @NotNull
+    @Size(min=1)
     private String email;
 
+    @NotNull
+    @Size(min=1)
     private String firstName;
 
+    @NotNull
+    @Size(min=1)
     private String lastName;
 
+    @NotNull
+    @Size(min=1)
     private String password; //sha-512 + hex
 
-    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    @NotNull
+    @Temporal(TemporalType.TIMESTAMP)
     private Date registrationDate;
 
+    @NotNull
     @ElementCollection(targetClass = Group.class)
     @CollectionTable(name = "USERS_GROUPS",
             joinColumns = @JoinColumn(name = "email"))
