@@ -68,8 +68,8 @@
                             <contextRoot>/TDMS</contextRoot>
                         </webModule>
                     </modules>
-                    <!-- <generateApplicationXml>true</generateApplicationXml>
-                    <applicationXml>${basedir}/src/main/application/META-INF/application.xml</applicationXml> -->
+                    <generateApplicationXml>true</generateApplicationXml>
+                    <applicationXml>${basedir}/src/main/application/META-INF/application.xml</applicationXml>
                 </configuration>
             </plugin>
         </plugins>

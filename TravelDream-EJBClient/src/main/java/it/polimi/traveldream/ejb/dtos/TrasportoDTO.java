@@ -1,27 +1,13 @@
-package it.polimi.traveldream.ejb.entities;
+package it.polimi.traveldream.ejb.dtos;
 
-import it.polimi.traveldream.ejb.dtos.TipoTrasporto;
-import it.polimi.traveldream.ejb.dtos.TrasportoDTO;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.io.Serializable;
 
 /**
- * Created by cHoco on 17/01/14.
+ * Created by Asus on 19/01/14.
  */
 
-@Entity
-@Table(name = "TRASPORTI")
-public class Trasporto implements Serializable{
-
-    @Id
-    @GeneratedValue
-    private long id_mezzoTrasporto;
+public class TrasportoDTO {
 
     @NotNull
     private TipoTrasporto tipoTrasporto;
@@ -37,27 +23,6 @@ public class Trasporto implements Serializable{
     @NotNull
     @Size(min=1)
     private String localitaArrivo;
-
-    public Trasporto(){
-        super();
-    }
-
-    public Trasporto(TrasportoDTO trasportoDTO) {
-
-        this.tipoTrasporto = trasportoDTO.getTipoTrasporto();
-        this.societa = trasportoDTO.getSocieta();
-        this.localitaPartenza = trasportoDTO.getLocalitaPartenza();
-        this.localitaArrivo = trasportoDTO.getLocalitaArrivo();
-
-    }
-
-    public long getId_mezzoTrasporto() {
-        return id_mezzoTrasporto;
-    }
-
-    public void setId_mezzoTrasporto(long id_mezzoTrasporto) {
-        this.id_mezzoTrasporto = id_mezzoTrasporto;
-    }
 
     public TipoTrasporto getTipoTrasporto() {
         return tipoTrasporto;

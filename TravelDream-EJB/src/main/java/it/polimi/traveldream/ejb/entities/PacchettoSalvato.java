@@ -1,5 +1,7 @@
 package it.polimi.traveldream.ejb.entities;
 
+import it.polimi.traveldream.ejb.dtos.PacchettoSalvatoDTO;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
@@ -62,6 +64,22 @@ public class PacchettoSalvato {
             inverseJoinColumns = { @JoinColumn(name="id_escursione")}
     )
     private List<Escursione> escursioni;
+
+    public PacchettoSalvato(){
+        super();
+    }
+
+    /*public PacchettoSalvato(PacchettoSalvatoDTO pacchettoSalvatoDTO) {
+
+        this.userCreatore = pacchettoSalvatoDTO.getUserCreatore();
+        this.pacchettoOriginale = pacchettoSalvatoDTO.getPacchettoOriginale();
+        this.dataPartenza = pacchettoSalvatoDTO.getDataPartenza();
+        this.dataRitorno = pacchettoSalvatoDTO.getDataRitorno();
+        this.prenotato = pacchettoSalvatoDTO.isPrenotato();
+        this.trasportiScelti = trasportiScelti;
+        this.hotelsScelti = hotelsScelti;
+        this.escursioni = escursioni;
+    }*/
 
     public long getId_pacchettoSalvato() {
         return id_pacchettoSalvato;

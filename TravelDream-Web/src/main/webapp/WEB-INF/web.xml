@@ -21,6 +21,6 @@
         </form-login-config>
     </login-config>
     <welcome-file-list>
-        <welcome-file>hello.xhtml</welcome-file>
+        <welcome-file>login.xhtml</welcome-file>
     </welcome-file-list>
 </web-app>

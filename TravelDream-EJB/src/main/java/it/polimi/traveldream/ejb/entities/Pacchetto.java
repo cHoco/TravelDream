@@ -1,5 +1,7 @@
 package it.polimi.traveldream.ejb.entities;
 
+import it.polimi.traveldream.ejb.dtos.PacchettoDTO;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -48,6 +50,21 @@ public class Pacchetto implements Serializable {
 
     @OneToMany(mappedBy = "pacchetto")
     private List<EscursioniPacchetto> escursioni;
+
+    public Pacchetto(){
+        super();
+    }
+
+    public Pacchetto(PacchettoDTO pacchettoDTO) {
+        this.nome = pacchettoDTO.getNome();
+        this.descrizione = pacchettoDTO.getDescrizione();
+        this.localita = pacchettoDTO.getLocalita();
+        this.inizioValidita = pacchettoDTO.getInizioValidita();
+        this.fineValidita = pacchettoDTO.getFineValidita();
+      /*  this.mezziTrasporto = pacchettoDTO.mezz;
+        this.hotels = hotels;
+        this.escursioni = escursioni;    */
+    }
 
     public long getId_pacchetto() {
         return id_pacchetto;

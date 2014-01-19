@@ -1,5 +1,7 @@
 package it.polimi.traveldream.ejb.entities;
 
+import it.polimi.traveldream.ejb.dtos.HotelDTO;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -31,6 +33,16 @@ public class Hotel implements Serializable{
     @DecimalMin("1")
     @DecimalMax("5")
     private int stelle;
+
+    public Hotel(){
+        super();
+    }
+
+    public Hotel(HotelDTO hotelDTO) {
+        this.nome = hotelDTO.getNome();
+        this.descrizione = hotelDTO.getDescrizione();
+        this.stelle = hotelDTO.getStelle();
+    }
 
     public long getId_hotel() {
         return id_hotel;

@@ -1,5 +1,7 @@
 package it.polimi.traveldream.ejb.entities;
 
+import it.polimi.traveldream.ejb.dtos.EscursioneDTO;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -27,6 +29,17 @@ public class Escursione implements Serializable{
     @NotNull
     @Size(min=1)
     private String descrizione;
+
+    public Escursione (){
+        super();
+    }
+
+    public Escursione (EscursioneDTO escursioneDTO){
+
+        this.nome = escursioneDTO.getNome();
+        this.descrizione = escursioneDTO.getDescrizione();
+
+    }
 
     public long getId_escursione() {
         return id_escursione;
