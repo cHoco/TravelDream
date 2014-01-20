@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough"
+                template="/WEB-INF/templates/default.xhtml">
+    <f:metadata>
+        <f:event type="preRenderView" listener="#{userSessionBean.checkAlreadyLoggedin}"/>
+    </f:metadata>
+
+    <ui:define name="content">
+        <header class="container">
+            <div class="bg"></div>
+            <div class="home-text">
+                <h1>TravelDream, trova il viaggio dei tuoi sogni</h1>
+                <p>Hai sempre sognato la vacanza perfetta? Magari in riva al mare per rilassarti. Oppure vuoi vivere una vera avventura e affrontare le escursioni più impegnative?
+                    Registrati subito e scopri tutte le nostre proposte
+                </p>
+            </div>
+
+            <div class="home-register">
+                <h:form>
+                    <div>
+                        <div class="clear-fix">
+                            <div class="nome-left">
+                                <div>
+                                    <h:inputText class="nome" id="nome" jsf:placeholder="Nome" value="#{registerBean.user.firstName}"/>
+                                    <h:message for="nome" />
+                                </div>
+                            </div>
+                            <div class="cognome-right">
+                                <div>
+                                    <h:inputText class="cognome" id="cognome" jsf:placeholder="Cognome"  value="#{registerBean.user.lastName}"/>
+                                    <h:message for="cognome" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-div">
+                            <h:inputText class="email" id="email" jsf:placeholder="La tua email" binding="#{registerBean.email}" value="#{registerBean.user.email}"/>
+                            <h:message for="email" />
+                        </div>
+                        <div class="input-div">
+                            <h:inputSecret  class="password" id="password" jsf:placeholder="Nuova password" binding="#{passwordComponent}" value="#{registerBean.user.password}"/>
+                            <h:message for="password" />
+                        </div>
+                        <div class="input-div">
+                            <h:inputSecret class="password" id="confirmPassword" jsf:placeholder="Re-inserisci la password" required="#{not empty passwordComponent.value}">
+                                <f:validator validatorId="confirmPasswordValidator" />
+                                <f:attribute name="passwordComponent" value="#{passwordComponent}" />
+                            </h:inputSecret>
+                            <h:message for="confirmPassword" />
+                        </div>
+
+                        <div class="input-div submit">
+                            <h:commandButton class="submit-button" value="Registrati" action="#{registerBean.register()}"/>
+                        </div>
+                    </div>
+                </h:form>
+            </div>
+
+        </header>
+
+
+        <section id="codice-viaggio">
+            <div class="container div-codice">
+                <h2>Possiedi un codice pacchetto viaggio?</h2>
+                <h3>Inseriscilo qui sotto e scopri il viaggio che ti aspetta!</h3>
+
+                <div class="form-codice">
+                    <h:form>
+                        <div class="clear-fix">
+                            <div class="input-codice">
+                                <h:inputText jsf:placeholder="Codice"/>
+                            </div>
+                            <div class="submit-codice">
+                                <h:commandButton class="submit-button-codice" value="Vai al viaggio" action="#{registerBean.register}"/>
+                            </div>
+                        </div>
+                    </h:form>
+                </div>
+
+
+            </div>
+
+        </section>
+
+    </ui:define>
+</ui:composition>

@@ -1,35 +1,57 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough"
+                template="/WEB-INF/templates/default.xhtml">
+    <ui:define name="content">
 
-<h:head>
-    <title>Login</title>
-</h:head>
-<h:body>
-    <h:form>
-            <h:panelGrid columns="3" id="regGrid">
-                <h:outputLabel for="email">Email:</h:outputLabel>
-                <h:inputText id="email" value="#{registerBean.user.email}" />
-                <h:message for="email" />
+        <section id="login-register">
+            <div class="login-register-container">
+                <h1>Registrati qui</h1>
+                <div class="home-register solo-register">
+                    <h:form>
+                        <div>
+                            <div class="clear-fix">
+                                <div class="nome-left">
+                                    <div>
+                                        <h:inputText class="nome" id="nome" jsf:placeholder="Nome" value="#{registerBean.user.firstName}"/>
+                                        <h:message for="nome" />
+                                    </div>
+                                </div>
+                                <div class="cognome-right">
+                                    <div>
+                                        <h:inputText class="cognome" id="cognome" jsf:placeholder="Cognome"  value="#{registerBean.user.lastName}"/>
+                                        <h:message for="cognome" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="input-div">
+                                <h:inputText class="email" id="email" jsf:placeholder="La tua email" binding="#{registerBean.email}" value="#{registerBean.user.email}"/>
+                                <h:message for="email" />
+                            </div>
+                            <div class="input-div">
+                                <h:inputSecret  class="password" id="password" jsf:placeholder="Nuova password" binding="#{passwordComponent}" value="#{registerBean.user.password}"/>
+                                <h:message for="password" />
+                            </div>
+                            <div class="input-div">
+                                <h:inputSecret class="password" id="confirmPassword" jsf:placeholder="Re-inserisci la password" required="#{not empty passwordComponent.value}">
+                                    <f:validator validatorId="confirmPasswordValidator" />
+                                    <f:attribute name="passwordComponent" value="#{passwordComponent}" />
+                                </h:inputSecret>
+                                <h:message for="confirmPassword" />
+                            </div>
 
-                <h:outputLabel for="firstName">First name:</h:outputLabel>
-                <h:inputText id="firstName" value="#{registerBean.user.firstName}" />
-                <h:message for="firstName" />
+                            <div class="input-div submit">
+                                <h:commandButton class="submit-button" value="Registrati" action="#{registerBean.register()}"/>
+                            </div>
+                        </div>
+                    </h:form>
+                </div>
 
-                <h:outputLabel for="lastName">Last name:</h:outputLabel>
-                <h:inputText id="lastName" value="#{registerBean.user.lastName}" />
-                <h:message for="lastName" />
+            </div>
+        </section>
 
-                <h:outputLabel for="password">Password:</h:outputLabel>
-                <h:inputSecret id="password" value="#{registerBean.user.password}" label="Password"/>
-                <h:message for="password" />
-
-            </h:panelGrid>
-            <h:commandButton value="Register" update="regGrid"
-                             action="#{registerBean.register()}" />
-
-    </h:form>
-</h:body>
-</html>
+    </ui:define>
+</ui:composition>

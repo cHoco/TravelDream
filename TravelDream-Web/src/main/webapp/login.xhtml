@@ -1,18 +1,29 @@
-<html xmlns="http://www.w3.org/1999/xhtml"
-        xmlns:h="http://java.sun.com/jsf/html">
-<h:head>
-    <title>Login Form</title>
-</h:head>
-<h:body>
-<h2>Hello, please log in:</h2>
-<form name="loginForm" method="POST" action="j_security_check">
-    <p><strong>Please type your user name: </strong>
-        <input type="text" name="j_username" size="25"></input></p>
-    <p><strong>Please type your password: </strong>
-        <input type="password" size="15" name="j_password"></input></p>
-    <p>
-        <input type="submit" value="Submit"/>
-        <input type="reset" value="Reset"/></p>
-</form>
-</h:body>
-</html>
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough"
+                template="/WEB-INF/templates/default.xhtml">
+<ui:define name="content">
+    <section id="login-register">
+        <div class="login-register-container">
+            <h1>Effettua qui il login</h1>
+            <div class="home-register solo-register">
+                <form method="post" action="j_security_check">
+                    <div class="input-div">
+                        <input name="j_username" class="email" placeholder="La tua email" type="text"/>
+                    </div>
+                    <div class="input-div">
+                        <input  name="j_password" class="password" placeholder="La tua password" type="password"/>
+                    </div>
+
+                    <div class="input-div submit">
+                        <input class="submit-button" type="submit" value="Log in"/>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </section></ui:define>
+</ui:composition>

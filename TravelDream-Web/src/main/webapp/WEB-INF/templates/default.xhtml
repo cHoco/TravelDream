@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough">
+
+<h:head>
+    <meta name="viewport" content="" />
+    <title>TravelDream</title>
+    <h:outputStylesheet name="css/main.css" />
+    <meta name="description" content="Cerca il viaggio dei tuoi sogni e prenotalo nel modo più semplice possibile, da solo o con gli amici" />
+    <meta charset="UTF-8" />
+</h:head>
+
+<h:body>
+    <div class="navbar">
+        <div class="container">
+            <h:link class="navbar-logo" outcome="index"><h:graphicImage library="img" name="logo.png" alt="TravelDream"/></h:link>
+            <div class="navbar-links">
+                <ul class="navbar-list">
+                    <li><h:link value="Mio Profilo" outcome="user/index" /></li>
+                    <li><h:link value="Cerca Viaggio" outcome="user/cercaPacchetto" /></li>
+
+                    <li class="sep"></li>
+
+                    <li><h:link value="Log in" outcome="login"/></li>
+                    <li class="registrati"><h:link value="Registrati" outcome="register" class="btn signup-link"/></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="main">
+        <ui:insert name="content">
+            [Template content will be inserted here]
+        </ui:insert>
+    </div>
+    <footer>
+
+        <div class="container">
+                <div class="footer-links">
+                    <ul class="footer-list">
+                        <li><a href="/about/">Chi siamo</a></li>
+                        <li><a href="/terms/">Condizioni</a></li>
+                        <li><a href="/privacy/">Privacy</a></li>
+                        <li><a href="mailto:hello@traveldream.com">Contattaci</a></li>
+                    </ul>
+                </div>
+                <div class="footer-copyright">
+                    <span>© 2013 - <a href="https://traveldream.com/">TravelDream</a></span>
+                    <p>Implementato con impegno per il Politecnico di Milano ♥</p>
+                </div>
+        </div>
+
+    </footer>
+
+</h:body>
+
+</html>
