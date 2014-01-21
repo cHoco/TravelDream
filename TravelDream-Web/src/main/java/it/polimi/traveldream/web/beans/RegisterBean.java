@@ -9,9 +9,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-import javax.faces.validator.ValidatorException;
-import javax.print.attribute.standard.Severity;
-import javax.xml.bind.ValidationException;
 
 /**
  * Created by cHoco on 14/01/14.
@@ -57,7 +54,7 @@ public class RegisterBean {
             return "?faces-redirect=false";
         }
         else {
-            userMgr.save(user);
+            userMgr.saveUser(user);
         }
         return "registerSuccess?faces-redirect=true";
     }

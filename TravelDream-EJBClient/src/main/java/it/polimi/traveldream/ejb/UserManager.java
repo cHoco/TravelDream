@@ -11,7 +11,11 @@ import javax.ejb.Local;
 @Local
 public interface UserManager {
 
-    public void save(UserDTO user);
+    public void saveUser(UserDTO user);
+
+    public void saveAdmin(UserDTO admin);
+
+    public void saveAu(UserDTO au);
 
     public boolean emailAlreadyUsed(String email);
 

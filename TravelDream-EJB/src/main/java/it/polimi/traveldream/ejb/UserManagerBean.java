@@ -30,12 +30,34 @@ public class UserManagerBean implements UserManager {
     private EJBContext context;
 
     @Override
-    public void save(UserDTO user) {
+    public void saveUser(UserDTO user) {
+
+        save(user, Group.USER);
+
+    }
+
+    @Override
+    public void saveAdmin(UserDTO admin) {
+
+        save(admin, Group.ADMIN);
+
+    }
+
+    @Override
+    public void saveAu(UserDTO au) {
+
+        save(au, Group.ADVANCED_USER);
+
+    }
+
+    private void save(UserDTO user, Group group){
+
         User newUser = new User(user);
         List<Group> groups = new ArrayList<Group>();
-        groups.add(Group.USER);
+        groups.add(group);
         newUser.setGroups(groups);
         em.persist(newUser);
+
     }
 
 
