@@ -5,6 +5,7 @@ import it.polimi.traveldream.ejb.entities.Group;
 import it.polimi.traveldream.ejb.entities.User;
 
 import javax.annotation.Resource;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJBContext;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -43,6 +44,7 @@ public class UserManagerBean implements UserManager {
 
     }
 
+    @RolesAllowed({"ADMIN"})
     @Override
     public void saveAu(UserDTO au) {
 

@@ -2,6 +2,7 @@ package it.polimi.traveldream.ejb;
 
 import it.polimi.traveldream.ejb.dtos.UserDTO;
 
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.Local;
 
 /**
@@ -15,6 +16,7 @@ public interface UserManager {
 
     public void saveAdmin(UserDTO admin);
 
+    @RolesAllowed({"ADMIN"})
     public void saveAu(UserDTO au);
 
     public boolean emailAlreadyUsed(String email);

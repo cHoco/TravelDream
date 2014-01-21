@@ -28,11 +28,11 @@ public class AdminWebBean {
         au = new UserDTO();
     }
 
-    public UserDTO getUser() {
+    public UserDTO getAu() {
         return au;
     }
 
-    public void setUser(UserDTO user) {
+    public void setAu(UserDTO user) {
         this.au = user;
     }
 
@@ -45,7 +45,6 @@ public class AdminWebBean {
     }
 
     public String aggiungiAu() {
-
         if(userMgr.emailAlreadyUsed(au.getEmail())){
             FacesMessage message = new FacesMessage("Questa mail è già stata utilizzata");
             FacesContext context = FacesContext.getCurrentInstance();
@@ -55,9 +54,9 @@ public class AdminWebBean {
             return "?faces-redirect=false";
         }
         else {
-            userMgr.saveUser(au);
+            userMgr.saveAu(au);
         }
+
         return "insertSuccess?faces-redirect=true";
     }
-
 }
