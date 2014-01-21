@@ -1,13 +1,18 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough"
+                template="/WEB-INF/templates/default.xhtml">
 
-<h:body>
-    <h1>Hello User</h1>
-    <h:form>
-        <h:commandButton action="#{userSessionBean.logout}" value="Logout" />
-    </h:form>
-</h:body>
-</html>
+    <ui:define name="htmlhead">
+        <title>Mio Profilo - TravelDream</title>
+    </ui:define>
+
+    <ui:define name="content">
+
+        Hello user :D
+
+    </ui:define>
+</ui:composition>

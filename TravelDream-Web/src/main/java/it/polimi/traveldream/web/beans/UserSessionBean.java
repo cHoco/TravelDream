@@ -26,7 +26,7 @@ public class UserSessionBean {
         }
     }
 
-    private boolean isLoggedIn(){
+    public boolean isLoggedIn(){
         if(FacesContext.getCurrentInstance().getExternalContext().getRemoteUser()!=null) {
           return true;
         }
@@ -34,14 +34,35 @@ public class UserSessionBean {
         return false;
     }
 
-    private String redirectPerRole() {
+    public boolean isUser() {
         if(FacesContext.getCurrentInstance().getExternalContext().isUserInRole("USER")) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean isAdvancedUser() {
+        if(FacesContext.getCurrentInstance().getExternalContext().isUserInRole("ADVANCED_USER")) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean isAdmin() {
+        if(FacesContext.getCurrentInstance().getExternalContext().isUserInRole("ADMIN")) {
+            return true;
+        }
+        return false;
+    }
+
+    private String redirectPerRole() {
+        if(isUser()) {
             return "user/index.xhtml";
         }
-        else if(FacesContext.getCurrentInstance().getExternalContext().isUserInRole("ADVANCED_USER")) {
+        else if(isAdvancedUser()) {
             return "auser/index.xhtml";
         }
-        else if(FacesContext.getCurrentInstance().getExternalContext().isUserInRole("ADMIN")) {
+        else if(isAdmin()) {
             return "admin/index.xhtml";
         }
 

@@ -6,7 +6,7 @@
 
 <h:head>
     <meta name="viewport" content="" />
-    <title>TravelDream</title>
+    <ui:insert name="htmlhead" />
     <h:outputStylesheet name="css/main.css" />
     <meta name="description" content="Cerca il viaggio dei tuoi sogni e prenotalo nel modo più semplice possibile, da solo o con gli amici" />
     <meta charset="UTF-8" />
@@ -15,16 +15,38 @@
 <h:body>
     <div class="navbar">
         <div class="container">
-            <h:link class="navbar-logo" outcome="index"><h:graphicImage library="img" name="logo.png" alt="TravelDream"/></h:link>
+            <h:link class="navbar-logo" outcome="/index"><h:graphicImage library="img" name="logo.png" alt="TravelDream"/></h:link>
             <div class="navbar-links">
                 <ul class="navbar-list">
-                    <li><h:link value="Mio Profilo" outcome="user/index" /></li>
-                    <li><h:link value="Cerca Viaggio" outcome="user/cercaPacchetto" /></li>
+                    <h:panelGroup rendered="#{!userSessionBean.loggedIn}">
+                    <li><h:link value="Mio Profilo" outcome="/user/index" /></li>
+                    <li><h:link value="Cerca Viaggio" outcome="/user/cercaPacchetto" /></li>
 
                     <li class="sep"></li>
 
                     <li><h:link value="Log in" outcome="login"/></li>
-                    <li class="registrati"><h:link value="Registrati" outcome="register" class="btn signup-link"/></li>
+                    <li class="registrati"><h:link value="Registrati" outcome="/register" class="btn signup-link"/></li>
+                    </h:panelGroup>
+
+                    <h:panelGroup rendered="#{userSessionBean.user}">
+                        <li><h:link value="Mio Profilo" outcome="/user/index" /></li>
+                        <li><h:link value="Cerca Viaggio" outcome="/user/cercaPacchetto" /></li>
+                    </h:panelGroup>
+
+                    <h:panelGroup rendered="#{userSessionBean.advancedUser}">
+                        <li><h:link value="Mio Profilo" outcome="/user/index" /></li>
+                        <li><h:link value="Cerca Viaggio" outcome="/user/cercaPacchetto" /></li>
+                    </h:panelGroup>
+
+                    <h:panelGroup rendered="#{userSessionBean.admin}">
+                        <li><h:link value="Gestione Advanced Users" outcome="/admin/index" /></li>
+                    </h:panelGroup>
+
+                    <h:panelGroup rendered="#{userSessionBean.loggedIn}">
+                        <li class="sep"></li>
+                        <li class="registrati"><a href="#{request.contextPath}/logout" class="btn signup-link">Log out</a></li>
+                    </h:panelGroup>
+
                 </ul>
             </div>
         </div>
@@ -40,14 +62,14 @@
         <div class="container">
                 <div class="footer-links">
                     <ul class="footer-list">
-                        <li><a href="/about/">Chi siamo</a></li>
-                        <li><a href="/terms/">Condizioni</a></li>
-                        <li><a href="/privacy/">Privacy</a></li>
+                        <li><a href="#{request.contextPath}/about/">Chi siamo</a></li>
+                        <li><a href="#{request.contextPath}/terms/">Condizioni</a></li>
+                        <li><a href="#{request.contextPath}/privacy/">Privacy</a></li>
                         <li><a href="mailto:hello@traveldream.com">Contattaci</a></li>
                     </ul>
                 </div>
                 <div class="footer-copyright">
-                    <span>© 2013 - <a href="https://traveldream.com/">TravelDream</a></span>
+                    <span>© 2013 - <a href="#{request.contextPath}/">TravelDream</a></span>
                     <p>Implementato con impegno per il Politecnico di Milano ♥</p>
                 </div>
         </div>
