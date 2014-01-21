@@ -7,12 +7,14 @@
                 template="/WEB-INF/templates/default.xhtml">
 
     <ui:define name="htmlhead">
-        <title>Gestione AUs - TravelDream</title>
+        <title>Aggiunta completata - TravelDream</title>
     </ui:define>
 
     <ui:define name="content">
-
-        <h:link value="Aggiunti Dipendente" outcome="insertAu"/>
-
-    </ui:define>
+        <section id="login-register">
+            <div class="login-register-container">
+                <h1>Aggiunta credenziali dipendente effettuata con successo!</h1>
+                <p>Torna alla home <h:link value="Avanti" outcome="index"/> </p>
+            </div>
+        </section></ui:define>
 </ui:composition>

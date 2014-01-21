@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough"
+                template="/WEB-INF/templates/default.xhtml">
+
+    <ui:define name="htmlhead">
+        <title>Aggiunta AUs - TravelDream</title>
+    </ui:define>
+
+    <ui:define name="content">
+
+        <section id="insert-au">
+            <div class="insert-au-container">
+                <h1>Inserire credenziali dipendente</h1>
+                <div class="insert-au-form">
+                    <h:form>
+                        <div>
+                            <div class="clear-fix">
+                                <div class="nome-left">
+                                    <div>
+                                        <h:inputText class="nome" id="nome" jsf:placeholder="Nome" value="#{adminWebBean.au.firstName}"></h:inputText>
+                                        <h:message for="nome" />
+                                    </div>
+                                </div>
+                                <div class="cognome-right">
+                                    <div>
+                                        <h:inputText class="cognome" id="cognome" jsf:placeholder="Cognome"  value="#{adminWebBean.au.lastName}"/>
+                                        <h:message for="cognome" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="input-div">
+                                <h:inputText class="email" id="email" jsf:placeholder="La tua email" binding="#{adminWebBean.email}" value="#{adminWebBean.au.email}"/>
+                                <h:message for="email" />
+                            </div>
+                            <div class="input-div">
+                                <h:inputSecret  class="password" id="password" jsf:placeholder="Nuova password" binding="#{passwordComponent}" value="#{adminWebBean.au.password}"/>
+                                <h:message for="password" />
+                            </div>
+                            <div class="input-div">
+                                <h:inputSecret class="password" id="confirmPassword" jsf:placeholder="Re-inserisci la password" required="#{not empty passwordComponent.value}">
+                                    <f:validator validatorId="confirmPasswordValidator" />
+                                    <f:attribute name="passwordComponent" value="#{passwordComponent}" />
+                                </h:inputSecret>
+                                <h:message for="confirmPassword" />
+                            </div>
+
+                            <div class="input-div submit">
+                                <h:commandButton class="submit-button" value="Aggiungi" action="#{adminWebBean.aggiungiAu()}"/>
+                            </div>
+                        </div>
+                    </h:form>
+                </div>
+
+            </div>
+        </section>
+
+    </ui:define>
+</ui:composition>
