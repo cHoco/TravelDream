@@ -22,15 +22,17 @@ public class InitServlet implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
 
-        admin = new UserDTO();
+        if(!userManager.emailAlreadyUsed("admin@td.it")) {
+            admin = new UserDTO();
 
-        admin.setEmail("admin@td.it");
-        admin.setFirstName("Mino");
-        admin.setLastName("Raiola");
-        admin.setPassword("balotelli");
+            admin.setEmail("admin@td.it");
+            admin.setFirstName("Mino");
+            admin.setLastName("Raiola");
+            admin.setPassword("balotelli");
 
-        userManager.saveAdmin(admin);
 
+            userManager.saveAdmin(admin);
+        }
     }
 
     @Override

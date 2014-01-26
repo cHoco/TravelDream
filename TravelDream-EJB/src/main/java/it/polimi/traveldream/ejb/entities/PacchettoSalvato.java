@@ -20,7 +20,7 @@ import java.util.List;
 public class PacchettoSalvato {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id_pacchettoSalvato;
 
     @NotNull

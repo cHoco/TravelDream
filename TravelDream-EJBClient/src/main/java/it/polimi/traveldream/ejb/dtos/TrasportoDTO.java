@@ -24,6 +24,10 @@ public class TrasportoDTO {
     @Size(min=1)
     private String localitaArrivo;
 
+    @NotNull
+    @Size(min=5, max = 5)
+    private String codice_trasporto;
+
     public TipoTrasporto getTipoTrasporto() {
         return tipoTrasporto;
     }
@@ -54,5 +58,13 @@ public class TrasportoDTO {
 
     public void setLocalitaArrivo(String localitaArrivo) {
         this.localitaArrivo = localitaArrivo;
+    }
+
+    public String getCodice_trasporto() {
+        return codice_trasporto;
+    }
+
+    public void setCodice_trasporto(String codice_trasporto) {
+        this.codice_trasporto = codice_trasporto;
     }
 }

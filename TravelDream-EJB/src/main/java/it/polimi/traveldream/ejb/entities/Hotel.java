@@ -2,12 +2,10 @@ package it.polimi.traveldream.ejb.entities;
 
 import it.polimi.traveldream.ejb.dtos.HotelDTO;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by cHoco on 17/01/14.
@@ -18,7 +16,7 @@ import java.io.Serializable;
 public class Hotel implements Serializable{
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id_hotel;
 
     @NotNull
@@ -34,6 +32,14 @@ public class Hotel implements Serializable{
     @DecimalMax("5")
     private int stelle;
 
+    @NotNull
+    @Size(min=5, max = 5)
+    @Column(unique = true)
+    private String codice_hotel;
+
+    @OneToMany(mappedBy = "hotel")
+    private List<HotelsPacchetto> pacchetti;
+
     public Hotel(){
         super();
     }
@@ -42,6 +48,7 @@ public class Hotel implements Serializable{
         this.nome = hotelDTO.getNome();
         this.descrizione = hotelDTO.getDescrizione();
         this.stelle = hotelDTO.getStelle();
+        this.codice_hotel = hotelDTO.getCodice_hotel();
     }
 
     public long getId_hotel() {
@@ -74,5 +81,13 @@ public class Hotel implements Serializable{
 
     public void setStelle(int stelle) {
         this.stelle = stelle;
+    }
+
+    public String getCodice_hotel() {
+        return codice_hotel;
+    }
+
+    public void setCodice_hotel(String codice_hotel) {
+        this.codice_hotel = codice_hotel;
     }
 }

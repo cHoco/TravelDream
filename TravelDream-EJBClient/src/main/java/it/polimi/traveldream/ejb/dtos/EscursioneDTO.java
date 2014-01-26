@@ -18,6 +18,9 @@ public class EscursioneDTO {
     @Size(min=1)
     private String descrizione;
 
+    @NotNull
+    @Size(min=5, max = 5)
+    private String codice_escursione;
 
     public String getNome() {
         return nome;
@@ -35,4 +38,11 @@ public class EscursioneDTO {
         this.descrizione = descrizione;
     }
 
+    public String getCodice_escursione() {
+        return codice_escursione;
+    }
+
+    public void setCodice_escursione(String codice_escursione) {
+        this.codice_escursione = codice_escursione;
+    }
 }

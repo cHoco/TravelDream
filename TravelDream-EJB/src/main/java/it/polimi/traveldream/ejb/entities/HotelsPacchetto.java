@@ -13,17 +13,29 @@ import java.io.Serializable;
 public class HotelsPacchetto implements Serializable{
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
     @ManyToOne
-    @JoinColumn(name = "id_pacchetto")
+    @JoinColumn(name = "id_pacchetto", referencedColumnName = "id_pacchetto")
     private Pacchetto pacchetto;
 
-    @Id
     @ManyToOne
-    @JoinColumn(name = "id_hotel")
+    @JoinColumn(name = "id_hotel", referencedColumnName = "id_hotel")
     private Hotel hotel;
 
     @NotNull
     private boolean predefinito;
+
+    public HotelsPacchetto() {
+        super();
+    }
+
+    public HotelsPacchetto(Pacchetto pacchetto, Hotel hotel, boolean predefinito) {
+        this.pacchetto = pacchetto;
+        this.hotel = hotel;
+        this.predefinito = predefinito;
+    }
 
     public Pacchetto getPacchetto() {
         return pacchetto;

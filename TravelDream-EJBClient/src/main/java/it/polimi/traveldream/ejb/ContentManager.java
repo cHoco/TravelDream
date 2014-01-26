@@ -22,11 +22,11 @@ public interface ContentManager {
     public void aggiungiEscursione(EscursioneDTO escursione);
 
 
-    public void modificaTrasporto(TrasportoDTO trasporto);
+    public void modificaTrasporto(String codiceTrasporto, TrasportoDTO trasporto);
 
-    public void modificaHotel(HotelDTO hotel);
+    public void modificaHotel(String codiceHotel, HotelDTO hotel);
 
-    public void modificaEscursione(EscursioneDTO escursione);
+    public void modificaEscursione(String codiceEscursione, EscursioneDTO escursione);
 
 
     public void eliminaTrasporto(TrasportoDTO trasporto);
@@ -36,9 +36,9 @@ public interface ContentManager {
     public void eliminaEscursione(EscursioneDTO escursione);
 
 
-    public TrasportoDTO getTrasporto(String id_trasporto);
+    public TrasportoDTO getTrasporto(String codice_trasporto);
 
-    public HotelDTO getHotel(String id_hotel);
+    public HotelDTO getHotel(String codice_hotel);
 
-    public EscursioneDTO getEscursione(String id_escursione);
+    public EscursioneDTO getEscursione(String codice_escursione);
 }

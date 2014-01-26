@@ -13,19 +13,32 @@ import java.io.Serializable;
 public class TrasportiPacchetto implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
     @ManyToOne
     //@PrimaryKeyJoinColumn(name = "id_pacchetto", referencedColumnName = "id_pacchetto")
-    @JoinColumn(name = "id_pacchetto")
+    @JoinColumn(name = "id_pacchetto", referencedColumnName = "id_pacchetto")
     private Pacchetto pacchetto;
 
-    @Id
+
     @ManyToOne
     //@PrimaryKeyJoinColumn(name = "id_mezzoTrasporto", referencedColumnName = "id_mezzoTrasporto")
-    @JoinColumn(name = "id_mezzoTrasporto")
+    @JoinColumn(name = "id_mezzoTrasporto", referencedColumnName = "id_mezzoTrasporto")
     private Trasporto trasporto;
 
     @NotNull
     private boolean predefinito;
+
+    public TrasportiPacchetto() {
+        super();
+    }
+
+    public TrasportiPacchetto(Pacchetto pacchetto, Trasporto trasporto, boolean predefinito) {
+        this.pacchetto = pacchetto;
+        this.trasporto = trasporto;
+        this.predefinito = predefinito;
+    }
 
     public Pacchetto getPacchetto() {
         return pacchetto;

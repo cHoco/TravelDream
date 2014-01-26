@@ -44,7 +44,7 @@ public class UserManagerBean implements UserManager {
 
     }
 
-    @RolesAllowed({"ADMIN"})
+    //@RolesAllowed({"ADMIN"})
     @Override
     public void saveAu(UserDTO au) {
 

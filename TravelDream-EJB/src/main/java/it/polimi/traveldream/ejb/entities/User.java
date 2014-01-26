@@ -26,7 +26,7 @@ public class User implements Serializable{
     public static final String FIND_ALL = "User.findAll";
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id_user;
 
     @Column(unique = true)

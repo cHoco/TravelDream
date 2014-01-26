@@ -29,6 +29,11 @@
             <version>7.0</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>org.omnifaces</groupId>
+            <artifactId>omnifaces</artifactId>
+            <version>1.6.3</version> <!-- Or 1.8-SNAPSHOT -->
+        </dependency>
         <!-- <dependency>
             <groupId>it.polimi.traveldream</groupId>
             <artifactId>TravelDream-EJBClient</artifactId>

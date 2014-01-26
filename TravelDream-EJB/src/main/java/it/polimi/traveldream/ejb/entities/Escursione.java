@@ -2,13 +2,11 @@ package it.polimi.traveldream.ejb.entities;
 
 import it.polimi.traveldream.ejb.dtos.EscursioneDTO;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by cHoco on 17/01/14.
@@ -19,7 +17,7 @@ import java.io.Serializable;
 public class Escursione implements Serializable{
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id_escursione;
 
     @NotNull
@@ -30,6 +28,15 @@ public class Escursione implements Serializable{
     @Size(min=1)
     private String descrizione;
 
+    @NotNull
+    @Size(min=5, max = 5)
+    @Column(unique = true)
+    private String codice_escursione;
+
+
+    @OneToMany(mappedBy = "escursione")
+    private List<EscursioniPacchetto> pacchetti;
+
     public Escursione (){
         super();
     }
@@ -38,6 +45,7 @@ public class Escursione implements Serializable{
 
         this.nome = escursioneDTO.getNome();
         this.descrizione = escursioneDTO.getDescrizione();
+        this.codice_escursione = escursioneDTO.getCodice_escursione();
 
     }
 
@@ -63,5 +71,13 @@ public class Escursione implements Serializable{
 
     public void setDescrizione(String descrizione) {
         this.descrizione = descrizione;
+    }
+
+    public String getCodice_escursione() {
+        return codice_escursione;
+    }
+
+    public void setCodice_escursione(String codice_escursione) {
+        this.codice_escursione = codice_escursione;
     }
 }

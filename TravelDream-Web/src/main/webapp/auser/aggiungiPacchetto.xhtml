@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough"
+                template="/WEB-INF/templates/default.xhtml">
+
+    <ui:define name="htmlhead">
+        <title>Aggiungi Pacchetto - TravelDream</title>
+        <h:outputStylesheet name="lib/themes/default.css" />
+        <h:outputStylesheet name="lib/themes/default.date.css" />
+    </ui:define>
+
+    <ui:define name="content">
+
+        <section id="aggiunta-pacchetto">
+            <div class="container">
+            <h:form>
+                <div class="clear-fix">
+                <div class="dati-pacchetto-left">
+                    <div class="input-div">
+                        <h:inputText id="codice-pacchetto" jsf:placeholder="Codice" value="#{advancedUserPacchettiWebBean.pacchettoDTO.codice_pacchetto}"/>
+                        <h:message for="codice-pacchetto" />
+                    </div>
+                    <div class="input-div">
+                        <h:inputText id="nome-pacchetto" jsf:placeholder="Nome Pacchetto" value="#{advancedUserPacchettiWebBean.pacchettoDTO.nome}"/>
+                        <h:message for="nome-pacchetto" />
+                    </div>
+                    <div class="input-div">
+                        <h:inputText id="localita-pacchetto" jsf:placeholder="Località del Pacchetto" value="#{advancedUserPacchettiWebBean.pacchettoDTO.localita}"/>
+                        <h:message for="localita-pacchetto" />
+                    </div>
+                    <div class="input-div">
+                        <h:inputText id="inizio-validita-pacchetto" styleClass="js__datepicker" jsf:placeholder="Data inizio validità" value="#{advancedUserPacchettiWebBean.pacchettoDTO.inizioValidita}">
+                            <f:convertDateTime pattern="dd/mm/yyyy" />
+                        </h:inputText>
+                        <h:message for="inizio-validita-pacchetto" />
+                    </div>
+                    <div class="input-div">
+                        <h:inputText id="fine-validita-pacchetto" styleClass="js__datepicker" jsf:placeholder="Data fine validità" value="#{advancedUserPacchettiWebBean.pacchettoDTO.fineValidita}">
+                            <f:convertDateTime pattern="dd/mm/yyyy" />
+                        </h:inputText>
+                        <h:message for="fine-validita-pacchetto" />
+                    </div>
+                </div>
+                <div class="dati-pacchetto-right">
+                    <div class="input-div">
+                        <h:inputTextarea id="descrizione-pacchetto" rows="11" jsf:placeholder="Descrizione Pacchetto" value="#{advancedUserPacchettiWebBean.pacchettoDTO.descrizione}"/>
+                        <h:message for="descrizione-pacchetto" />
+                    </div>
+                    <div class="submit-codice">
+                        <h:commandButton class="submit-button-codice" value="Aggiungi nuovo pacchetto" action="#{advancedUserPacchettiWebBean.aggiungiPacchetto()}"/>
+                    </div>
+                </div>
+                </div>
+            </h:form>
+                <div class="servizi-predefiniti clear-fix">
+                    <h2>
+                        Servizi Predefiniti
+                    </h2>
+                    <div class="servizi-pacchetto">
+                        <h:form>
+                            <div class="input-div">
+                                <h:inputText id="codice-trasporto-predef" jsf:placeholder="Codice trasporto" value="#{advancedUserPacchettiWebBean.codiceTrasportoPredefinito}"/>
+                                <h:message for="codice-trasporto-predef" />
+                            </div>
+                            <h:commandLink action="#{advancedUserPacchettiWebBean.aggiungiTraspostoPredefinito()}">
+                                <h:outputText value="Aggiungi" />
+                                <f:ajax execute="@form" render="trasporti-predef" />
+                            </h:commandLink>
+                            <h:panelGroup id="trasporti-predef">
+                                <h:dataTable value="#{advancedUserPacchettiWebBean.listaTrasportiPredefiniti}" var="trasportoPredef" styleClass="hor-minimalist-b">
+                                    <h:column>
+                                        <f:facet name="header">Codice</f:facet>
+                                        #{trasportoPredef.codice_trasporto}
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">Società</f:facet>
+                                        #{trasportoPredef.societa}
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">Tipo</f:facet>
+                                        #{trasportoPredef.tipoTrasporto}
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">Partenza</f:facet>
+                                        #{trasportoPredef.localitaPartenza}
+                                    </h:column>
+                                </h:dataTable>
+                            </h:panelGroup>
+                        </h:form>
+                    </div>
+                    <div class="servizi-pacchetto">
+                        <h:form>
+                            <div class="input-div">
+                                <h:inputText id="codice-hotel-predef" jsf:placeholder="Codice hotel" value="#{advancedUserPacchettiWebBean.codiceHotelPredefinito}"/>
+                                <h:message for="codice-hotel-predef" />
+                            </div>
+                            <h:commandLink action="#{advancedUserPacchettiWebBean.aggiungiHotelPredefinito}">
+                                <h:outputText value="Aggiungi" />
+                                <f:ajax execute="@form" render="hotels-predef" />
+                            </h:commandLink>
+                            <h:panelGroup id="hotels-predef">
+                                <h:dataTable value="#{advancedUserPacchettiWebBean.listaHotelsPredefiniti}" var="hotelPredef" styleClass="hor-minimalist-b">
+                                    <h:column>
+                                        <f:facet name="header">Codice</f:facet>
+                                        #{hotelPredef.codice_hotel}
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">Nome</f:facet>
+                                        #{hotelPredef.nome}
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">Stelle</f:facet>
+                                        #{hotelPredef.stelle}
+                                    </h:column>
+                                </h:dataTable>
+                            </h:panelGroup>
+                        </h:form>
+                    </div>
+                    <div class="servizi-pacchetto">
+                        <h:form>
+                            <div class="input-div">
+                                <h:inputText id="codice-escursione-predef" jsf:placeholder="Codice escursione" value="#{advancedUserPacchettiWebBean.codiceEscursionePredefinita}"/>
+                                <h:message for="codice-escursione" />
+                            </div>
+                            <h:commandLink action="#{advancedUserPacchettiWebBean.aggiungiEscursionePredefinita}">
+                                <h:outputText value="Aggiungi" />
+                                <f:ajax execute="@form" render="escursioni-predef" />
+                            </h:commandLink>
+                            <h:panelGroup id="escursioni-predef">
+                                <h:dataTable value="#{advancedUserPacchettiWebBean.listaEscursioniPredefinite}" var="escursionePredef" styleClass="hor-minimalist-b">
+                                    <h:column>
+                                        <f:facet name="header">Codice</f:facet>
+                                        #{escursionePredef.codice_escursione}
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">Nome</f:facet>
+                                        #{escursionePredef.nome}
+                                    </h:column>
+                                </h:dataTable>
+                            </h:panelGroup>
+                        </h:form>
+                    </div>
+                </div>
+
+                <div class="servizi clear-fix">
+                        <h2>
+                            Altri Servizi disponibili
+                        </h2>
+                    <div class="servizi-pacchetto">
+                        <h:form>
+                        <div class="input-div">
+                                <h:inputText id="codice-trasporto" jsf:placeholder="Codice trasporto" value="#{advancedUserPacchettiWebBean.codiceTrasporto}"/>
+                                <h:message for="codice-trasporto" />
+                            </div>
+                            <h:commandLink action="#{advancedUserPacchettiWebBean.aggiungiTrasporto}">
+                                <h:outputText value="Aggiungi" />
+                                <f:ajax execute="@all" render="trasporti" />
+                            </h:commandLink>
+                            <h:panelGroup id="trasporti">
+                                <h:dataTable value="#{advancedUserPacchettiWebBean.listaTrasporti}" var="trasporto" styleClass="hor-minimalist-b">
+                                    <h:column>
+                                        <f:facet name="header">Codice</f:facet>
+                                        #{trasporto.codice_trasporto}
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">Società</f:facet>
+                                        #{trasporto.societa}
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">Tipo</f:facet>
+                                        #{trasporto.tipoTrasporto}
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">Partenza</f:facet>
+                                        #{trasporto.localitaPartenza}
+                                    </h:column>
+                                </h:dataTable>
+                            </h:panelGroup>
+                    </h:form>
+                    </div>
+                    <div class="servizi-pacchetto">
+                        <h:form>
+                            <div class="input-div">
+                                <h:inputText id="codice-hotel" jsf:placeholder="Codice hotel" value="#{advancedUserPacchettiWebBean.codiceHotel}"/>
+                                <h:message for="codice-hotel" />
+                            </div>
+                            <h:commandLink action="#{advancedUserPacchettiWebBean.aggiungiHotel}">
+                                <h:outputText value="Aggiungi" />
+                                <f:ajax execute="@form" render="hotels" />
+                            </h:commandLink>
+                            <h:panelGroup id="hotels">
+                                <h:dataTable value="#{advancedUserPacchettiWebBean.listaHotels}" var="hotel" styleClass="hor-minimalist-b">
+                                    <h:column>
+                                        <f:facet name="header">Codice</f:facet>
+                                        #{hotel.codice_hotel}
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">Nome</f:facet>
+                                        #{hotel.nome}
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">Stelle</f:facet>
+                                        #{hotel.stelle}
+                                    </h:column>
+                                </h:dataTable>
+                            </h:panelGroup>
+                        </h:form>
+                    </div>
+                    <div class="servizi-pacchetto">
+                        <h:form>
+                            <div class="input-div">
+                                <h:inputText id="codice-escursione" jsf:placeholder="Codice escursione" value="#{advancedUserPacchettiWebBean.codiceEscursione}"/>
+                                <h:message for="codice-escursione" />
+                            </div>
+                            <h:commandLink action="#{advancedUserPacchettiWebBean.aggiungiEscursione}">
+                                <h:outputText value="Aggiungi" />
+                                <f:ajax execute="@form" render="escursioni" />
+                            </h:commandLink>
+                            <h:panelGroup id="escursioni">
+                                <h:dataTable value="#{advancedUserPacchettiWebBean.listaEscursioni}" var="escursione" styleClass="hor-minimalist-b">
+                                    <h:column>
+                                        <f:facet name="header">Codice</f:facet>
+                                        #{escursione.codice_escursione}
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">Nome</f:facet>
+                                        #{escursione.nome}
+                                    </h:column>
+                                </h:dataTable>
+                            </h:panelGroup>
+                        </h:form>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+
+    </ui:define>
+
+    <ui:define name="scripts">
+        <h:outputScript name="lib/jquery-2.1.0.min.js" />
+        <h:outputScript name="lib/picker.js" />
+        <h:outputScript name="lib/picker.date.js" />
+        <h:outputScript name="lib/picker.time.js" />
+        <h:outputScript name="lib/main.js" />
+    </ui:define>
+</ui:composition>

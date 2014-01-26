@@ -13,17 +13,29 @@ import java.io.Serializable;
 public class EscursioniPacchetto implements Serializable{
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
     @ManyToOne
-    @JoinColumn(name = "id_pacchetto")
+    @JoinColumn(name = "id_pacchetto", referencedColumnName = "id_pacchetto")
     private Pacchetto pacchetto;
 
-    @Id
     @ManyToOne
-    @JoinColumn(name = "id_escursione")
+    @JoinColumn(name = "id_escursione", referencedColumnName = "id_escursione")
     private Escursione escursione;
 
     @NotNull
     private boolean predefinito;
+
+    public EscursioniPacchetto() {
+        super();
+    }
+
+    public EscursioniPacchetto(Pacchetto pacchetto, Escursione escursione, boolean predefinito) {
+        this.pacchetto = pacchetto;
+        this.escursione = escursione;
+        this.predefinito = predefinito;
+    }
 
     public Pacchetto getPacchetto() {
         return pacchetto;

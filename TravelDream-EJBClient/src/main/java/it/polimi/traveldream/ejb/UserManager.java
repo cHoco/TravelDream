@@ -16,7 +16,7 @@ public interface UserManager {
 
     public void saveAdmin(UserDTO admin);
 
-    @RolesAllowed({"ADMIN"})
+    //@RolesAllowed({"ADMIN"})
     public void saveAu(UserDTO au);
 
     public boolean emailAlreadyUsed(String email);

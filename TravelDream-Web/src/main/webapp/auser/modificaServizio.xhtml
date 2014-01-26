@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough"
+                template="/WEB-INF/templates/default.xhtml"
+                xmlns:o="http://omnifaces.org/ui"
+                xmlns:of="http://omnifaces.org/functions">
+
+    <f:metadata>
+        <f:viewParam name="tipoServizio" value="#{advancedUserServiziWebBean.tipoServizio}" />
+        <f:viewParam name="codiceServizio" value="#{advancedUserServiziWebBean.codiceServizioInModifica}" />
+        <f:event type="preRenderView" listener="#{advancedUserServiziWebBean.modificaServizio()}" />
+    </f:metadata>
+
+    <ui:define name="htmlhead">
+        <title>Gestione contenuti - TravelDream</title>
+    </ui:define>
+
+    <ui:define name="content">
+
+        <h:panelGroup rendered="#{advancedUserServiziWebBean.tipoServizio == 'trasporto'}">
+
+            <div class="home-register solo-register">
+                <o:form includeRequestParams="true">
+                    <div>
+                        <div class="input-div">
+                            <h:selectOneMenu value="#{advancedUserServiziWebBean.newTrasporto.tipoTrasporto}">
+                                <f:selectItems value="#{advancedUserServiziWebBean.tipiTrasporto}" />
+                            </h:selectOneMenu>
+                        </div>
+                        <div class="input-div">
+                            <h:inputText id="societa" jsf:placeholder="Società" value="#{advancedUserServiziWebBean.newTrasporto.societa}"/>
+                            <h:message for="societa" />
+                        </div>
+                        <div class="input-div">
+                            <h:inputText id="partenza" jsf:placeholder="Località di partenza" value="#{advancedUserServiziWebBean.newTrasporto.localitaPartenza}"/>
+                            <h:message for="partenza" />
+                        </div>
+
+                        <div class="input-div">
+                            <h:inputText id="arrivo" jsf:placeholder="Località di arrivo" value="#{advancedUserServiziWebBean.newTrasporto.localitaArrivo}"/>
+                            <h:message for="arrivo" />
+                        </div>
+
+                        <div class="input-div">
+                            <h:inputText id="codice-trasporto" jsf:placeholder="Codice trasporto" pattern=".{5,5}" value="#{advancedUserServiziWebBean.newTrasporto.codice_trasporto}"/>
+                            <h:message for="codice-trasporto" />
+                        </div>
+
+
+                        <div class="input-div submit">
+                            <h:commandButton class="submit-button" value="Modifica Trasporto" action="#{advancedUserServiziWebBean.modificaTrasporto()}"/>
+                        </div>
+                    </div>
+                </o:form>
+            </div>
+        </h:panelGroup>
+
+        <h:panelGroup rendered="#{advancedUserServiziWebBean.tipoServizio == 'hotel'}">
+
+            <div class="home-register solo-register">
+                <o:form includeRequestParams="true">
+                    <div>
+                        <div class="input-div">
+                            <h:inputText id="nome-hotel" jsf:placeholder="Nome" value="#{advancedUserServiziWebBean.newHotel.nome}"/>
+                            <h:message for="nome-hotel" />
+                        </div>
+                        <div class="input-div">
+                            <h:inputTextarea id="descrizione-hotel" jsf:placeholder="Descrizione" value="#{advancedUserServiziWebBean.newHotel.descrizione}"/>
+                            <h:message for="descrizione-hotel" />
+                        </div>
+
+                        <div class="input-div">
+                            <h:inputText id="stelle" jsf:placeholder="Stelle" value="#{advancedUserServiziWebBean.newHotel.stelle}"/>
+                            <h:message for="stelle" />
+                        </div>
+
+                        <div class="input-div">
+                            <h:inputText id="codice-hotel" jsf:placeholder="Codice hotel" pattern=".{5,5}" value="#{advancedUserServiziWebBean.newHotel.codice_hotel}"/>
+                            <h:message for="codice-hotel" />
+                        </div>
+
+
+                        <div class="input-div submit">
+                            <h:commandButton class="submit-button" value="Modifica Hotel" action="#{advancedUserServiziWebBean.modificaHotel()}"/>
+                        </div>
+                    </div>
+                </o:form>
+            </div>
+        </h:panelGroup>
+
+        <h:panelGroup rendered="#{advancedUserServiziWebBean.tipoServizio == 'escursione'}">
+
+            <div class="home-register solo-register">
+                <o:form includeRequestParams="true">
+                    <div>
+                        <div class="input-div">
+                            <h:inputText id="nome-escursione" jsf:placeholder="Nome" value="#{advancedUserServiziWebBean.newEscursione.nome}"/>
+                            <h:message for="nome-escursione" />
+                        </div>
+                        <div class="input-div">
+                            <h:inputTextarea id="descrizione-escursione" jsf:placeholder="Descrizione" value="#{advancedUserServiziWebBean.newEscursione.descrizione}"/>
+                            <h:message for="descrizione-escursione" />
+                        </div>
+
+                        <div class="input-div">
+                            <h:inputText id="codice-escursione" jsf:placeholder="Codice escursione" pattern=".{5,5}" value="#{advancedUserServiziWebBean.newEscursione.codice_escursione}"/>
+                            <h:message for="codice-escursione" />
+                        </div>
+
+
+                        <div class="input-div submit">
+                            <h:commandButton class="submit-button" value="Modifica Escursione" action="#{advancedUserServiziWebBean.modificaEscursione()}"/>
+                        </div>
+                    </div>
+                </o:form>
+            </div>
+        </h:panelGroup>
+
+
+    </ui:define>
+</ui:composition>

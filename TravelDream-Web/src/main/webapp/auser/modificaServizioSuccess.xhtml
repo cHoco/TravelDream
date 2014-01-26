@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough"
+                template="/WEB-INF/templates/default.xhtml">
+
+    <f:metadata>
+        <f:viewParam name="tipoServizio" value="#{advancedUserServiziWebBean.tipoServizio}" />
+    </f:metadata>
+
+    <ui:define name="htmlhead">
+        <title>Gestione contenuti - TravelDream</title>
+    </ui:define>
+
+    <ui:define name="content">
+
+
+        <h:panelGroup rendered="#{advancedUserServiziWebBean.tipoServizio == 'trasporto'}">
+            <section id="login-register">
+                <div class="login-register-container">
+                    <h1>Modifica completata!</h1>
+                    <p>Il trasporto è stato modificato correttamente, ora puoi tornare alla pagina di <h:link value="Gestione Contenuti" outcome="index"/></p>
+                </div>
+            </section>
+        </h:panelGroup>
+
+        <h:panelGroup rendered="#{advancedUserServiziWebBean.tipoServizio == 'hotel'}">
+            <section id="login-register">
+                <div class="login-register-container">
+                    <h1>Modifica completata!</h1>
+                    <p>L'hotel è stato modificato correttamente, ora puoi tornare alla pagina di <h:link value="Gestione Contenuti" outcome="index"/></p>
+                </div>
+            </section>
+        </h:panelGroup>
+
+        <h:panelGroup rendered="#{advancedUserServiziWebBean.tipoServizio == 'escursione'}">
+            <section id="login-register">
+                <div class="login-register-container">
+                    <h1>Modifica completata!</h1>
+                    <p>L'escursione è stata modificata correttamente, ora puoi tornare alla pagina di <h:link value="Gestione Contenuti" outcome="index"/></p>
+                </div>
+            </section>
+        </h:panelGroup>
+
+
+
+    </ui:define>
+</ui:composition>

@@ -23,6 +23,10 @@ public class HotelDTO {
     @DecimalMax("5")
     private int stelle;
 
+    @NotNull
+    @Size(min=5, max = 5)
+    private String codice_hotel;
+
     public String getNome() {
         return nome;
     }
@@ -45,5 +49,13 @@ public class HotelDTO {
 
     public void setStelle(int stelle) {
         this.stelle = stelle;
+    }
+
+    public String getCodice_hotel() {
+        return codice_hotel;
+    }
+
+    public void setCodice_hotel(String codice_hotel) {
+        this.codice_hotel = codice_hotel;
     }
 }

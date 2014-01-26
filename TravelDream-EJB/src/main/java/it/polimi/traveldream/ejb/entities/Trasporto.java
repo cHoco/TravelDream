@@ -3,13 +3,11 @@ package it.polimi.traveldream.ejb.entities;
 import it.polimi.traveldream.ejb.dtos.TipoTrasporto;
 import it.polimi.traveldream.ejb.dtos.TrasportoDTO;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by cHoco on 17/01/14.
@@ -20,7 +18,7 @@ import java.io.Serializable;
 public class Trasporto implements Serializable{
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id_mezzoTrasporto;
 
     @NotNull
@@ -38,6 +36,14 @@ public class Trasporto implements Serializable{
     @Size(min=1)
     private String localitaArrivo;
 
+    @NotNull
+    @Size(min=5, max = 5)
+    @Column(unique = true)
+    private String codice_trasporto;
+
+    @OneToMany(mappedBy = "trasporto")
+    private List<TrasportiPacchetto> pacchetti;
+
     public Trasporto(){
         super();
     }
@@ -48,6 +54,7 @@ public class Trasporto implements Serializable{
         this.societa = trasportoDTO.getSocieta();
         this.localitaPartenza = trasportoDTO.getLocalitaPartenza();
         this.localitaArrivo = trasportoDTO.getLocalitaArrivo();
+        this.codice_trasporto = trasportoDTO.getCodice_trasporto();
 
     }
 
@@ -89,5 +96,13 @@ public class Trasporto implements Serializable{
 
     public void setLocalitaArrivo(String localitaArrivo) {
         this.localitaArrivo = localitaArrivo;
+    }
+
+    public String getCodice_trasporto() {
+        return codice_trasporto;
+    }
+
+    public void setCodice_trasporto(String codice_trasporto) {
+        this.codice_trasporto = codice_trasporto;
     }
 }

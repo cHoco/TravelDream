@@ -1,6 +1,9 @@
 package it.polimi.traveldream.ejb.entities;
 
+import it.polimi.traveldream.ejb.dtos.EscursioneDTO;
+import it.polimi.traveldream.ejb.dtos.HotelDTO;
 import it.polimi.traveldream.ejb.dtos.PacchettoDTO;
+import it.polimi.traveldream.ejb.dtos.TrasportoDTO;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -19,7 +22,7 @@ import java.util.List;
 public class Pacchetto implements Serializable {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id_pacchetto;
 
     @NotNull
@@ -42,14 +45,19 @@ public class Pacchetto implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date fineValidita;
 
-    @OneToMany(mappedBy = "pacchetto")
+    @OneToMany(mappedBy = "pacchetto", cascade = CascadeType.PERSIST)
     private List<TrasportiPacchetto> mezziTrasporto;
 
-    @OneToMany(mappedBy = "pacchetto")
+    @OneToMany(mappedBy = "pacchetto", cascade = CascadeType.PERSIST)
     private List<HotelsPacchetto> hotels;
 
-    @OneToMany(mappedBy = "pacchetto")
+    @OneToMany(mappedBy = "pacchetto", cascade = CascadeType.PERSIST)
     private List<EscursioniPacchetto> escursioni;
+
+    @NotNull
+    @Size(min=5, max = 5)
+    @Column(unique = true)
+    private String codice_pacchetto;
 
     public Pacchetto(){
         super();
@@ -61,9 +69,22 @@ public class Pacchetto implements Serializable {
         this.localita = pacchettoDTO.getLocalita();
         this.inizioValidita = pacchettoDTO.getInizioValidita();
         this.fineValidita = pacchettoDTO.getFineValidita();
-      /*  this.mezziTrasporto = pacchettoDTO.mezz;
-        this.hotels = hotels;
-        this.escursioni = escursioni;    */
+        this.mezziTrasporto = new ArrayList<>();
+        this.hotels = new ArrayList<>();
+        this.escursioni = new ArrayList<>();
+        this.codice_pacchetto = pacchettoDTO.getCodice_pacchetto();
+        /*
+        for(String trasportoDTO : pacchettoDTO.getTrasporti().keySet()) {
+            this.mezziTrasporto.add(new TrasportiPacchetto(this, , pacchettoDTO.getTrasporti().get(trasportoDTO)));
+        }
+
+        for(String hotelDTO : pacchettoDTO.getHotels().keySet()) {
+            this.hotels.add(new HotelsPacchetto(this, new Hotel(hotelDTO), pacchettoDTO.getHotels().get(hotelDTO)));
+        }
+
+        for(String escursioneDTO : pacchettoDTO.getEscursioni().keySet()) {
+            this.escursioni.add(new EscursioniPacchetto(this, new Escursione(escursioneDTO), pacchettoDTO.getEscursioni().get(escursioneDTO)));
+        }*/
     }
 
     public long getId_pacchetto() {
@@ -126,10 +147,27 @@ public class Pacchetto implements Serializable {
         this.hotels = hotels;
     }
 
+    public List<HotelsPacchetto> getHotels() {
+        return hotels;
+    }
+
+    public List<EscursioniPacchetto> getEscursioni() {
+        return escursioni;
+    }
+
     public void setEscursioni(List<EscursioniPacchetto> escursioni) {
         this.escursioni = escursioni;
     }
 
+    public String getCodice_pacchetto() {
+        return codice_pacchetto;
+    }
+
+    public void setCodice_pacchetto(String codice_pacchetto) {
+        this.codice_pacchetto = codice_pacchetto;
+    }
+
+    /*
     public List<Trasporto> getTrasporti() {
         List<Trasporto> trasporti = new ArrayList<>();
         for(TrasportiPacchetto trasportoPacchetto : this.mezziTrasporto) {
@@ -152,5 +190,5 @@ public class Pacchetto implements Serializable {
             escursioni.add(escursionePacchetto.getEscursione());
         }
         return escursioni;
-    }
+    }*/
 }

@@ -11,8 +11,85 @@
     </ui:define>
 
     <ui:define name="content">
+        <section id="gestione-pacchetti">
+        <div class="container div-paccheti">
+            <h2>Gestione pacchetti</h2>
+            <h3>Gestisci l'aggiunta e l'eliminazione dei pacchetti</h3>
 
-        Hello Advanced user :D
+            <div class="form-codice">
+                <div class="clear-fix">
+                        <div class="submit-codice">
+                            <h:link styleClass="submit-button-codice" value="Crea pacchetto" outcome="/auser/aggiungiPacchetto" />
+                        </div>
+                </div>
+            </div>
+
+
+        </div>
+        </section>
+
+        <section id="gestione-servizi">
+        <div class="container div-servizi">
+            <h2>Gestione Servizi</h2>
+            <h3>Gestisci l'aggiunta, la modifica e l'eliminazione dei serivizi</h3>
+
+            <div class="form-codice">
+                <form method="get" action="aggiungiServizio.xhtml">
+                    <div class="clear-fix">
+                        <div class="input-codice">
+                            <select name="tipoServizio">
+                                <option value="trasporto">Trasporto</option>
+                                <option value="hotel">Hotel</option>
+                                <option value="escursione">Escursione</option>
+                            </select>
+                        </div>
+                        <div class="submit-codice">
+                            <input type="submit" class="submit-button-codice" value="Aggiungi servizio"/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="form-codice">
+                <form method="get" action="modificaServizio.xhtml">
+                    <div class="clear-fix">
+                        <div class="input-codice">
+                            <select name="tipoServizio">
+                                <option value="trasporto">Trasporto</option>
+                                <option value="hotel">Hotel</option>
+                                <option value="escursione">Escursione</option>
+                            </select>
+                        </div>
+                        <div class="input-codice">
+                            <input type="text" placeholder="Codice" pattern=".{5,5}" name="codiceServizio" />
+                        </div>
+                        <div class="submit-codice">
+                            <input type="submit" class="submit-button-codice" value="Modifica servizio"/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="form-codice">
+                <h:form>
+                    <div class="clear-fix">
+                        <div class="input-codice">
+                            <h:inputText jsf:placeholder="Codice" pattern=".{5,5}"/>
+                        </div>
+                        <div class="submit-codice">
+                            <h:commandButton class="submit-button-codice" value="Elimina servizio" action="null"/>
+                        </div>
+                    </div>
+                </h:form>
+            </div>
+
+
+        </div>
+        </section>
+
+
+
+
 
     </ui:define>
 </ui:composition>
