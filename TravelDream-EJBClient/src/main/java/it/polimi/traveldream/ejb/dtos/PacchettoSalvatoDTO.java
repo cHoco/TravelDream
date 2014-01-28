@@ -1,7 +1,9 @@
 package it.polimi.traveldream.ejb.dtos;
 
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Asus on 19/01/14.
@@ -9,10 +11,10 @@ import java.util.Date;
 public class PacchettoSalvatoDTO {
 
     @NotNull
-    private UserDTO userCreatore;
+    private long idUserCreatore;
 
     @NotNull
-    private PacchettoDTO pacchettoOriginale;
+    private String codicePacchettoOriginale;
 
     @NotNull
     private Date dataPartenza;
@@ -23,20 +25,39 @@ public class PacchettoSalvatoDTO {
     @NotNull
     private boolean prenotato;
 
-    public UserDTO getUserCreatore() {
-        return userCreatore;
+    @NotNull
+    private List<String> codiciTrasporti;
+
+    @NotNull
+    private List<String> codiciHotels;
+
+    @NotNull
+    private  List<String> codiciEscursioni;
+
+    private List<UserDTO> usersPartecipanti;
+
+    public PacchettoSalvatoDTO() {
+        codiciTrasporti = new ArrayList<>();
+        codiciHotels = new ArrayList<>();
+        codiciEscursioni = new ArrayList<>();
+        usersPartecipanti = new ArrayList<>();
+        prenotato = false;
     }
 
-    public void setUserCreatore(UserDTO userCreatore) {
-        this.userCreatore = userCreatore;
+    public long getIdUserCreatore() {
+        return idUserCreatore;
     }
 
-    public PacchettoDTO getPacchettoOriginale() {
-        return pacchettoOriginale;
+    public void setIdUserCreatore(long userCreatore) {
+        this.idUserCreatore = userCreatore;
     }
 
-    public void setPacchettoOriginale(PacchettoDTO pacchettoOriginale) {
-        this.pacchettoOriginale = pacchettoOriginale;
+    public String getCodicePacchettoOriginale() {
+        return codicePacchettoOriginale;
+    }
+
+    public void setCodicePacchettoOriginale(String pacchettoOriginale) {
+        this.codicePacchettoOriginale = pacchettoOriginale;
     }
 
     public Date getDataPartenza() {
@@ -61,5 +82,45 @@ public class PacchettoSalvatoDTO {
 
     public void setPrenotato(boolean prenotato) {
         this.prenotato = prenotato;
+    }
+
+    public List<String> getCodiciTrasporti() {
+        return codiciTrasporti;
+    }
+
+    public void setCodiciTrasporti(List<String> codiciTrasporti) {
+        this.codiciTrasporti = codiciTrasporti;
+    }
+
+    public List<String> getCodiciHotels() {
+        return codiciHotels;
+    }
+
+    public void setCodiciHotels(List<String> codiciHotels) {
+        this.codiciHotels = codiciHotels;
+    }
+
+    public List<String> getCodiciEscursioni() {
+        return codiciEscursioni;
+    }
+
+    public void setCodiciEscursioni(List<String> codiciEscursioni) {
+        this.codiciEscursioni = codiciEscursioni;
+    }
+
+    public void addTrasporto(String trasporto) {
+        codiciTrasporti.add(trasporto);
+    }
+
+    public void addHotel(String hotel) {
+        codiciHotels.add(hotel);
+    }
+
+    public void addEscursione(String escursione) {
+        codiciEscursioni.add(escursione);
+    }
+
+    public void addUserPartecipante(UserDTO userDTO) {
+        usersPartecipanti.add(userDTO);
     }
 }

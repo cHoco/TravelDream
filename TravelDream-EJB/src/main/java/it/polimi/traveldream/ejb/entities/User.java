@@ -71,6 +71,14 @@ public class User implements Serializable{
         this.registrationDate = new Date();
     }
 
+    public long getId_user() {
+        return id_user;
+    }
+
+    public void setId_user(long id_user) {
+        this.id_user = id_user;
+    }
+
     public String getFirstName() {
         return firstName;
     }

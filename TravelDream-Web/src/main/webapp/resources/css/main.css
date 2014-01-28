@@ -563,3 +563,25 @@ form {
     width: 100%;
     padding-bottom: 10px;
 }
+
+.profile-form {
+    padding-top: 40px;
+}
+
+.profile-section-title {
+    color: #3e4248;
+    font-size: 2.05em;
+}
+
+#pacchetti-personali {
+    border-top: 5px solid #2FAC91;
+    background: rgb(95,197,174);
+    padding: 70px 0;
+}
+
+#pacchetti-partecipati {
+    border-top: 5px solid #BA464C;
+    background: #D35F65;
+    padding: 70px 0;
+
+}

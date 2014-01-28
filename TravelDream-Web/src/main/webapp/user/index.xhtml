@@ -12,7 +12,46 @@
 
     <ui:define name="content">
 
-        Hello user :D
+        <header class="container">
+            <div class="bg"></div>
+            <div class="home-text">
+                <h1>Benvenuto User</h1>
+                <p>Sei stato invitato a partecipare a un nuovo viaggio? Inserisci qui affianco il codice!</p>
+            </div>
+
+            <div class="home-register profile-form">
+                <div class="form-codice">
+                    <h:form>
+                        <div class="clear-fix">
+                            <div class="input-codice">
+                                <h:inputText jsf:placeholder="Codice"/>
+                            </div>
+                            <div class="submit-codice">
+                                <h:commandButton class="submit-button-codice" value="Vai al viaggio" action="#{registerBean.register}"/>
+                            </div>
+                        </div>
+                    </h:form>
+                </div>
+            </div>
+
+        </header>
+
+
+        <section id="pacchetti-personali">
+            <div class="container">
+                <h2 class="profile-section-title">Pacchetti Personali</h2>
+            </div>
+
+        </section>
+
+        <section id="pacchetti-partecipati">
+            <div class="container">
+                <h2 class="profile-section-title">Pacchetti a cui partecipi</h2>
+            </div>
+
+        </section>
+
+
 
     </ui:define>
 </ui:composition>

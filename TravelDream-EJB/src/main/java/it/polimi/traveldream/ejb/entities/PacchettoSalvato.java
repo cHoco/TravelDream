@@ -4,6 +4,7 @@ import it.polimi.traveldream.ejb.dtos.PacchettoSalvatoDTO;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -45,6 +46,13 @@ public class PacchettoSalvato {
     private boolean prenotato;
 
     @ManyToMany
+    @JoinTable(name="PARTECIPANTI_PACCHETTO_SALVATO",
+            joinColumns = { @JoinColumn(name="id_pacchettoSalvato")},
+            inverseJoinColumns = { @JoinColumn(name="id_userPartecipante", referencedColumnName = "ID_USER")}
+    )
+    private List<User> usersPartecipanti;
+
+    @ManyToMany
     @JoinTable(name="TRASPORTI_PACCHETTO_SALVATO",
             joinColumns = { @JoinColumn(name="id_pacchettoSalvato")},
             inverseJoinColumns = { @JoinColumn(name="id_mezzoTrasporto")}
@@ -69,17 +77,16 @@ public class PacchettoSalvato {
         super();
     }
 
-    /*public PacchettoSalvato(PacchettoSalvatoDTO pacchettoSalvatoDTO) {
+    public PacchettoSalvato(PacchettoSalvatoDTO pacchettoSalvatoDTO) {
 
-        this.userCreatore = pacchettoSalvatoDTO.getUserCreatore();
-        this.pacchettoOriginale = pacchettoSalvatoDTO.getPacchettoOriginale();
         this.dataPartenza = pacchettoSalvatoDTO.getDataPartenza();
         this.dataRitorno = pacchettoSalvatoDTO.getDataRitorno();
         this.prenotato = pacchettoSalvatoDTO.isPrenotato();
-        this.trasportiScelti = trasportiScelti;
-        this.hotelsScelti = hotelsScelti;
-        this.escursioni = escursioni;
-    }*/
+        this.trasportiScelti = new ArrayList<>();
+        this.hotelsScelti = new ArrayList<>();
+        this.escursioni = new ArrayList<>();
+        this.usersPartecipanti = new ArrayList<>();
+    }
 
     public long getId_pacchettoSalvato() {
         return id_pacchettoSalvato;
@@ -151,5 +158,13 @@ public class PacchettoSalvato {
 
     public void setEscursioni(List<Escursione> escursioni) {
         this.escursioni = escursioni;
+    }
+
+    public List<User> getUsersPartecipanti() {
+        return usersPartecipanti;
+    }
+
+    public void setUsersPartecipanti(List<User> usersPartecipanti) {
+        this.usersPartecipanti = usersPartecipanti;
     }
 }

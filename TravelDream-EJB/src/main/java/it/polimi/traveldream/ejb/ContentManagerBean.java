@@ -215,7 +215,7 @@ public class ContentManagerBean implements ContentManager{
         return em.createQuery(c).getSingleResult();
     }
 
-    private EscursioneDTO convertEscursioneToDTO(Escursione escursione) {
+    public EscursioneDTO convertEscursioneToDTO(Escursione escursione) {
         EscursioneDTO escursioneDTO = new EscursioneDTO();
         escursioneDTO.setCodice_escursione(escursione.getCodice_escursione());
         escursioneDTO.setDescrizione(escursione.getDescrizione());
@@ -223,7 +223,7 @@ public class ContentManagerBean implements ContentManager{
         return escursioneDTO;
     }
 
-    private TrasportoDTO convertTrasportoToDTO(Trasporto trasporto) {
+    public TrasportoDTO convertTrasportoToDTO(Trasporto trasporto) {
         TrasportoDTO trasportoDTO = new TrasportoDTO();
         trasportoDTO.setCodice_trasporto(trasporto.getCodice_trasporto());
         trasportoDTO.setLocalitaArrivo(trasporto.getLocalitaArrivo());
@@ -233,7 +233,7 @@ public class ContentManagerBean implements ContentManager{
         return trasportoDTO;
     }
 
-    private HotelDTO convertHotelToDTO(Hotel hotel) {
+    public HotelDTO convertHotelToDTO(Hotel hotel) {
         HotelDTO hotelDTO = new HotelDTO();
         hotelDTO.setNome(hotel.getNome());
         hotelDTO.setCodice_hotel(hotel.getCodice_hotel());
