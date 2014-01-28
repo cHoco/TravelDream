@@ -6,10 +6,9 @@ import it.polimi.traveldream.ejb.dtos.PacchettoSalvatoDTO;
 import it.polimi.traveldream.ejb.entities.*;
 
 import javax.ejb.EJB;
-import javax.persistence.EntityManager;
-import javax.persistence.NamedQuery;
-import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
+import javax.ejb.Stateless;
+import javax.inject.Inject;
+import javax.persistence.*;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
@@ -21,13 +20,14 @@ import java.util.List;
 /**
  * Created by cHoco on 27/01/14.
  */
+@Stateless
 public class UserContentManagerBean implements UserContentManager {
 
     @PersistenceContext
     private EntityManager em;
 
-    @EJB
-    UserManagerBean userManagerBean;
+    @Inject
+    UserManager userManagerBean;
 
     @Override
     public void prenotaPacchetto(PacchettoSalvatoDTO pacchettoSalvatoDTO) {
@@ -46,7 +46,9 @@ public class UserContentManagerBean implements UserContentManager {
 
     @Override
     public void aggiungiPartecipazione(PacchettoSalvatoDTO pacchettoSalvatoDTO) {
-
+        PacchettoSalvato pacchettoSalvato = findPacchettoSalvatoByCodice(pacchettoSalvatoDTO.getCodice_pacchettoSalvato());
+        pacchettoSalvato.getUsersPartecipanti().add(em.find(User.class, userManagerBean.getPrincipalEmail()));
+        em.persist(pacchettoSalvato);
     }
 
     @Override
@@ -88,7 +90,7 @@ public class UserContentManagerBean implements UserContentManager {
             pacchettiPersonaliDTO.add(convertPacchettoSalvatoToDTO(pacchettoSalvato));
         }*/
 
-        TypedQuery query = em.createQuery("select r from PacchettoSalvato r join r.usersPartecipanti p where p.id_user = :idUser", PacchettoSalvato.class).setParameter("idUser", idUser);
+        TypedQuery<PacchettoSalvato> query = em.createQuery("select r from PacchettoSalvato r join r.usersPartecipanti p where p.id_user = :idUser", PacchettoSalvato.class).setParameter("idUser", idUser);
         List<PacchettoSalvato> pacchettiPartecipati = query.getResultList();
         List<PacchettoSalvatoDTO> pacchettiPartecipatiDTO = new ArrayList<>();
         for(PacchettoSalvato pacchettoSalvato : pacchettiPartecipati) {
@@ -100,7 +102,20 @@ public class UserContentManagerBean implements UserContentManager {
 
     @Override
     public List<PacchettoDTO> searchPacchetti(String partenza, String localita, Date dataPartenza, Date dateRitorno) {
-        return null;
+        TypedQuery<Pacchetto> query = em.createQuery("select p from Pacchetto p join p.mezziTrasporto m " +
+                "where p.localita = :localita " +
+                "and p.inizioValidita < :dataPartenza " +
+                "and p.fineValidita > :dataRitorno " +
+                "and m.trasporto.localitaPartenza = :partenza", Pacchetto.class).setParameter("localita", localita).
+                                                                                    setParameter("partenza", partenza).
+                                                                                    setParameter("dataPartenza", dataPartenza, TemporalType.DATE).
+                                                                                    setParameter("dataRitorno", dateRitorno, TemporalType.DATE);
+        List<Pacchetto> pacchettiCercati = query.getResultList();
+        List<PacchettoDTO> pacchettiCercatiDTO = new ArrayList<>();
+        for(Pacchetto pacchetto : pacchettiCercati) {
+            pacchettiCercatiDTO.add(convertPacchettoToDTO(pacchetto));
+        }
+        return pacchettiCercatiDTO;
     }
 
     private PacchettoDTO convertPacchettoToDTO(Pacchetto pacchetto) {
@@ -158,4 +173,21 @@ public class UserContentManagerBean implements UserContentManager {
 
         return pacchettoSalvatoDTO;
     }
+
+    private Pacchetto findPacchettoByCodice(String codice_pacchetto) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Pacchetto> c = cb.createQuery(Pacchetto.class);
+        Root<Pacchetto> member = c.from(Pacchetto.class);
+        c.select(member).where(cb.equal(member.get("codice_pacchetto"), codice_pacchetto));
+        return em.createQuery(c).getSingleResult();
+    }
+
+    private PacchettoSalvato findPacchettoSalvatoByCodice(String codice_pacchettoSalvato) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<PacchettoSalvato> c = cb.createQuery(PacchettoSalvato.class);
+        Root<PacchettoSalvato> member = c.from(PacchettoSalvato.class);
+        c.select(member).where(cb.equal(member.get("codice_pacchettoSalvato"), codice_pacchettoSalvato));
+        return em.createQuery(c).getSingleResult();
+    }
+
 }

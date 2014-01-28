@@ -131,4 +131,11 @@ public class PacchettoDTO {
     public void addEscursione(String escursione, boolean predefinito) {
         this.escursioni.put(escursione, predefinito);
     }
+
+    @Override
+    public String toString() {
+        return "PacchettoDTO [codice=" + codice_pacchetto + ", nome=" + nome
+                + ", descrizione=" + descrizione + ", inzioValidita=" + inizioValidita
+                + ", fineValidita=" + fineValidita + ", localita=" + localita + "]";
+    }
 }

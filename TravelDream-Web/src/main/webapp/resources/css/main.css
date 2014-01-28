@@ -585,3 +585,101 @@ form {
     padding: 70px 0;
 
 }
+
+.cerca-pacchetto-header {
+     float: left;
+     width: 40%;
+     box-sizing: border-box;
+     -moz-box-sizing: border-box;
+     padding-right: 50px;
+ }
+
+.cerca-pacchetto-header > h1 {
+    color: #3e4248;
+    font-size: 2.05em;
+}
+
+.cerca-pacchetto-header > p {
+    font-size: 1.4em;
+    color: #747c81;
+    text-align: justify;
+    padding-right: 10px;
+    padding-top: 20px;
+}
+
+.dati-pacchetto-cerca {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    float: left;
+    width: 60%;
+    overflow: auto;
+}
+
+.dati-pacchetto-cerca::after {
+    clear: both
+}
+
+.data-left {
+    float: left;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    width: 60%;
+}
+
+.time-right {
+    float: right;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    width: 40%;
+}
+
+.data-left > div {
+    margin: 5px;
+}
+
+.data-left > div > input {
+    width: 100%;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    font-size: 18px;
+    padding: 10px;
+}
+
+.time-right > div {
+    margin: 5px;
+}
+
+.time-right > div > input {
+    width: 100%;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    font-size: 18px;
+    padding: 10px;
+}
+
+.pacchetti-trovati > a {
+    text-decoration: none;
+}
+
+.pacchetti-trovati > h2 {
+    color: rgb(58,116,93);
+    font-size: 2.05em;
+    padding-bottom: 30px;
+}
+
+.pacchetto-trovato {
+    float: left;
+    width: 33%;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    padding: 14px;
+    border-radius: 3px;
+    background: #fff;
+    height: 180px;
+}
+
+#section-pacchetti-trovati {
+    border-top: 5px solid #2FAC91;
+    background: rgb(95,197,174);
+    padding: 5px 0;
+}

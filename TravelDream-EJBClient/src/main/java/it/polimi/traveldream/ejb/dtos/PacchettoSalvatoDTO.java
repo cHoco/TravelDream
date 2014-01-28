@@ -36,6 +36,9 @@ public class PacchettoSalvatoDTO {
 
     private List<UserDTO> usersPartecipanti;
 
+    @NotNull
+    private String codice_pacchettoSalvato;
+
     public PacchettoSalvatoDTO() {
         codiciTrasporti = new ArrayList<>();
         codiciHotels = new ArrayList<>();
@@ -106,6 +109,14 @@ public class PacchettoSalvatoDTO {
 
     public void setCodiciEscursioni(List<String> codiciEscursioni) {
         this.codiciEscursioni = codiciEscursioni;
+    }
+
+    public String getCodice_pacchettoSalvato() {
+        return codice_pacchettoSalvato;
+    }
+
+    public void setCodice_pacchettoSalvato(String codice_pacchettoSalvato) {
+        this.codice_pacchettoSalvato = codice_pacchettoSalvato;
     }
 
     public void addTrasporto(String trasporto) {

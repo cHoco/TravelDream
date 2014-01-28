@@ -8,11 +8,105 @@
 
     <ui:define name="htmlhead">
         <title>Cerca un Viaggio - TravelDream</title>
+        <h:outputStylesheet name="lib/themes/default.css" />
+        <h:outputStylesheet name="lib/themes/default.date.css" />
+        <h:outputStylesheet name="lib/themes/default.time.css" />
     </ui:define>
 
     <ui:define name="content">
 
-        Cerca pacchetto :D
+        <h:form>
+        <header class="container">
+            <div class="cerca-pacchetto-header">
+                <h1>Dati Viaggio</h1>
+                <p>Inserisci la località che hai sempre sognato di visitare, dicci da dove vuoi partire, quando vuoi partire e tornare. Noi faremo il resto!</p>
+            </div>
 
+            <div class="dati-pacchetto-cerca">
+                    <div>
+                        <div class="input-div">
+                            <h:inputText class="partenza" id="partenza" jsf:placeholder="Località Partenza" value="#{userRicercaPacchettoBean.partenzaCercata}"/>
+                            <h:message for="partenza" />
+                        </div>
+                        <div class="input-div">
+                            <h:inputText  class="arrivo" id="arrivo" jsf:placeholder="Località Arrivo" value="#{userRicercaPacchettoBean.localitaCercata}"/>
+                            <h:message for="arrivo" />
+                        </div>
+                        <div class="clear-fix">
+                            <div class="data-left">
+                                <div>
+                                    <h:inputText styleClass="js__datepicker" id="data-partenza" jsf:placeholder="Data Partenza" value="#{userRicercaPacchettoBean.dataPartenza}">
+                                        <f:convertDateTime pattern="dd/mm/yyyy" />
+                                    </h:inputText>
+                                    <h:message for="data-partenza" />
+                                </div>
+                            </div>
+                            <div class="time-right">
+                                <div>
+                                    <h:inputText styleClass="js__timepicker" id="ora-partenza" jsf:placeholder="Orario"  value="#{userRicercaPacchettoBean.oraPartenza}">
+                                        <f:convertDateTime pattern="h:mm a" />
+                                    </h:inputText>
+                                    <h:message for="ora-partenza" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clear-fix">
+                            <div class="data-left">
+                                <div>
+                                    <h:inputText styleClass="js__datepicker" id="data-ritorno" jsf:placeholder="Data Ritorno" value="#{userRicercaPacchettoBean.dataRitorno}">
+                                        <f:convertDateTime pattern="dd/mm/yyyy" />
+                                    </h:inputText>
+                                    <h:message for="data-ritorno" />
+                                </div>
+                            </div>
+                            <div class="time-right">
+                                <div>
+                                    <h:inputText styleClass="js__timepicker" id="ora-ritorno" jsf:placeholder="Orario"  value="#{userRicercaPacchettoBean.oraRitorno}">
+                                        <f:convertDateTime pattern="h:mm a" />
+                                    </h:inputText>
+                                    <h:message for="ora-ritorno" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="input-div submit">
+                            <h:commandButton class="submit-button" value="Cerca Pacchetti" action="#{userRicercaPacchettoBean.cercaPacchetti}">
+                                <f:ajax execute="@form" render="pacchetti-trovati"/>
+                            </h:commandButton>
+                        </div>
+                    </div>
+
+            </div>
+
+        </header>
+            <h:panelGroup id="pacchetti-trovati">
+
+            <section id="section-pacchetti-trovati">
+                <div class="container pacchetti-trovati">
+                    <h2>Pacchetti Trovati</h2>
+                    <ui:repeat value="#{userRicercaPacchettoBean.pacchettiTrovati}" var="pacchetto">
+                        <a href="#{request.contextPath}/mostraPacchetto.xhtml?codicePacchetto=#{pacchetto.codice_pacchetto}">
+                            <div class="pacchetto-trovato">
+                                <h2>#{pacchetto.nome}</h2>
+                                <p>#{pacchetto.descrizione}</p>
+
+
+                            </div>
+                        </a>
+                    </ui:repeat>
+                </div>
+        </section>
+            </h:panelGroup>
+
+        </h:form>
+
+    </ui:define>
+
+    <ui:define name="scripts">
+        <h:outputScript name="lib/jquery-2.1.0.min.js" />
+        <h:outputScript name="lib/picker.js" />
+        <h:outputScript name="lib/picker.date.js" />
+        <h:outputScript name="lib/picker.time.js" />
+        <h:outputScript name="lib/cerca.js" />
     </ui:define>
 </ui:composition>

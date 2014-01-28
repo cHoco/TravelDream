@@ -45,6 +45,10 @@ public class PacchettoSalvato {
     @NotNull
     private boolean prenotato;
 
+    @NotNull
+    @Column(unique = true)
+    private String codice_pacchettoSalvato;
+
     @ManyToMany
     @JoinTable(name="PARTECIPANTI_PACCHETTO_SALVATO",
             joinColumns = { @JoinColumn(name="id_pacchettoSalvato")},
@@ -166,5 +170,13 @@ public class PacchettoSalvato {
 
     public void setUsersPartecipanti(List<User> usersPartecipanti) {
         this.usersPartecipanti = usersPartecipanti;
+    }
+
+    public String getCodice_pacchettoSalvato() {
+        return codice_pacchettoSalvato;
+    }
+
+    public void setCodice_pacchettoSalvato(String codice_pacchettoSalvato) {
+        this.codice_pacchettoSalvato = codice_pacchettoSalvato;
     }
 }
