@@ -16,7 +16,7 @@
         <f:viewParam name="dataRitorno" value="#{mostraPacchettoBean.dataRitorno}">
             <f:convertDateTime pattern="yyyyMMddHHmmzzz"/>
         </f:viewParam>
-        <f:viewParam name="localitaPartenza" value="#{mostraPacchettoBean.localitaPartenza}" />
+        <f:viewParam name="luogoPartenza" value="#{mostraPacchettoBean.localitaPartenza}" />
         <f:viewParam name="codicePacchettoSalvato" value="#{mostraPacchettoBean.codicePacchettoSalvato}" />
         <f:event type="preRenderView" listener="#{mostraPacchettoBean.loadPacchetto()}" />
     </f:metadata>
@@ -63,11 +63,11 @@
                             <div class="tasti-mostra-pacchetto-sopra">Personalizza</div>
                         </h:link>
                         <p>- oppure -</p>
-                        <h:form>
-                            <h:commandLink styleClass="mostra-pacchetto-main-button" action="#{mostraPacchettoBean.salvaPacchetto}" >
+                        <o:form includeRequestParams="true">
+                            <h:commandLink styleClass="mostra-pacchetto-main-button" action="#{mostraPacchettoBean.salvaPacchettoPredefinito()}" >
                                 <div class="tasti-mostra-pacchetto-sopra">Salva</div>
                             </h:commandLink>
-                        </h:form>
+                        </o:form>
                     </div>
                 </div>
             </header>

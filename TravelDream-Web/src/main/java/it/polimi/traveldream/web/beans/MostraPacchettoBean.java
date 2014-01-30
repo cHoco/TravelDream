@@ -4,17 +4,21 @@ import it.polimi.traveldream.ejb.UserContentManager;
 import it.polimi.traveldream.ejb.UserManager;
 import it.polimi.traveldream.ejb.dtos.PacchettoDTO;
 import it.polimi.traveldream.ejb.dtos.PacchettoSalvatoDTO;
+import it.polimi.traveldream.ejb.dtos.TrasportoDTO;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by cHoco on 29/01/14.
  */
 @ManagedBean(name = "mostraPacchettoBean")
-@RequestScoped
+@ViewScoped
 public class MostraPacchettoBean {
 
     @EJB
@@ -156,7 +160,7 @@ public class MostraPacchettoBean {
         if(codicePacchettoSalvato!=null) {
             pacchettoSalvatoDTO = userContentManager.getPacchettoSalvato(codicePacchettoSalvato);
             pacchettoSalvatoOriginaleDTO = userContentManager.getPacchetto(pacchettoSalvatoDTO.getCodicePacchettoOriginale());
-            if(pacchettoSalvatoDTO.getIdUserCreatore()==userManager.getPrincipalEmail()) {
+            if(pacchettoSalvatoDTO.getEmailUserCreatore()==userManager.getUserDTO().getEmail()) {
                 salvato = true;
                 if(pacchettoSalvatoDTO.isPrenotato()) {
                     prenotato = true;
@@ -171,11 +175,16 @@ public class MostraPacchettoBean {
         }
     }
 
-    public void salvaPacchetto() {
+    public String salvaPacchettoPredefinito() {
         PacchettoSalvatoDTO newPacchetto = new PacchettoSalvatoDTO();
 
         newPacchetto.setDataPartenza(dataPartenza);
         newPacchetto.setDataRitorno(dataRitorno);
         newPacchetto.setCodicePacchettoOriginale(pacchettoDTO.getCodice_pacchetto());
+        newPacchetto.setEmailUserCreatore(userManager.getUserDTO().getEmail());
+
+        userContentManager.salvaPacchettoPredefinito(newPacchetto, localitaPartenza);
+
+        return "user/salvaPacchettoSuccess?faces-redirect=true";
     }
 }

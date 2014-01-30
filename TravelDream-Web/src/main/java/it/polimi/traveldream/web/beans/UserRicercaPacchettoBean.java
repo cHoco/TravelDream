@@ -136,7 +136,6 @@ public class UserRicercaPacchettoBean {
 
     public void cercaPacchetti(){
         pacchettiTrovati = userContentManager.searchPacchetti(partenzaCercata, localitaCercata, dataPartenza, dataRitorno);
-        System.out.println("Nome : " + pacchettiTrovati.get(0).getNome());
         cercato = true;
     }
 }

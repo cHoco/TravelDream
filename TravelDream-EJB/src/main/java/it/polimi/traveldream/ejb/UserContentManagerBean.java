@@ -30,9 +30,18 @@ public class UserContentManagerBean implements UserContentManager {
     @Inject
     UserManager userManagerBean;
 
+    @Inject
+    ContentRepository contentRepository;
+
+    @Inject
+    DTOsConverter dtOsConverter;
+
+    @Inject
+    UserRepository userRepository;
+
     @Override
     public void prenotaPacchetto(PacchettoSalvatoDTO pacchettoSalvatoDTO) {
-        PacchettoSalvato pacchettoSalvato = findPacchettoSalvatoByCodice(pacchettoSalvatoDTO.getCodice_pacchettoSalvato());
+        PacchettoSalvato pacchettoSalvato = contentRepository.findPacchettoSalvatoByCodice(pacchettoSalvatoDTO.getCodice_pacchettoSalvato());
         pacchettoSalvato.setPrenotato(true);
         em.persist(pacchettoSalvato);
     }
@@ -40,29 +49,56 @@ public class UserContentManagerBean implements UserContentManager {
     @Override
     public void salvaPacchetto(PacchettoSalvatoDTO pacchettoSalvatoDTO) {
         PacchettoSalvato pacchettoSalvato = new PacchettoSalvato(pacchettoSalvatoDTO);
+
         String codice_pacchetto = null;
         do {
             codice_pacchetto = RandomStringUtils.randomAlphanumeric(5);
         } while(codicePacchettoSalvatoAlreadyUsed(codice_pacchetto));
-        pacchettoSalvato.setCodice_pacchettoSalvato(codice_pacchetto);
-        pacchettoSalvato.setUserCreatore(em.find(User.class, userManagerBean.getPrincipalEmail()));
-        pacchettoSalvato.setPacchettoOriginale(findPacchettoByCodice(pacchettoSalvatoDTO.getCodicePacchettoOriginale()));
 
-        //TO DO AGGIUNGERE TRASPORTI ESCURSIONI HOTELS
+        pacchettoSalvato.setCodice_pacchettoSalvato(codice_pacchetto);
+        pacchettoSalvato.setUserCreatore(userRepository.findUserByEmail(pacchettoSalvatoDTO.getEmailUserCreatore()));
+        pacchettoSalvato.setPacchettoOriginale(contentRepository.findPacchettoByCodice(pacchettoSalvatoDTO.getCodicePacchettoOriginale()));
+
         for(String codice_trasporto : pacchettoSalvatoDTO.getCodiciTrasporti()) {
-           // pacchettoSalvato.getTrasportiScelti().add(contentManagerBean.findTrasportoByCodice(codice_trasporto));
+            pacchettoSalvato.getTrasportiScelti().add(contentRepository.findTrasportoByCodice(codice_trasporto));
         }
 
         for(String codice_hotel : pacchettoSalvatoDTO.getCodiciHotels()) {
-          //  pacchettoSalvato.getHotelsScelti().add(contentManagerBean.findHotelByCodice(codice_hotel));
+            pacchettoSalvato.getHotelsScelti().add(contentRepository.findHotelByCodice(codice_hotel));
         }
 
         for(String codice_escursione : pacchettoSalvatoDTO.getCodiciEscursioni()) {
-           // pacchettoSalvato.getEscursioni().add(contentManagerBean.findEscursioneByCodice(codice_escursione));
+            pacchettoSalvato.getEscursioni().add(contentRepository.findEscursioneByCodice(codice_escursione));
         }
 
-
         em.persist(pacchettoSalvato);
+    }
+
+    @Override
+    public void salvaPacchettoPredefinito(PacchettoSalvatoDTO pacchettoSalvatoDTO, String localitaPartenza) {
+        Pacchetto originale = contentRepository.findPacchettoByCodice(pacchettoSalvatoDTO.getCodicePacchettoOriginale());
+        List<TrasportiPacchetto> trasportiPacchetto = originale.getMezziTrasporto();
+        for(TrasportiPacchetto trasporto : trasportiPacchetto) {
+            if(trasporto.isPredefinito() && trasporto.getTrasporto().getLocalitaPartenza().equals(localitaPartenza)) {
+                pacchettoSalvatoDTO.addTrasporto(trasporto.getTrasporto().getCodice_trasporto());
+            }
+        }
+
+        List<HotelsPacchetto> hotelsPacchetto = originale.getHotels();
+        for(HotelsPacchetto hotel : hotelsPacchetto) {
+            if(hotel.isPredefinito()) {
+                pacchettoSalvatoDTO.addHotel(hotel.getHotel().getCodice_hotel());
+            }
+        }
+
+        List<EscursioniPacchetto> escursioniPacchetto = originale.getEscursioni();
+        for(EscursioniPacchetto escursione : escursioniPacchetto) {
+            if(escursione.isPredefinito()) {
+                pacchettoSalvatoDTO.addEscursione(escursione.getEscursione().getCodice_escursione());
+            }
+        }
+
+        salvaPacchetto(pacchettoSalvatoDTO);
     }
 
     private boolean codicePacchettoSalvatoAlreadyUsed(String codice_pacchetto) {
@@ -70,7 +106,7 @@ public class UserContentManagerBean implements UserContentManager {
         PacchettoSalvato pacchettoSalvato = null;
 
         try {
-            pacchettoSalvato = findPacchettoSalvatoByCodice(codice_pacchetto);
+            pacchettoSalvato = contentRepository.findPacchettoSalvatoByCodice(codice_pacchetto);
         }
         catch (NoResultException e) {
 
@@ -86,24 +122,24 @@ public class UserContentManagerBean implements UserContentManager {
 
     @Override
     public void aggiungiPartecipazione(PacchettoSalvatoDTO pacchettoSalvatoDTO) {
-        PacchettoSalvato pacchettoSalvato = findPacchettoSalvatoByCodice(pacchettoSalvatoDTO.getCodice_pacchettoSalvato());
-        pacchettoSalvato.getUsersPartecipanti().add(em.find(User.class, userManagerBean.getPrincipalEmail()));
+        PacchettoSalvato pacchettoSalvato = contentRepository.findPacchettoSalvatoByCodice(pacchettoSalvatoDTO.getCodice_pacchettoSalvato());
+        pacchettoSalvato.getUsersPartecipanti().add(userRepository.findUserByEmail(userManagerBean.getUserDTO().getEmail()));
         em.persist(pacchettoSalvato);
     }
 
     @Override
     public PacchettoDTO getPacchetto(String codice_pacchetto) {
-        return convertPacchettoToDTO(findPacchettoByCodice(codice_pacchetto));
+        return dtOsConverter.convertPacchettoToDTO(contentRepository.findPacchettoByCodice(codice_pacchetto));
     }
 
     @Override
     public PacchettoSalvatoDTO getPacchettoSalvato(String codice_pacchettoSalvato) {
-        return convertPacchettoSalvatoToDTO(findPacchettoSalvatoByCodice(codice_pacchettoSalvato));
+        return dtOsConverter.convertPacchettoSalvatoToDTO(contentRepository.findPacchettoSalvatoByCodice(codice_pacchettoSalvato));
     }
 
     @Override
     public List<PacchettoSalvatoDTO> getPacchettiPersonali() {
-        long idUserCreatore = userManagerBean.getPrincipalEmail();
+        long idUserCreatore = userRepository.findUserByEmail(userManagerBean.getUserDTO().getEmail()).getId_user();
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<PacchettoSalvato> c = cb.createQuery(PacchettoSalvato.class);
         Root<PacchettoSalvato> member = c.from(PacchettoSalvato.class);
@@ -111,14 +147,14 @@ public class UserContentManagerBean implements UserContentManager {
         List<PacchettoSalvato> pacchettiPersonali = em.createQuery(c).getResultList();
         List<PacchettoSalvatoDTO> pacchettiPersonaliDTO = new ArrayList<>();
         for(PacchettoSalvato pacchettoSalvato : pacchettiPersonali) {
-            pacchettiPersonaliDTO.add(convertPacchettoSalvatoToDTO(pacchettoSalvato));
+            pacchettiPersonaliDTO.add(dtOsConverter.convertPacchettoSalvatoToDTO(pacchettoSalvato));
         }
         return pacchettiPersonaliDTO;
     }
 
     @Override
     public List<PacchettoSalvatoDTO> getPacchettiPartecipati() {
-        long idUser = userManagerBean.getPrincipalEmail();
+        long idUser = userRepository.findUserByEmail(userManagerBean.getUserDTO().getEmail()).getId_user();
         /*CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<PacchettoSalvato> c = cb.createQuery(PacchettoSalvato.class);
         Root<PacchettoSalvato> member = c.from(PacchettoSalvato.class);
@@ -134,7 +170,7 @@ public class UserContentManagerBean implements UserContentManager {
         List<PacchettoSalvato> pacchettiPartecipati = query.getResultList();
         List<PacchettoSalvatoDTO> pacchettiPartecipatiDTO = new ArrayList<>();
         for(PacchettoSalvato pacchettoSalvato : pacchettiPartecipati) {
-            pacchettiPartecipatiDTO.add(convertPacchettoSalvatoToDTO(pacchettoSalvato));
+            pacchettiPartecipatiDTO.add(dtOsConverter.convertPacchettoSalvatoToDTO(pacchettoSalvato));
         }
 
         return pacchettiPartecipatiDTO;
@@ -153,81 +189,8 @@ public class UserContentManagerBean implements UserContentManager {
         List<Pacchetto> pacchettiCercati = query.getResultList();
         List<PacchettoDTO> pacchettiCercatiDTO = new ArrayList<>();
         for(Pacchetto pacchetto : pacchettiCercati) {
-            pacchettiCercatiDTO.add(convertPacchettoToDTO(pacchetto));
+            pacchettiCercatiDTO.add(dtOsConverter.convertPacchettoToDTO(pacchetto));
         }
         return pacchettiCercatiDTO;
     }
-
-    private PacchettoDTO convertPacchettoToDTO(Pacchetto pacchetto) {
-        PacchettoDTO pacchettoDTO = new PacchettoDTO();
-        pacchettoDTO.setNome(pacchetto.getNome());
-        pacchettoDTO.setDescrizione(pacchetto.getDescrizione());
-        pacchettoDTO.setLocalita(pacchetto.getLocalita());
-        pacchettoDTO.setCodice_pacchetto(pacchetto.getCodice_pacchetto());
-        pacchettoDTO.setInizioValidita(pacchetto.getInizioValidita());
-        pacchettoDTO.setFineValidita(pacchetto.getFineValidita());
-        for(TrasportiPacchetto trasportiPacchetto : pacchetto.getMezziTrasporto()) {
-            if(trasportiPacchetto.isPredefinito()) {
-                pacchettoDTO.addTrasporto(trasportiPacchetto.getTrasporto().getCodice_trasporto(), true);
-            }
-            else if(!trasportiPacchetto.isPredefinito()) {
-                pacchettoDTO.addTrasporto(trasportiPacchetto.getTrasporto().getCodice_trasporto(), false);
-            }
-        }
-        for(HotelsPacchetto hotelsPacchetto : pacchetto.getHotels()) {
-            if(hotelsPacchetto.isPredefinito()) {
-                pacchettoDTO.addHotel(hotelsPacchetto.getHotel().getCodice_hotel(), true);
-            }
-            else if(!hotelsPacchetto.isPredefinito()) {
-                pacchettoDTO.addHotel(hotelsPacchetto.getHotel().getCodice_hotel(), false);
-            }
-        }
-        for(EscursioniPacchetto escursioniPacchetto : pacchetto.getEscursioni()) {
-            if(escursioniPacchetto.isPredefinito()) {
-                pacchettoDTO.addEscursione(escursioniPacchetto.getEscursione().getCodice_escursione(), true);
-            }
-            else if(!escursioniPacchetto.isPredefinito()) {
-                pacchettoDTO.addEscursione(escursioniPacchetto.getEscursione().getCodice_escursione(), false);
-            }
-        }
-
-        return pacchettoDTO;
-    }
-
-    private PacchettoSalvatoDTO convertPacchettoSalvatoToDTO(PacchettoSalvato pacchettoSalvato) {
-        PacchettoSalvatoDTO pacchettoSalvatoDTO = new PacchettoSalvatoDTO();
-        pacchettoSalvatoDTO.setCodicePacchettoOriginale(pacchettoSalvato.getPacchettoOriginale().getCodice_pacchetto());
-        pacchettoSalvatoDTO.setIdUserCreatore(pacchettoSalvato.getUserCreatore().getId_user());
-        pacchettoSalvatoDTO.setDataPartenza(pacchettoSalvato.getDataPartenza());
-        pacchettoSalvatoDTO.setDataRitorno(pacchettoSalvato.getDataRitorno());
-        pacchettoSalvatoDTO.setPrenotato(pacchettoSalvato.isPrenotato());
-        for(Trasporto trasporto : pacchettoSalvato.getTrasportiScelti()) {
-            pacchettoSalvatoDTO.addTrasporto(trasporto.getCodice_trasporto());
-        }
-        for(Hotel hotel : pacchettoSalvato.getHotelsScelti()) {
-            pacchettoSalvatoDTO.addHotel(hotel.getCodice_hotel());
-        }
-        for(Escursione escursione : pacchettoSalvato.getEscursioni()) {
-            pacchettoSalvatoDTO.addEscursione(escursione.getCodice_escursione());
-        }
-
-        return pacchettoSalvatoDTO;
-    }
-
-    private Pacchetto findPacchettoByCodice(String codice_pacchetto) {
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Pacchetto> c = cb.createQuery(Pacchetto.class);
-        Root<Pacchetto> member = c.from(Pacchetto.class);
-        c.select(member).where(cb.equal(member.get("codice_pacchetto"), codice_pacchetto));
-        return em.createQuery(c).getSingleResult();
-    }
-
-    private PacchettoSalvato findPacchettoSalvatoByCodice(String codice_pacchettoSalvato) {
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<PacchettoSalvato> c = cb.createQuery(PacchettoSalvato.class);
-        Root<PacchettoSalvato> member = c.from(PacchettoSalvato.class);
-        c.select(member).where(cb.equal(member.get("codice_pacchettoSalvato"), codice_pacchettoSalvato));
-        return em.createQuery(c).getSingleResult();
-    }
-
 }

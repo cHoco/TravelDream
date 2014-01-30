@@ -51,14 +51,11 @@ public class UserContentBean {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        System.out.println(pacchettoDTOs);
-
 
         try {
             pacchettoDTOs = userContentManager.searchPacchetti("a", "sdfghj", sdf.parse("21/01/2014"), sdf.parse("31/01/2014"));
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        System.out.println(pacchettoDTOs);
     }
 }

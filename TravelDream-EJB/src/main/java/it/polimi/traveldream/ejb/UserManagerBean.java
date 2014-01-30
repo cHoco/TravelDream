@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJBContext;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
@@ -29,6 +30,12 @@ public class UserManagerBean implements UserManager {
 
     @Resource
     private EJBContext context;
+
+    @Inject
+    private UserRepository userRepository;
+
+    @Inject
+    private DTOsConverter dtOsConverter;
 
     @Override
     public void saveUser(UserDTO user) {
@@ -72,7 +79,7 @@ public class UserManagerBean implements UserManager {
         User user = null;
 
         try {
-            user = findByEmail(email);
+            user = userRepository.findUserByEmail(email);
         }
         catch (NoResultException e) {
 
@@ -81,27 +88,10 @@ public class UserManagerBean implements UserManager {
         return user!=null;
     }
 
-
-    /**
-     * Trova lo user specifico nel database usando l'e-mail come chiave
-     */
-     private User findByEmail(String email) {
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<User> c = cb.createQuery(User.class);
-        Root<User> member = c.from(User.class);
-        c.select(member).where(cb.equal(member.get("email"), email));
-        return em.createQuery(c).getSingleResult();
-    }
-
     @Override
     public UserDTO getUserDTO() {
-        UserDTO userDTO = convertToDTO(getPrincipalUser());
+        UserDTO userDTO = dtOsConverter.convertToDTO(getPrincipalUser());
         return userDTO;
-    }
-
-
-    public User findByID(long id) {
-        return em.find(User.class, id);
     }
 
     /**
@@ -113,7 +103,7 @@ public class UserManagerBean implements UserManager {
     }
 
     public void remove(long id) {
-        User user = findByID(id);
+        User user = userRepository.findUserByID(id);
         em.remove(user);
     }
 
@@ -124,23 +114,16 @@ public class UserManagerBean implements UserManager {
     /**
      * Ritorna lo user che sta conversando con l' EJB
      * */
-    public User getPrincipalUser() {
-        return findByID(getPrincipalEmail());
+    private User getPrincipalUser() {
+        return  userRepository.findUserByEmail(getPrincipalId());
+        //return userRepository.findUserByID(getPrincipalId());
     }
 
-    public long getPrincipalEmail() {
-        return Long.parseLong(context.getCallerPrincipal().getName());
+
+    private String getPrincipalId() {
+        return context.getCallerPrincipal().getName();
+        //return Long.parseLong(context.getCallerPrincipal().getName());
     }
 
-    /**
-     * Realizza il Data Transfer Object estraendo le informazioni dal database
-     * */
-    private UserDTO convertToDTO(User user) {
-        UserDTO userDTO = new UserDTO();
-        userDTO.setEmail(user.getEmail());
-        userDTO.setFirstName(user.getFirstName());
-        userDTO.setLastName(user.getLastName());
-        return userDTO;
-    }
 
 }

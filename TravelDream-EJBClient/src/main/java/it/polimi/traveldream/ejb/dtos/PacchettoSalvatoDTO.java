@@ -11,7 +11,7 @@ import java.util.List;
 public class PacchettoSalvatoDTO {
 
     @NotNull
-    private long idUserCreatore;
+    private String emailUserCreatore;
 
     @NotNull
     private String codicePacchettoOriginale;
@@ -47,12 +47,12 @@ public class PacchettoSalvatoDTO {
         prenotato = false;
     }
 
-    public long getIdUserCreatore() {
-        return idUserCreatore;
+    public String getEmailUserCreatore() {
+        return emailUserCreatore;
     }
 
-    public void setIdUserCreatore(long userCreatore) {
-        this.idUserCreatore = userCreatore;
+    public void setEmailUserCreatore(String userCreatore) {
+        this.emailUserCreatore = userCreatore;
     }
 
     public String getCodicePacchettoOriginale() {
@@ -133,5 +133,13 @@ public class PacchettoSalvatoDTO {
 
     public void addUserPartecipante(UserDTO userDTO) {
         usersPartecipanti.add(userDTO);
+    }
+
+    @Override
+    public String toString() {
+        return "PacchettoSalvatoDTO [codice=" + codice_pacchettoSalvato + ", codiceOriginale=" + codicePacchettoOriginale
+                + ", emailUserCreatore=" + emailUserCreatore + ", dataPartenza=" + dataPartenza
+                + ", listaTrasporti=" + codiciTrasporti + ", listaHotels=" + codiciHotels + ", listaEscursioni=" + codiciEscursioni
+                + ", dataRitorno=" + dataRitorno + ", prenotato=" + prenotato + "]";
     }
 }

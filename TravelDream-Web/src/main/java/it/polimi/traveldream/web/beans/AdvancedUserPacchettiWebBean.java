@@ -251,19 +251,6 @@ public class AdvancedUserPacchettiWebBean {
             pacchettoDTO.addEscursione(escursione.getCodice_escursione(), false);
         }
 
-        System.out.println("Nome : " + pacchettoDTO.getNome());
-        System.out.println("Codice : " + pacchettoDTO.getCodice_pacchetto());
-        System.out.println("Descrizione : " + pacchettoDTO.getDescrizione());
-        System.out.println("Localita : " + pacchettoDTO.getLocalita());
-        System.out.println("Inizio : " + pacchettoDTO.getInizioValidita());
-        System.out.println("Fine : " + pacchettoDTO.getFineValidita());
-        System.out.println("Lista trasporti : " + pacchettoDTO.getTrasporti());
-        System.out.println("Lista hotels : " + pacchettoDTO.getHotels());
-        System.out.println("Lista escursioni : " + pacchettoDTO.getEscursioni());
-
-
-
-
         contentManager.aggiungiPacchetto(pacchettoDTO);
 
         return "aggiungiPacchettoSuccess?faces-redirect=true";

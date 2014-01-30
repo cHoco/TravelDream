@@ -23,6 +23,4 @@ public interface UserManager {
 
     public UserDTO getUserDTO();
 
-    public long getPrincipalEmail();
-
 }

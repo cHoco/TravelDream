@@ -35,11 +35,11 @@ public class PacchettoSalvato {
     private Pacchetto pacchettoOriginale;
 
     @NotNull
-    @Temporal(TemporalType.TIME)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date dataPartenza;
 
     @NotNull
-    @Temporal(TemporalType.TIME)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date dataRitorno;
 
     @NotNull

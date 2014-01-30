@@ -23,7 +23,7 @@ public class UserRepository {
     /**
      * Trova lo user specifico nel database usando l'e-mail come chiave
      */
-    private User findUserByEmail(String email) {
+    public User findUserByEmail(String email) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<User> c = cb.createQuery(User.class);
         Root<User> member = c.from(User.class);
