@@ -6,6 +6,10 @@
                 xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough"
                 template="/WEB-INF/templates/default.xhtml">
 
+    <f:metadata>
+        <f:event type="preRenderView" listener="#{adminWebBean.showAuList}"/>
+    </f:metadata>
+
     <ui:define name="htmlhead">
         <title>Gestione AUs - TravelDream</title>
     </ui:define>
@@ -13,6 +17,31 @@
     <ui:define name="content">
 
         <h:link value="Aggiunti Dipendente" outcome="insertAu"/>
+
+        <h:dataTable value="#{adminWebBean.showAuList}" var="au">
+
+            <h:column>
+                <f:facet name="header">
+                    E-mail
+                </f:facet>
+                #{au.email}
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">
+                    Nome
+                </f:facet>
+                #{au.nome}
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">
+                    Cognome
+                </f:facet>
+                #{au.cognome}
+            </h:column>
+
+        </h:dataTable>
 
     </ui:define>
 </ui:composition>

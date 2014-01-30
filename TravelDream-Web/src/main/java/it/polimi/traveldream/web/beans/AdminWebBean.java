@@ -9,6 +9,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import java.util.List;
 
 /**
  * Created by Asus on 21/01/14.
@@ -58,5 +59,12 @@ public class AdminWebBean {
         }
 
         return "insertSuccess?faces-redirect=true";
+    }
+
+    public List<UserDTO> showAuList(){
+
+        List<UserDTO> auList = userMgr.getAdvanceUsers();
+
+        return auList;
     }
 }

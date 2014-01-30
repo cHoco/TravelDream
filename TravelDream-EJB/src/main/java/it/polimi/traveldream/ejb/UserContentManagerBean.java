@@ -1,18 +1,15 @@
 package it.polimi.traveldream.ejb;
 
-import it.polimi.traveldream.ejb.dtos.HotelDTO;
 import it.polimi.traveldream.ejb.dtos.PacchettoDTO;
 import it.polimi.traveldream.ejb.dtos.PacchettoSalvatoDTO;
 import it.polimi.traveldream.ejb.entities.*;
 import org.apache.commons.lang3.RandomStringUtils;
 
-import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.*;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.Date;

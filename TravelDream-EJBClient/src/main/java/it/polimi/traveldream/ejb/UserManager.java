@@ -2,8 +2,8 @@ package it.polimi.traveldream.ejb;
 
 import it.polimi.traveldream.ejb.dtos.UserDTO;
 
-import javax.annotation.security.RolesAllowed;
 import javax.ejb.Local;
+import java.util.List;
 
 /**
  * Created by cHoco on 06/01/14.
@@ -22,5 +22,7 @@ public interface UserManager {
     public boolean emailAlreadyUsed(String email);
 
     public UserDTO getUserDTO();
+
+    public List<UserDTO> getAdvanceUsers();
 
 }
