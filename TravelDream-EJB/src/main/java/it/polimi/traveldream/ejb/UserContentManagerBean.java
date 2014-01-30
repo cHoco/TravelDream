@@ -4,6 +4,7 @@ import it.polimi.traveldream.ejb.dtos.HotelDTO;
 import it.polimi.traveldream.ejb.dtos.PacchettoDTO;
 import it.polimi.traveldream.ejb.dtos.PacchettoSalvatoDTO;
 import it.polimi.traveldream.ejb.entities.*;
+import org.apache.commons.lang3.RandomStringUtils;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -31,12 +32,51 @@ public class UserContentManagerBean implements UserContentManager {
 
     @Override
     public void prenotaPacchetto(PacchettoSalvatoDTO pacchettoSalvatoDTO) {
-
+        PacchettoSalvato pacchettoSalvato = findPacchettoSalvatoByCodice(pacchettoSalvatoDTO.getCodice_pacchettoSalvato());
+        pacchettoSalvato.setPrenotato(true);
+        em.persist(pacchettoSalvato);
     }
 
     @Override
-    public void salvaPacchetto() {
+    public void salvaPacchetto(PacchettoSalvatoDTO pacchettoSalvatoDTO) {
+        PacchettoSalvato pacchettoSalvato = new PacchettoSalvato(pacchettoSalvatoDTO);
+        String codice_pacchetto = null;
+        do {
+            codice_pacchetto = RandomStringUtils.randomAlphanumeric(5);
+        } while(codicePacchettoSalvatoAlreadyUsed(codice_pacchetto));
+        pacchettoSalvato.setCodice_pacchettoSalvato(codice_pacchetto);
+        pacchettoSalvato.setUserCreatore(em.find(User.class, userManagerBean.getPrincipalEmail()));
+        pacchettoSalvato.setPacchettoOriginale(findPacchettoByCodice(pacchettoSalvatoDTO.getCodicePacchettoOriginale()));
 
+        //TO DO AGGIUNGERE TRASPORTI ESCURSIONI HOTELS
+        for(String codice_trasporto : pacchettoSalvatoDTO.getCodiciTrasporti()) {
+           // pacchettoSalvato.getTrasportiScelti().add(contentManagerBean.findTrasportoByCodice(codice_trasporto));
+        }
+
+        for(String codice_hotel : pacchettoSalvatoDTO.getCodiciHotels()) {
+          //  pacchettoSalvato.getHotelsScelti().add(contentManagerBean.findHotelByCodice(codice_hotel));
+        }
+
+        for(String codice_escursione : pacchettoSalvatoDTO.getCodiciEscursioni()) {
+           // pacchettoSalvato.getEscursioni().add(contentManagerBean.findEscursioneByCodice(codice_escursione));
+        }
+
+
+        em.persist(pacchettoSalvato);
+    }
+
+    private boolean codicePacchettoSalvatoAlreadyUsed(String codice_pacchetto) {
+
+        PacchettoSalvato pacchettoSalvato = null;
+
+        try {
+            pacchettoSalvato = findPacchettoSalvatoByCodice(codice_pacchetto);
+        }
+        catch (NoResultException e) {
+
+        }
+
+        return pacchettoSalvato!=null;
     }
 
     @Override
@@ -52,13 +92,13 @@ public class UserContentManagerBean implements UserContentManager {
     }
 
     @Override
-    public PacchettoDTO getPacchetto(PacchettoDTO pacchettoDTO) {
-        return null;
+    public PacchettoDTO getPacchetto(String codice_pacchetto) {
+        return convertPacchettoToDTO(findPacchettoByCodice(codice_pacchetto));
     }
 
     @Override
-    public PacchettoSalvatoDTO getPacchettoSalvato() {
-        return null;
+    public PacchettoSalvatoDTO getPacchettoSalvato(String codice_pacchettoSalvato) {
+        return convertPacchettoSalvatoToDTO(findPacchettoSalvatoByCodice(codice_pacchettoSalvato));
     }
 
     @Override

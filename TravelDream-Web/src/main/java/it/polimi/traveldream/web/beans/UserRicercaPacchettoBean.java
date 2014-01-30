@@ -6,6 +6,7 @@ import it.polimi.traveldream.ejb.dtos.PacchettoDTO;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -31,6 +32,10 @@ public class UserRicercaPacchettoBean {
     private Date oraPartenza;
 
     private Date oraRitorno;
+
+    private String partenza;
+
+    private String ritorno;
 
     private List<PacchettoDTO> pacchettiTrovati;
 
@@ -103,6 +108,30 @@ public class UserRicercaPacchettoBean {
 
     public boolean isCercato() {
         return cercato;
+    }
+
+    public String getPartenza() {
+        String tempDataPartenza = new SimpleDateFormat("yyyyMMdd").format(dataPartenza);
+        String tempOraPartenza = new SimpleDateFormat("HHmmzzz").format(oraPartenza);
+
+
+        return tempDataPartenza+tempOraPartenza;
+    }
+
+    public void setPartenza(String partenza) {
+        this.partenza = partenza;
+    }
+
+    public String getRitorno() {
+        String tempDataRitorno = new SimpleDateFormat("yyyyMMdd").format(dataRitorno);
+        String tempOraRitorno = new SimpleDateFormat("HHmmzzz").format(oraRitorno);
+
+
+        return tempDataRitorno+tempOraRitorno;
+    }
+
+    public void setRitorno(String ritorno) {
+        this.ritorno = ritorno;
     }
 
     public void cercaPacchetti(){

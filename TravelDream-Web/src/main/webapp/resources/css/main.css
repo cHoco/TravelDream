@@ -683,3 +683,60 @@ form {
     background: rgb(95,197,174);
     padding: 5px 0;
 }
+
+.tasti-mostra-pacchetto {
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.tasti-mostra-pacchetto > p {
+    font-size: 1.2em;
+    color: #747c81;
+    padding: 10px 0;
+}
+
+
+
+.tasti-mostra-pacchetto-sopra {
+    width: 100%;
+    padding: 20px 40px;
+    background: #D35F65;
+
+    box-sizing: border-box;
+    border-radius: 2px;
+}
+
+.tasti-mostra-pacchetto-sotto {
+    width: 48%;
+    padding: 20px 40px;
+    background: #D35F65;
+    box-sizing: border-box;
+    border-radius: 2px;
+}
+
+.left-mostra {
+    margin-right: 5px;
+    float: left
+}
+
+.right-mostra {
+    margin-left: 5px;
+    float: right;
+}
+
+.right-mostra-prenotato {
+    margin-left: 5px;
+    float: right;
+    background: rgb(95,197,174);
+
+}
+
+.mostra-pacchetto-main-button {
+
+    text-transform: uppercase;
+    text-decoration: none;
+    font-size: 1.4em;
+    color: #fff;
+    margin: 0 auto;
+    box-sizing: border-box;
+}

@@ -36,7 +36,7 @@
                             <div class="data-left">
                                 <div>
                                     <h:inputText styleClass="js__datepicker" id="data-partenza" jsf:placeholder="Data Partenza" value="#{userRicercaPacchettoBean.dataPartenza}">
-                                        <f:convertDateTime pattern="dd/mm/yyyy" />
+                                        <f:convertDateTime pattern="dd/MM/yyyy" />
                                     </h:inputText>
                                     <h:message for="data-partenza" />
                                 </div>
@@ -44,7 +44,7 @@
                             <div class="time-right">
                                 <div>
                                     <h:inputText styleClass="js__timepicker" id="ora-partenza" jsf:placeholder="Orario"  value="#{userRicercaPacchettoBean.oraPartenza}">
-                                        <f:convertDateTime pattern="h:mm a" />
+                                        <f:convertDateTime pattern="HH:mm" timeZone="CET"/>
                                     </h:inputText>
                                     <h:message for="ora-partenza" />
                                 </div>
@@ -54,7 +54,7 @@
                             <div class="data-left">
                                 <div>
                                     <h:inputText styleClass="js__datepicker" id="data-ritorno" jsf:placeholder="Data Ritorno" value="#{userRicercaPacchettoBean.dataRitorno}">
-                                        <f:convertDateTime pattern="dd/mm/yyyy" />
+                                        <f:convertDateTime pattern="dd/MM/yyyy"/>
                                     </h:inputText>
                                     <h:message for="data-ritorno" />
                                 </div>
@@ -62,7 +62,7 @@
                             <div class="time-right">
                                 <div>
                                     <h:inputText styleClass="js__timepicker" id="ora-ritorno" jsf:placeholder="Orario"  value="#{userRicercaPacchettoBean.oraRitorno}">
-                                        <f:convertDateTime pattern="h:mm a" />
+                                        <f:convertDateTime pattern="HH:mm" timeZone="CET"/>
                                     </h:inputText>
                                     <h:message for="ora-ritorno" />
                                 </div>
@@ -85,7 +85,7 @@
                 <div class="container pacchetti-trovati">
                     <h2>Pacchetti Trovati</h2>
                     <ui:repeat value="#{userRicercaPacchettoBean.pacchettiTrovati}" var="pacchetto">
-                        <a href="#{request.contextPath}/mostraPacchetto.xhtml?codicePacchetto=#{pacchetto.codice_pacchetto}">
+                        <a href="#{request.contextPath}/mostraPacchetto.xhtml?codicePacchetto=#{pacchetto.codice_pacchetto}&amp;dataPartenza=#{userRicercaPacchettoBean.partenza}&amp;dataRitorno=#{userRicercaPacchettoBean.ritorno}&amp;luogoPartenza=#{userRicercaPacchettoBean.partenzaCercata}">
                             <div class="pacchetto-trovato">
                                 <h2>#{pacchetto.nome}</h2>
                                 <p>#{pacchetto.descrizione}</p>

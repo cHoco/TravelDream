@@ -9,9 +9,16 @@
                 xmlns:of="http://omnifaces.org/functions">
 
     <f:metadata>
-        <f:viewParam name="codicePacchetto" value="#{advancedUserServiziWebBean.tipoServizio}" />
-        <f:viewParam name="codicePacchettoSalvato" value="#{advancedUserServiziWebBean.codiceServizioInModifica}" />
-        <f:event type="preRenderView" listener="#{advancedUserServiziWebBean.modificaServizio()}" />
+        <f:viewParam name="codicePacchetto" value="#{mostraPacchettoBean.codicePacchetto}" />
+        <f:viewParam name="dataPartenza" value="#{mostraPacchettoBean.dataPartenza}">
+            <f:convertDateTime pattern="yyyyMMddHHmmzzz"/>
+        </f:viewParam>
+        <f:viewParam name="dataRitorno" value="#{mostraPacchettoBean.dataRitorno}">
+            <f:convertDateTime pattern="yyyyMMddHHmmzzz"/>
+        </f:viewParam>
+        <f:viewParam name="localitaPartenza" value="#{mostraPacchettoBean.localitaPartenza}" />
+        <f:viewParam name="codicePacchettoSalvato" value="#{mostraPacchettoBean.codicePacchettoSalvato}" />
+        <f:event type="preRenderView" listener="#{mostraPacchettoBean.loadPacchetto()}" />
     </f:metadata>
 
     <ui:define name="htmlhead">
@@ -19,6 +26,86 @@
     </ui:define>
 
     <ui:define name="content">
+
+        <h:panelGroup rendered="#{(!userSessionBean.loggedIn) and mostraPacchettoBean.salvato}">
+            <header class="container">
+                <div class="bg"></div>
+                <div class="home-text">
+                    <h1>#{mostraPacchettoBean.pacchettoSalvatoOriginaleDTO.nome}</h1>
+                    <p>#{mostraPacchettoBean.pacchettoSalvatoOriginaleDTO.descrizione}</p>
+                </div>
+
+                <div class="home-register clear-fix">
+                    <div class="tasti-mostra-pacchetto">
+                        <h:link styleClass="mostra-pacchetto-main-button" outcome="user/personalizzaPacchetto" >
+                            <div class="tasti-mostra-pacchetto-sopra">Personalizza</div>
+                        </h:link>
+                        <p>- oppure -</p>
+                        <h:link styleClass="mostra-pacchetto-main-button" outcome="user/personalizzaPacchetto" >
+                            <div class="tasti-mostra-pacchetto-sopra">Salva</div>
+                        </h:link>
+                    </div>
+                </div>
+            </header>
+        </h:panelGroup>
+
+        <h:panelGroup rendered="#{userSessionBean.loggedIn and mostraPacchettoBean.cercato}">
+            <header class="container">
+                <div class="bg"></div>
+                <div class="home-text">
+                    <h1>#{mostraPacchettoBean.pacchettoDTO.nome}</h1>
+                    <p>#{mostraPacchettoBean.pacchettoDTO.descrizione}</p>
+                </div>
+
+                <div class="home-register clear-fix">
+                    <div class="tasti-mostra-pacchetto">
+                        <h:link styleClass="mostra-pacchetto-main-button" outcome="user/personalizzaPacchetto" >
+                            <div class="tasti-mostra-pacchetto-sopra">Personalizza</div>
+                        </h:link>
+                        <p>- oppure -</p>
+                        <h:form>
+                            <h:commandLink styleClass="mostra-pacchetto-main-button" action="#{mostraPacchettoBean.salvaPacchetto}" >
+                                <div class="tasti-mostra-pacchetto-sopra">Salva</div>
+                            </h:commandLink>
+                        </h:form>
+                    </div>
+                </div>
+            </header>
+        </h:panelGroup>
+
+        <h:panelGroup rendered="#{userSessionBean.loggedIn and mostraPacchettoBean.salvato}">
+            <header class="container">
+                <div class="bg"></div>
+                <div class="home-text">
+                    <h1>#{mostraPacchettoBean.pacchettoSalvatoOriginaleDTO.nome}</h1>
+                    <p>#{mostraPacchettoBean.pacchettoSalvatoOriginaleDTO.descrizione}</p>
+                </div>
+
+                <div class="home-register clear-fix">
+                    <div class="tasti-mostra-pacchetto">
+                        <h:link styleClass="mostra-pacchetto-main-button" outcome="user/personalizzaPacchetto" >
+                            <div class="tasti-mostra-pacchetto-sopra">Invita amici</div>
+                        </h:link>
+                        <p>- oppure -</p>
+                        <h:link styleClass="mostra-pacchetto-main-button" outcome="user/personalizzaPacchetto" >
+                            <div class="tasti-mostra-pacchetto-sotto left-mostra">Modifica</div>
+                        </h:link>
+                        <h:panelGroup rendered="#{mostraPacchettoBean.prenotato}">
+                            <h:link styleClass="mostra-pacchetto-main-button" outcome="user/index" >
+                                <div class="tasti-mostra-pacchetto-sotto right-mostra-prenotato">Prenotato</div>
+                            </h:link>
+                        </h:panelGroup>
+                        <h:panelGroup rendered="#{!mostraPacchettoBean.prenotato}">
+                            <h:link styleClass="mostra-pacchetto-main-button" outcome="user/personalizzaPacchetto" >
+                                <div class="tasti-mostra-pacchetto-sotto right-mostra">Prenota</div>
+                            </h:link>
+                        </h:panelGroup>
+                    </div>
+                </div>
+            </header>
+        </h:panelGroup>
+
+
 
 
     </ui:define>

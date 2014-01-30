@@ -33,13 +33,13 @@
                     </div>
                     <div class="input-div">
                         <h:inputText id="inizio-validita-pacchetto" styleClass="js__datepicker" jsf:placeholder="Data inizio validità" value="#{advancedUserPacchettiWebBean.pacchettoDTO.inizioValidita}">
-                            <f:convertDateTime pattern="dd/mm/yyyy" />
+                            <f:convertDateTime pattern="dd/MM/yyyy" />
                         </h:inputText>
                         <h:message for="inizio-validita-pacchetto" />
                     </div>
                     <div class="input-div">
                         <h:inputText id="fine-validita-pacchetto" styleClass="js__datepicker" jsf:placeholder="Data fine validità" value="#{advancedUserPacchettiWebBean.pacchettoDTO.fineValidita}">
-                            <f:convertDateTime pattern="dd/mm/yyyy" />
+                            <f:convertDateTime pattern="dd/MM/yyyy" />
                         </h:inputText>
                         <h:message for="fine-validita-pacchetto" />
                     </div>

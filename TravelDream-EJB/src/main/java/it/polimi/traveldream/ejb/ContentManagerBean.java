@@ -191,7 +191,7 @@ public class ContentManagerBean implements ContentManager{
     }
 
 
-    private Escursione findEscursioneByCodice(String codice_escursione) {
+    Escursione findEscursioneByCodice(String codice_escursione) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Escursione> c = cb.createQuery(Escursione.class);
         Root<Escursione> member = c.from(Escursione.class);
@@ -199,7 +199,7 @@ public class ContentManagerBean implements ContentManager{
         return em.createQuery(c).getSingleResult();
     }
 
-    private Trasporto findTrasportoByCodice(String codice_trasporto) {
+    Trasporto findTrasportoByCodice(String codice_trasporto) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Trasporto> c = cb.createQuery(Trasporto.class);
         Root<Trasporto> member = c.from(Trasporto.class);
@@ -207,7 +207,7 @@ public class ContentManagerBean implements ContentManager{
         return em.createQuery(c).getSingleResult();
     }
 
-    private Hotel findHotelByCodice(String codice_hotel) {
+    Hotel findHotelByCodice(String codice_hotel) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Hotel> c = cb.createQuery(Hotel.class);
         Root<Hotel> member = c.from(Hotel.class);

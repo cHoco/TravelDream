@@ -14,15 +14,15 @@ import java.util.List;
 public interface UserContentManager {
     public void prenotaPacchetto(PacchettoSalvatoDTO pacchettoSalvatoDTO);
 
-    public void salvaPacchetto();
+    public void salvaPacchetto(PacchettoSalvatoDTO pacchettoSalvatoDTO);
 
     public void personalizzaPacchetto();
 
     public void aggiungiPartecipazione(PacchettoSalvatoDTO pacchettoSalvatoDTO);
 
-    public PacchettoDTO getPacchetto(PacchettoDTO pacchettoDTO);
+    public PacchettoDTO getPacchetto(String codice_pacchetto);
 
-    public PacchettoSalvatoDTO getPacchettoSalvato();
+    public PacchettoSalvatoDTO getPacchettoSalvato(String codice_pacchettoSalvato);
 
     public List<PacchettoSalvatoDTO> getPacchettiPersonali();
 
