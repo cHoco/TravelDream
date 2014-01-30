@@ -27,7 +27,7 @@
 
     <ui:define name="content">
 
-        <h:panelGroup rendered="#{(!userSessionBean.loggedIn) and mostraPacchettoBean.salvato}">
+        <h:panelGroup rendered="#{(!userSessionBean.loggedIn) and mostraPacchettoBean.invitato}">
             <header class="container">
                 <div class="bg"></div>
                 <div class="home-text">
@@ -39,6 +39,28 @@
                     <div class="tasti-mostra-pacchetto">
                         <h:link styleClass="mostra-pacchetto-main-button" outcome="user/personalizzaPacchetto" >
                             <div class="tasti-mostra-pacchetto-sopra">Personalizza</div>
+                        </h:link>
+                        <p>- oppure -</p>
+                        <h:link styleClass="mostra-pacchetto-main-button" outcome="user/personalizzaPacchetto" >
+                            <div class="tasti-mostra-pacchetto-sopra">Salva</div>
+                        </h:link>
+                    </div>
+                </div>
+            </header>
+        </h:panelGroup>
+
+        <h:panelGroup rendered="#{userSessionBean.loggedIn and mostraPacchettoBean.invitato}">
+            <header class="container">
+                <div class="bg"></div>
+                <div class="home-text">
+                    <h1>#{mostraPacchettoBean.pacchettoSalvatoOriginaleDTO.nome}</h1>
+                    <p>#{mostraPacchettoBean.pacchettoSalvatoOriginaleDTO.descrizione}</p>
+                </div>
+
+                <div class="home-register clear-fix">
+                    <div class="tasti-mostra-pacchetto">
+                        <h:link styleClass="mostra-pacchetto-main-button" outcome="user/personalizzaPacchetto" >
+                            <div class="tasti-mostra-pacchetto-sopra">Partecipa</div>
                         </h:link>
                         <p>- oppure -</p>
                         <h:link styleClass="mostra-pacchetto-main-button" outcome="user/personalizzaPacchetto" >

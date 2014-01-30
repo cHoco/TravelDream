@@ -72,16 +72,16 @@
                 <h3>Inseriscilo qui sotto e scopri il viaggio che ti aspetta!</h3>
 
                 <div class="form-codice">
-                    <h:form>
+                    <form action="mostraPacchetto.xhtml" method="get">
                         <div class="clear-fix">
                             <div class="input-codice">
-                                <h:inputText jsf:placeholder="Codice"/>
+                                <input type="text" placeholder="Codice" name="codicePacchettoSalvato"/>
                             </div>
                             <div class="submit-codice">
-                                <h:commandButton class="submit-button-codice" value="Vai al viaggio" action="#{registerBean.register}"/>
+                                <input type="submit" class="submit-button-codice" value="Vai al viaggio"/>
                             </div>
                         </div>
-                    </h:form>
+                    </form>
                 </div>
 
 

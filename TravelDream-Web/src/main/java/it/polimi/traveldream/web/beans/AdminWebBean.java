@@ -9,6 +9,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,8 +26,11 @@ public class AdminWebBean {
 
     private UserDTO au;
 
+    private List<UserDTO> listaAU;
+
     public AdminWebBean() {
         au = new UserDTO();
+        listaAU = new ArrayList<>();
     }
 
     public UserDTO getAu() {
@@ -45,6 +49,14 @@ public class AdminWebBean {
         this.email = email;
     }
 
+    public List<UserDTO> getListaAU() {
+        return listaAU;
+    }
+
+    public void setListaAU(List<UserDTO> listaAU) {
+        this.listaAU = listaAU;
+    }
+
     public String aggiungiAu() {
         if(userMgr.emailAlreadyUsed(au.getEmail())){
             FacesMessage message = new FacesMessage("Questa mail è già stata utilizzata");
@@ -61,10 +73,9 @@ public class AdminWebBean {
         return "insertSuccess?faces-redirect=true";
     }
 
-    public List<UserDTO> showAuList(){
+    public void showAuList(){
 
-        List<UserDTO> auList = userMgr.getAdvanceUsers();
+        listaAU = userMgr.getAdvanceUsers();
 
-        return auList;
     }
 }

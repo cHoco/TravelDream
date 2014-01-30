@@ -42,8 +42,8 @@ public class UserRepository {
     }
 
     public List<User> getAllUsersByGroup(Group group){
-
-        TypedQuery<User> query = em.createQuery("select u from User u join u.groups g where g = :gruppo", User.class).setParameter("gruppo", group.toString());
+        System.out.println(group);
+        TypedQuery<User> query = em.createQuery("select u from User u join u.groups g where g = :gruppo", User.class).setParameter("gruppo", group);
         List<User> users = query.getResultList();
 
         return users;

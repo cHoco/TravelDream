@@ -10,6 +10,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -156,14 +157,25 @@ public class MostraPacchettoBean {
         this.localitaPartenza = localitaPartenza;
     }
 
+    public boolean isLoggedIn(){
+        if(FacesContext.getCurrentInstance().getExternalContext().getRemoteUser()!=null) {
+            return true;
+        }
+
+        return false;
+    }
+
     public void loadPacchetto() {
         if(codicePacchettoSalvato!=null) {
             pacchettoSalvatoDTO = userContentManager.getPacchettoSalvato(codicePacchettoSalvato);
             pacchettoSalvatoOriginaleDTO = userContentManager.getPacchetto(pacchettoSalvatoDTO.getCodicePacchettoOriginale());
-            if(pacchettoSalvatoDTO.getEmailUserCreatore()==userManager.getUserDTO().getEmail()) {
-                salvato = true;
-                if(pacchettoSalvatoDTO.isPrenotato()) {
-                    prenotato = true;
+
+            if(isLoggedIn()) {
+                if(pacchettoSalvatoDTO.getEmailUserCreatore().equals(userManager.getUserDTO().getEmail())) {
+                    salvato = true;
+                    if(pacchettoSalvatoDTO.isPrenotato()) {
+                        prenotato = true;
+                    }
                 }
             }
             else {
