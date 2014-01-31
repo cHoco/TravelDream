@@ -76,7 +76,7 @@
             <section id="section-personalizza-trasporti">
                 <div class="container personalizza-trasporti">
                     <h2>Scegli un trasporto</h2>
-                    <h:dataTable value="#{modificaPacchettoBean.listaTrasporti}" var="trasporto">
+                    <h:dataTable styleClass="flat-table" value="#{modificaPacchettoBean.listaTrasporti}" var="trasporto">
                         <h:column>
                             <h:selectOneRadio valueChangeListener="#{modificaPacchettoBean.setSelectedTrasporto}"
                                               onclick="dataTableSelectOneRadio(this);">
@@ -109,7 +109,7 @@
             <section id="section-personalizza-hotels">
                 <div class="container personalizza-hotels">
                     <h2>Scegli un hotel</h2>
-                    <h:dataTable value="#{modificaPacchettoBean.listaHotels}" var="hotel">
+                    <h:dataTable styleClass="flat-table" value="#{modificaPacchettoBean.listaHotels}" var="hotel">
                         <h:column>
                             <h:selectOneRadio valueChangeListener="#{modificaPacchettoBean.setSelectedHotel}"
                                               onclick="dataTableSelectOneRadio(this);">
@@ -141,7 +141,7 @@
             <section id="section-personalizza-escursioni">
                 <div class="container personalizza-escursioni">
                     <h2>Scegli le escursioni</h2>
-                    <h:dataTable value="#{modificaPacchettoBean.listaEscursioni}" var="escursione">
+                    <h:dataTable styleClass="flat-table" value="#{modificaPacchettoBean.listaEscursioni}" var="escursione">
                         <h:column>
                             <h:selectBooleanCheckbox value="#{modificaPacchettoBean.escursioniScelte[escursione.codice_escursione]}" />
                         </h:column>

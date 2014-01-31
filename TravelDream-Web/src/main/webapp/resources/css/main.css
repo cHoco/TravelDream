@@ -574,15 +574,16 @@ form {
 }
 
 #pacchetti-personali {
-    border-top: 5px solid #2FAC91;
-    background: rgb(95,197,174);
-    padding: 70px 0;
+
+    border-top: 5px solid #BA464C;
+    background: #D35F65;
+    padding: 20px 0;
 }
 
 #pacchetti-partecipati {
-    border-top: 5px solid #BA464C;
-    background: #D35F65;
-    padding: 70px 0;
+    border-top: 5px solid #2FAC91;
+    background: rgb(95,197,174);
+    padding: 20px 0;
 
 }
 
@@ -664,7 +665,7 @@ form {
 .pacchetti-trovati > h2 {
     color: rgb(58,116,93);
     font-size: 2.05em;
-    padding-bottom: 30px;
+    padding-bottom: 20px;
 }
 
 .pacchetto-trovato {
@@ -681,37 +682,37 @@ form {
 #section-pacchetti-trovati {
     border-top: 5px solid #2FAC91;
     background: rgb(95,197,174);
-    padding: 5px 0;
+    padding: 20px 0;
 }
 
 #section-personalizza-trasporti {
     border-top: 5px solid #DA9012;
     background: rgb(243,169,43);
-    padding: 5px 0;
+    padding: 20px 0;
 }
 
 .personalizza-trasporti > h2 {
     color: #C17700;
     font-size: 2.05em;
-    padding-bottom: 30px;
+    padding-bottom: 20px;
 }
 
 #section-personalizza-hotels {
     border-top: 5px solid #BA464C;
     background: #D35F65;
-    padding: 5px 0;
+    padding: 20px 0;
 }
 
 .personalizza-hotels > h2 {
     color: #A12D33;
     font-size: 2.05em;
-    padding-bottom: 30px;
+    padding-bottom: 20px;
 }
 
 #section-personalizza-escursioni {
     border-top: 5px solid #2FAC91;
     background: rgb(95,197,174);
-    padding: 5px 0;
+    padding: 20px 0;
 }
 
 .personalizza-escursioni > h2 {
@@ -775,4 +776,56 @@ form {
     color: #fff;
     margin: 0 auto;
     box-sizing: border-box;
+}
+
+.flat-table {
+    margin-bottom: 20px;
+    border-collapse:collapse;
+    width: 100%;
+    border: none;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+}
+.flat-table th, .flat-table td {
+    box-shadow: inset 0 -1px rgba(0,0,0,0.25),
+    inset 0 1px rgba(0,0,0,0.25);
+}
+.flat-table th {
+    font-weight: normal;
+    -webkit-font-smoothing: antialiased;
+    padding: 1em;
+    color: rgba(0,0,0,0.45);
+    text-shadow: 0 0 1px rgba(0,0,0,0.1);
+    font-size: 1.5em;
+}
+.flat-table td {
+    color: #f7f7f7;
+    padding: 0.7em 1em 0.7em 1.15em;
+    text-shadow: 0 0 1px rgba(255,255,255,0.1);
+    font-size: 1.4em;
+}
+.flat-table tr {
+    -webkit-transition: background 0.3s, box-shadow 0.3s;
+    -moz-transition: background 0.3s, box-shadow 0.3s;
+    transition: background 0.3s, box-shadow 0.3s;
+}
+
+.trasporti-table {
+    background: #336ca6;
+}
+.trasporti-table tr:hover {
+    background: rgba(0,0,0,0.19);
+}
+
+.pacchetti-partecipati-title {
+    color: rgb(58,116,93);
+    font-size: 2.05em;
+    padding-bottom: 10px;
+}
+
+.pacchetti-personali-title {
+    color: #A12D33;
+    font-size: 2.05em;
+    padding-bottom: 10px;
 }

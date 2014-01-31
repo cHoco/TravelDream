@@ -49,7 +49,7 @@
             </header>
         </h:panelGroup>
 
-        <h:panelGroup rendered="#{userSessionBean.loggedIn and mostraPacchettoBean.invitato}">
+        <h:panelGroup rendered="#{userSessionBean.loggedIn and mostraPacchettoBean.invitato and !mostraPacchettoBean.partecipato}">
             <header class="container">
                 <div class="bg"></div>
                 <div class="home-text">
@@ -153,7 +153,8 @@
             <section id="section-personalizza-trasporti">
                 <div class="container personalizza-trasporti">
                     <h2>Trasporti</h2>
-                    <h:dataTable value="#{mostraPacchettoBean.listaTrasporti}" var="trasporto">
+
+                <h:dataTable styleClass="flat-table" value="#{mostraPacchettoBean.listaTrasporti}" var="trasporto">
                         <h:column>
                             <f:facet name="header">
                                 Partenza
@@ -173,14 +174,13 @@
                             #{trasporto.tipoTrasporto}
                         </h:column>
                     </h:dataTable>
-
-                </div>
+                    </div>
             </section>
 
             <section id="section-personalizza-hotels">
                 <div class="container personalizza-hotels">
                     <h2>Hotels</h2>
-                    <h:dataTable value="#{mostraPacchettoBean.listaHotels}" var="hotel">
+                    <h:dataTable styleClass="flat-table" value="#{mostraPacchettoBean.listaHotels}" var="hotel">
                         <h:column>
                             <f:facet name="header">
                                 Nome
@@ -206,7 +206,7 @@
             <section id="section-personalizza-escursioni">
                 <div class="container personalizza-escursioni">
                     <h2>Escursioni</h2>
-                    <h:dataTable value="#{mostraPacchettoBean.listaEscursioni}" var="escursione">
+                    <h:dataTable styleClass="flat-table" value="#{mostraPacchettoBean.listaEscursioni}" var="escursione">
                         <h:column>
                             <f:facet name="header">
                                 Nome
@@ -229,34 +229,33 @@
             <section id="section-personalizza-trasporti">
                 <div class="container personalizza-trasporti">
                     <h2>Trasporti</h2>
-                    <h:dataTable value="#{mostraPacchettoBean.listaTrasporti}" var="trasporto">
-                        <h:column>
-                            <f:facet name="header">
-                                Partenza
-                            </f:facet>
-                            #{trasporto.localitaPartenza}
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                Societa
-                            </f:facet>
-                            #{trasporto.societa}
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                Tipo
-                            </f:facet>
-                            #{trasporto.tipoTrasporto}
-                        </h:column>
-                    </h:dataTable>
-
-                </div>
+                        <h:dataTable styleClass="flat-table" value="#{mostraPacchettoBean.listaTrasporti}" var="trasporto">
+                            <h:column>
+                                <f:facet name="header">
+                                    Partenza
+                                </f:facet>
+                                #{trasporto.localitaPartenza}
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    Societa
+                                </f:facet>
+                                #{trasporto.societa}
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    Tipo
+                                </f:facet>
+                                #{trasporto.tipoTrasporto}
+                            </h:column>
+                        </h:dataTable>
+                    </div>
             </section>
 
             <section id="section-personalizza-hotels">
                 <div class="container personalizza-hotels">
                     <h2>Hotels</h2>
-                    <h:dataTable value="#{mostraPacchettoBean.listaHotels}" var="hotel">
+                    <h:dataTable styleClass="flat-table" value="#{mostraPacchettoBean.listaHotels}" var="hotel">
                         <h:column>
                             <f:facet name="header">
                                 Nome
@@ -282,7 +281,7 @@
             <section id="section-personalizza-escursioni">
                 <div class="container personalizza-escursioni">
                     <h2>Escursioni</h2>
-                    <h:dataTable value="#{mostraPacchettoBean.listaEscursioni}" var="escursione">
+                    <h:dataTable styleClass="flat-table" value="#{mostraPacchettoBean.listaEscursioni}" var="escursione">
                         <h:column>
                             <f:facet name="header">
                                 Nome

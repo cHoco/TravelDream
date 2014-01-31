@@ -43,8 +43,8 @@
 
         <section id="pacchetti-personali">
             <div class="container">
-                <h2 class="profile-section-title">Pacchetti Personali</h2>
-                <h:dataTable value="#{userContentBean.pacchettiPersonali}" var="pacchettoPersonale">
+                <h2 class="pacchetti-personali-title">Pacchetti Personali</h2>
+                <h:dataTable styleClass="flat-table" value="#{userContentBean.pacchettiPersonali}" var="pacchettoPersonale">
 
                     <h:column>
                         <f:facet name="header">
@@ -92,8 +92,8 @@
 
         <section id="pacchetti-partecipati">
             <div class="container">
-                <h2 class="profile-section-title">Pacchetti a cui partecipi</h2>
-                <h:dataTable value="#{userContentBean.pacchettiPartecipati}" var="pacchettoPartecipato">
+                <h2 class="pacchetti-partecipati-title">Pacchetti a cui partecipi</h2>
+                <h:dataTable styleClass="flat-table" value="#{userContentBean.pacchettiPartecipati}" var="pacchettoPartecipato">
 
                     <h:column>
                         <f:facet name="header">
