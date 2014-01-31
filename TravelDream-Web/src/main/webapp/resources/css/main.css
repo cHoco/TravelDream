@@ -829,3 +829,18 @@ form {
     font-size: 2.05em;
     padding-bottom: 10px;
 }
+
+.link-aggiungi-dipendete {
+    text-decoration: none;
+    color: #BA464C;
+    background: #fff;
+    padding: 20px;
+    margin:20px;
+    border-radius: 3px;
+    font-size: 22px;
+}
+
+.aggiungi-dipendente {
+    width: 200px;
+    height: 80px;
+}

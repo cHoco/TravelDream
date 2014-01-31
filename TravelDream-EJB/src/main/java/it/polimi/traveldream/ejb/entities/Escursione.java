@@ -26,6 +26,7 @@ public class Escursione implements Serializable{
 
     @NotNull
     @Size(min=1)
+    @Column(length = 1000)
     private String descrizione;
 
     @NotNull

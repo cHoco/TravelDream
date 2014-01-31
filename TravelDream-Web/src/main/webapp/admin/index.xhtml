@@ -15,33 +15,37 @@
     </ui:define>
 
     <ui:define name="content">
+        <section id="section-personalizza-hotels">
+        <div class="container personalizza-hotels">
 
-        <h:link value="Aggiunti Dipendente" outcome="insertAu"/>
+            <h:dataTable styleClass="flat-table" value="#{adminWebBean.listaAU}" var="advacedUser">
 
-        <h:dataTable value="#{adminWebBean.listaAU}" var="advacedUser">
+                <h:column>
+                    <f:facet name="header">
+                        E-mail
+                    </f:facet>
+                    #{advacedUser.email}
+                </h:column>
 
-            <h:column>
-                <f:facet name="header">
-                    E-mail
-                </f:facet>
-                #{advacedUser.email}
-            </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Nome
+                    </f:facet>
+                    #{advacedUser.firstName}
+                </h:column>
 
-            <h:column>
-                <f:facet name="header">
-                    Nome
-                </f:facet>
-                #{advacedUser.firstName}
-            </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Cognome
+                    </f:facet>
+                    #{advacedUser.lastName}
+                </h:column>
 
-            <h:column>
-                <f:facet name="header">
-                    Cognome
-                </f:facet>
-                #{advacedUser.lastName}
-            </h:column>
-
-        </h:dataTable>
-
+            </h:dataTable>
+            <div class="aggiungi-dipendete">
+            <h:link styleClass="link-aggiungi-dipendete" value="Aggiunti Dipendente" outcome="insertAu"/>
+            </div>
+        </div>
+        </section>
     </ui:define>
 </ui:composition>
