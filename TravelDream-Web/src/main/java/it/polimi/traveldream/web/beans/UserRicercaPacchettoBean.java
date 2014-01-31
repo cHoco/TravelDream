@@ -19,7 +19,7 @@ import java.util.List;
 public class UserRicercaPacchettoBean {
 
     @EJB
-    UserContentManager userContentManager;
+    private UserContentManager userContentManager;
 
     private String partenzaCercata;
 

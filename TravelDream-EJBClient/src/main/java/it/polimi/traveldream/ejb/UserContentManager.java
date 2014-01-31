@@ -18,7 +18,7 @@ public interface UserContentManager {
 
     public void salvaPacchettoPredefinito(PacchettoSalvatoDTO pacchettoSalvatoDTO, String localitaPartenza);
 
-    public void personalizzaPacchetto();
+    public void modificaPacchettoSalvato(PacchettoSalvatoDTO pacchettoSalvatoDTO);
 
     public void aggiungiPartecipazione(PacchettoSalvatoDTO pacchettoSalvatoDTO);
 

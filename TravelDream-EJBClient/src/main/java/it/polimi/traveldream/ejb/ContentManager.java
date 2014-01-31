@@ -29,6 +29,13 @@ public interface ContentManager {
     public void modificaEscursione(String codiceEscursione, EscursioneDTO escursione);
 
 
+    public boolean isTrasportoUsed(TrasportoDTO trasporto);
+
+    public boolean isHotelUsed(HotelDTO hotel);
+
+    public boolean isEscursioneUsed(EscursioneDTO escursione);
+
+
     public void eliminaTrasporto(TrasportoDTO trasporto);
 
     public void eliminaHotel(HotelDTO hotel);

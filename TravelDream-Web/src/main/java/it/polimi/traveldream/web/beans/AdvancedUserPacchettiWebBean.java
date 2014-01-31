@@ -27,7 +27,7 @@ import java.util.List;
 public class AdvancedUserPacchettiWebBean {
 
     @EJB
-    ContentManager contentManager;
+    private ContentManager contentManager;
 
     private PacchettoDTO pacchettoDTO;
 

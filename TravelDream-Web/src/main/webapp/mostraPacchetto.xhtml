@@ -37,12 +37,12 @@
 
                 <div class="home-register clear-fix">
                     <div class="tasti-mostra-pacchetto">
-                        <h:link styleClass="mostra-pacchetto-main-button" outcome="user/personalizzaPacchetto" >
-                            <div class="tasti-mostra-pacchetto-sopra">Personalizza</div>
+                        <h:link styleClass="mostra-pacchetto-main-button" outcome="login" >
+                            <div class="tasti-mostra-pacchetto-sopra">Login</div>
                         </h:link>
                         <p>- oppure -</p>
-                        <h:link styleClass="mostra-pacchetto-main-button" outcome="user/personalizzaPacchetto" >
-                            <div class="tasti-mostra-pacchetto-sopra">Salva</div>
+                        <h:link styleClass="mostra-pacchetto-main-button" outcome="register" >
+                            <div class="tasti-mostra-pacchetto-sopra">Registrati</div>
                         </h:link>
                     </div>
                 </div>
@@ -59,12 +59,32 @@
 
                 <div class="home-register clear-fix">
                     <div class="tasti-mostra-pacchetto">
-                        <h:link styleClass="mostra-pacchetto-main-button" outcome="user/personalizzaPacchetto" >
-                            <div class="tasti-mostra-pacchetto-sopra">Partecipa</div>
-                        </h:link>
+                        <h:form>
+                            <h:commandLink styleClass="mostra-pacchetto-main-button" action="#{mostraPacchettoBean.partecipaPacchetto}">
+                                <div class="tasti-mostra-pacchetto-sopra">Partecipa</div>
+                            </h:commandLink>
+                        </h:form>
                         <p>- oppure -</p>
                         <h:link styleClass="mostra-pacchetto-main-button" outcome="user/personalizzaPacchetto" >
                             <div class="tasti-mostra-pacchetto-sopra">Salva</div>
+                        </h:link>
+                    </div>
+                </div>
+            </header>
+        </h:panelGroup>
+
+        <h:panelGroup rendered="#{userSessionBean.loggedIn and mostraPacchettoBean.partecipato}">
+            <header class="container">
+                <div class="bg"></div>
+                <div class="home-text">
+                    <h1>#{mostraPacchettoBean.pacchettoSalvatoOriginaleDTO.nome}</h1>
+                    <p>#{mostraPacchettoBean.pacchettoSalvatoOriginaleDTO.descrizione}</p>
+                </div>
+
+                <div class="home-register clear-fix">
+                    <div class="tasti-mostra-pacchetto">
+                        <h:link styleClass="mostra-pacchetto-main-button" outcome="user/index" >
+                            <div class="tasti-mostra-pacchetto-sotto right-mostra-prenotato">Partecipato</div>
                         </h:link>
                     </div>
                 </div>
@@ -81,7 +101,7 @@
 
                 <div class="home-register clear-fix">
                     <div class="tasti-mostra-pacchetto">
-                        <h:link styleClass="mostra-pacchetto-main-button" outcome="user/personalizzaPacchetto" >
+                        <h:link styleClass="mostra-pacchetto-main-button" outcome="user/personalizzaPacchetto?codicePacchetto=#{mostraPacchettoBean.pacchettoDTO.codice_pacchetto}&amp;dataPartenza=#{mostraPacchettoBean.stringDataPartenza}&amp;dataRitorno=#{mostraPacchettoBean.stringDataRitorno}&amp;luogoPartenza=#{mostraPacchettoBean.localitaPartenza}" >
                             <div class="tasti-mostra-pacchetto-sopra">Personalizza</div>
                         </h:link>
                         <p>- oppure -</p>
@@ -105,11 +125,11 @@
 
                 <div class="home-register clear-fix">
                     <div class="tasti-mostra-pacchetto">
-                        <h:link styleClass="mostra-pacchetto-main-button" outcome="user/personalizzaPacchetto" >
-                            <div class="tasti-mostra-pacchetto-sopra">Invita amici</div>
+                        <h:link styleClass="mostra-pacchetto-main-button" outcome="" >
+                            <div id="invitaAmici" class="tasti-mostra-pacchetto-sopra" onclick="showCodicePacchetto(this);">Invita amici</div>
                         </h:link>
                         <p>- oppure -</p>
-                        <h:link styleClass="mostra-pacchetto-main-button" outcome="user/personalizzaPacchetto" >
+                        <h:link styleClass="mostra-pacchetto-main-button" outcome="user/modificaPacchetto?codicePacchettoSalvato=#{mostraPacchettoBean.pacchettoSalvatoDTO.codice_pacchettoSalvato}" >
                             <div class="tasti-mostra-pacchetto-sotto left-mostra">Modifica</div>
                         </h:link>
                         <h:panelGroup rendered="#{mostraPacchettoBean.prenotato}">
@@ -118,17 +138,181 @@
                             </h:link>
                         </h:panelGroup>
                         <h:panelGroup rendered="#{!mostraPacchettoBean.prenotato}">
-                            <h:link styleClass="mostra-pacchetto-main-button" outcome="user/personalizzaPacchetto" >
-                                <div class="tasti-mostra-pacchetto-sotto right-mostra">Prenota</div>
-                            </h:link>
+                            <h:form>
+                                <h:commandLink styleClass="mostra-pacchetto-main-button" action="#{mostraPacchettoBean.prenotaPacchetto}" >
+                                    <div class="tasti-mostra-pacchetto-sotto right-mostra">Prenota</div>
+                                </h:commandLink>
+                            </h:form>
                         </h:panelGroup>
                     </div>
                 </div>
             </header>
         </h:panelGroup>
+        <h:panelGroup rendered="#{mostraPacchettoBean.salvato or mostraPacchettoBean.invitato or mostraPacchettoBean.partecipato}">
+
+            <section id="section-personalizza-trasporti">
+                <div class="container personalizza-trasporti">
+                    <h2>Trasporti</h2>
+                    <h:dataTable value="#{mostraPacchettoBean.listaTrasporti}" var="trasporto">
+                        <h:column>
+                            <f:facet name="header">
+                                Partenza
+                            </f:facet>
+                            #{trasporto.localitaPartenza}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                Societa
+                            </f:facet>
+                            #{trasporto.societa}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                Tipo
+                            </f:facet>
+                            #{trasporto.tipoTrasporto}
+                        </h:column>
+                    </h:dataTable>
+
+                </div>
+            </section>
+
+            <section id="section-personalizza-hotels">
+                <div class="container personalizza-hotels">
+                    <h2>Hotels</h2>
+                    <h:dataTable value="#{mostraPacchettoBean.listaHotels}" var="hotel">
+                        <h:column>
+                            <f:facet name="header">
+                                Nome
+                            </f:facet>
+                            #{hotel.nome}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                Descrizione
+                            </f:facet>
+                            #{hotel.descrizione}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                Stelle
+                            </f:facet>
+                            #{hotel.stelle}
+                        </h:column>
+                    </h:dataTable>
+                </div>
+            </section>
+
+            <section id="section-personalizza-escursioni">
+                <div class="container personalizza-escursioni">
+                    <h2>Escursioni</h2>
+                    <h:dataTable value="#{mostraPacchettoBean.listaEscursioni}" var="escursione">
+                        <h:column>
+                            <f:facet name="header">
+                                Nome
+                            </f:facet>
+                            #{escursione.nome}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                Descrizione
+                            </f:facet>
+                            #{escursione.descrizione}
+                        </h:column>
+                    </h:dataTable>
+                </div>
+            </section>
+        </h:panelGroup>
+
+        <h:panelGroup rendered="#{mostraPacchettoBean.cercato}">
+
+            <section id="section-personalizza-trasporti">
+                <div class="container personalizza-trasporti">
+                    <h2>Trasporti</h2>
+                    <h:dataTable value="#{mostraPacchettoBean.listaTrasporti}" var="trasporto">
+                        <h:column>
+                            <f:facet name="header">
+                                Partenza
+                            </f:facet>
+                            #{trasporto.localitaPartenza}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                Societa
+                            </f:facet>
+                            #{trasporto.societa}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                Tipo
+                            </f:facet>
+                            #{trasporto.tipoTrasporto}
+                        </h:column>
+                    </h:dataTable>
+
+                </div>
+            </section>
+
+            <section id="section-personalizza-hotels">
+                <div class="container personalizza-hotels">
+                    <h2>Hotels</h2>
+                    <h:dataTable value="#{mostraPacchettoBean.listaHotels}" var="hotel">
+                        <h:column>
+                            <f:facet name="header">
+                                Nome
+                            </f:facet>
+                            #{hotel.nome}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                Descrizione
+                            </f:facet>
+                            #{hotel.descrizione}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                Stelle
+                            </f:facet>
+                            #{hotel.stelle}
+                        </h:column>
+                    </h:dataTable>
+                </div>
+            </section>
+
+            <section id="section-personalizza-escursioni">
+                <div class="container personalizza-escursioni">
+                    <h2>Escursioni</h2>
+                    <h:dataTable value="#{mostraPacchettoBean.listaEscursioni}" var="escursione">
+                        <h:column>
+                            <f:facet name="header">
+                                Nome
+                            </f:facet>
+                            #{escursione.nome}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                Descrizione
+                            </f:facet>
+                            #{escursione.descrizione}
+                        </h:column>
+                    </h:dataTable>
+                </div>
+            </section>
+        </h:panelGroup>
 
 
 
+
+    </ui:define>
+
+    <ui:define name="scripts">
+        <h:outputScript name="lib/jquery-2.1.0.min.js" />
+        <script>
+                function showCodicePacchetto(idElement) {
+                    $( '#invitaAmici').html("Codice pacchetto: #{mostraPacchettoBean.pacchettoSalvatoDTO.codice_pacchettoSalvato}");
+                }
+
+        </script>
 
     </ui:define>
 

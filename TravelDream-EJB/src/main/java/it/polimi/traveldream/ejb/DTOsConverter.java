@@ -86,6 +86,7 @@ public class DTOsConverter {
 
     public PacchettoSalvatoDTO convertPacchettoSalvatoToDTO(PacchettoSalvato pacchettoSalvato) {
         PacchettoSalvatoDTO pacchettoSalvatoDTO = new PacchettoSalvatoDTO();
+        pacchettoSalvatoDTO.setCodice_pacchettoSalvato(pacchettoSalvato.getCodice_pacchettoSalvato());
         pacchettoSalvatoDTO.setCodicePacchettoOriginale(pacchettoSalvato.getPacchettoOriginale().getCodice_pacchetto());
         pacchettoSalvatoDTO.setEmailUserCreatore(pacchettoSalvato.getUserCreatore().getEmail());
         pacchettoSalvatoDTO.setDataPartenza(pacchettoSalvato.getDataPartenza());
@@ -99,6 +100,9 @@ public class DTOsConverter {
         }
         for(Escursione escursione : pacchettoSalvato.getEscursioni()) {
             pacchettoSalvatoDTO.addEscursione(escursione.getCodice_escursione());
+        }
+        for(User user : pacchettoSalvato.getUsersPartecipanti()) {
+            pacchettoSalvatoDTO.addUserPartecipante(convertToDTO(user));
         }
 
         return pacchettoSalvatoDTO;

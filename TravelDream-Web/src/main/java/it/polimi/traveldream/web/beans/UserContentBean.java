@@ -9,7 +9,9 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by cHoco on 27/01/14.
@@ -20,11 +22,13 @@ import java.util.List;
 public class UserContentBean {
 
     @EJB
-    UserContentManager userContentManager;
+    private UserContentManager userContentManager;
 
     private List<PacchettoSalvatoDTO> pacchettiPersonali;
 
     private List<PacchettoSalvatoDTO> pacchettiPartecipati;
+
+    private Map<PacchettoSalvatoDTO, PacchettoDTO> pacchettiOriginali;
 
     public List<PacchettoSalvatoDTO> getPacchettiPersonali() {
         return pacchettiPersonali;
@@ -38,10 +42,33 @@ public class UserContentBean {
         return pacchettiPartecipati;
     }
 
+    public Map<PacchettoSalvatoDTO, PacchettoDTO> getPacchettiOriginali() {
+        return pacchettiOriginali;
+    }
+
+    public void setPacchettiOriginali(Map<PacchettoSalvatoDTO, PacchettoDTO> pacchettiOriginali) {
+        this.pacchettiOriginali = pacchettiOriginali;
+    }
+
     public void setPacchettiPartecipati(List<PacchettoSalvatoDTO> pacchettiPartecipati) {
         this.pacchettiPartecipati = pacchettiPartecipati;
     }
 
+    public void loadPacchettiPersonaliPartecipati() {
+        pacchettiPersonali = userContentManager.getPacchettiPersonali();
+        pacchettiPartecipati = userContentManager.getPacchettiPartecipati();
+        pacchettiOriginali = new HashMap<>();
+        for(PacchettoSalvatoDTO pacchettoSalvatoDTO : pacchettiPersonali) {
+            pacchettiOriginali.put(pacchettoSalvatoDTO, getPacchettoOriginale(pacchettoSalvatoDTO));
+        }
+        for(PacchettoSalvatoDTO pacchettoSalvatoDTO : pacchettiPartecipati) {
+            pacchettiOriginali.put(pacchettoSalvatoDTO, getPacchettoOriginale(pacchettoSalvatoDTO));
+        }
+    }
+
+    public PacchettoDTO getPacchettoOriginale(PacchettoSalvatoDTO pacchettoSalvatoDTO) {
+        return userContentManager.getPacchetto(pacchettoSalvatoDTO.getCodicePacchettoOriginale());
+    }
 
     public void test() {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");

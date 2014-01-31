@@ -119,6 +119,14 @@ public class PacchettoSalvatoDTO {
         this.codice_pacchettoSalvato = codice_pacchettoSalvato;
     }
 
+    public List<UserDTO> getUsersPartecipanti() {
+        return usersPartecipanti;
+    }
+
+    public void setUsersPartecipanti(List<UserDTO> usersPartecipanti) {
+        this.usersPartecipanti = usersPartecipanti;
+    }
+
     public void addTrasporto(String trasporto) {
         codiciTrasporti.add(trasporto);
     }

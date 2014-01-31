@@ -9,19 +9,12 @@
                 xmlns:of="http://omnifaces.org/functions">
 
     <f:metadata>
-        <f:viewParam name="codicePacchetto" value="#{personalizzaPacchettoBean.codicePacchetto}" />
-        <f:viewParam name="dataPartenza" value="#{personalizzaPacchettoBean.dataPartenza}">
-            <f:convertDateTime pattern="yyyyMMddHHmmzzz"/>
-        </f:viewParam>
-        <f:viewParam name="dataRitorno" value="#{personalizzaPacchettoBean.dataRitorno}">
-            <f:convertDateTime pattern="yyyyMMddHHmmzzz"/>
-        </f:viewParam>
-        <f:viewParam name="luogoPartenza" value="#{personalizzaPacchettoBean.localitaPartenza}" />
-        <f:event type="preRenderView" listener="#{personalizzaPacchettoBean.loadPacchetto()}" />
+        <f:viewParam name="codicePacchettoSalvato" value="#{modificaPacchettoBean.codicePacchettoSalvato}" />
+        <f:event type="preRenderView" listener="#{modificaPacchettoBean.loadPacchetto()}" />
     </f:metadata>
 
     <ui:define name="htmlhead">
-        <title>Personalizza Pacchetto - TravelDream</title>
+        <title>Modifica Pacchetto - TravelDream</title>
         <h:outputStylesheet name="lib/themes/default.css" />
         <h:outputStylesheet name="lib/themes/default.date.css" />
         <h:outputStylesheet name="lib/themes/default.time.css" />
@@ -29,63 +22,63 @@
 
     <ui:define name="content">
 
-            <header class="container">
-                <div class="bg"></div>
-                <div class="home-text">
-                    <h1>#{personalizzaPacchettoBean.pacchetto.nome}</h1>
-                    <p>#{personalizzaPacchettoBean.pacchetto.descrizione}</p>
-                </div>
+        <header class="container">
+            <div class="bg"></div>
+            <div class="home-text">
+                <h1>#{modificaPacchettoBean.pacchettoOriginale.nome}</h1>
+                <p>#{modificaPacchettoBean.pacchettoOriginale.descrizione}</p>
+            </div>
 
-                <div class="home-register clear-fix">
-                    <div>
-                        <div class="clear-fix">
-                            <div class="data-left">
-                                <div>
-                                    <h:inputText styleClass="js__datepicker" id="data-partenza" jsf:placeholder="Data Partenza" value="#{personalizzaPacchettoBean.dataPartenza}">
-                                        <f:convertDateTime pattern="dd/MM/yyyy" />
-                                    </h:inputText>
-                                    <h:message for="data-partenza" />
-                                </div>
-                            </div>
-                            <div class="time-right">
-                                <div>
-                                    <h:inputText styleClass="js__timepicker" id="ora-partenza" jsf:placeholder="Orario"  value="#{personalizzaPacchettoBean.oraPartenza}">
-                                        <f:convertDateTime pattern="HH:mm" timeZone="CET"/>
-                                    </h:inputText>
-                                    <h:message for="ora-partenza" />
-                                </div>
+            <div class="home-register clear-fix">
+                <div>
+                    <div class="clear-fix">
+                        <div class="data-left">
+                            <div>
+                                <h:inputText styleClass="js__datepicker" id="data-partenza" jsf:placeholder="Data Partenza" value="#{modificaPacchettoBean.dataPartenza}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                                </h:inputText>
+                                <h:message for="data-partenza" />
                             </div>
                         </div>
-                        <div class="clear-fix">
-                            <div class="data-left">
-                                <div>
-                                    <h:inputText styleClass="js__datepicker" id="data-ritorno" jsf:placeholder="Data Ritorno" value="#{personalizzaPacchettoBean.dataRitorno}">
-                                        <f:convertDateTime pattern="dd/MM/yyyy"/>
-                                    </h:inputText>
-                                    <h:message for="data-ritorno" />
-                                </div>
-                            </div>
-                            <div class="time-right">
-                                <div>
-                                    <h:inputText styleClass="js__timepicker" id="ora-ritorno" jsf:placeholder="Orario"  value="#{personalizzaPacchettoBean.oraRitorno}">
-                                        <f:convertDateTime pattern="HH:mm" timeZone="CET"/>
-                                    </h:inputText>
-                                    <h:message for="ora-ritorno" />
-                                </div>
+                        <div class="time-right">
+                            <div>
+                                <h:inputText styleClass="js__timepicker" id="ora-partenza" jsf:placeholder="Orario"  value="#{modificaPacchettoBean.oraPartenza}">
+                                    <f:convertDateTime pattern="HH:mm" timeZone="CET"/>
+                                </h:inputText>
+                                <h:message for="ora-partenza" />
                             </div>
                         </div>
                     </div>
-
+                    <div class="clear-fix">
+                        <div class="data-left">
+                            <div>
+                                <h:inputText styleClass="js__datepicker" id="data-ritorno" jsf:placeholder="Data Ritorno" value="#{modificaPacchettoBean.dataRitorno}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                </h:inputText>
+                                <h:message for="data-ritorno" />
+                            </div>
+                        </div>
+                        <div class="time-right">
+                            <div>
+                                <h:inputText styleClass="js__timepicker" id="ora-ritorno" jsf:placeholder="Orario"  value="#{modificaPacchettoBean.oraRitorno}">
+                                    <f:convertDateTime pattern="HH:mm" timeZone="CET"/>
+                                </h:inputText>
+                                <h:message for="ora-ritorno" />
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </header>
+
+            </div>
+        </header>
 
         <o:form includeRequestParams="true">
             <section id="section-personalizza-trasporti">
                 <div class="container personalizza-trasporti">
                     <h2>Scegli un trasporto</h2>
-                    <h:dataTable value="#{personalizzaPacchettoBean.listaTrasporti}" var="trasporto">
+                    <h:dataTable value="#{modificaPacchettoBean.listaTrasporti}" var="trasporto">
                         <h:column>
-                            <h:selectOneRadio valueChangeListener="#{personalizzaPacchettoBean.setSelectedTrasporto}"
+                            <h:selectOneRadio valueChangeListener="#{modificaPacchettoBean.setSelectedTrasporto}"
                                               onclick="dataTableSelectOneRadio(this);">
                                 <f:selectItem itemValue="null" />
                             </h:selectOneRadio>
@@ -116,9 +109,9 @@
             <section id="section-personalizza-hotels">
                 <div class="container personalizza-hotels">
                     <h2>Scegli un hotel</h2>
-                    <h:dataTable value="#{personalizzaPacchettoBean.listaHotels}" var="hotel">
+                    <h:dataTable value="#{modificaPacchettoBean.listaHotels}" var="hotel">
                         <h:column>
-                            <h:selectOneRadio valueChangeListener="#{personalizzaPacchettoBean.setSelectedHotel}"
+                            <h:selectOneRadio valueChangeListener="#{modificaPacchettoBean.setSelectedHotel}"
                                               onclick="dataTableSelectOneRadio(this);">
                                 <f:selectItem itemValue="null" />
                             </h:selectOneRadio>
@@ -148,9 +141,9 @@
             <section id="section-personalizza-escursioni">
                 <div class="container personalizza-escursioni">
                     <h2>Scegli le escursioni</h2>
-                    <h:dataTable value="#{personalizzaPacchettoBean.listaEscursioni}" var="escursione">
+                    <h:dataTable value="#{modificaPacchettoBean.listaEscursioni}" var="escursione">
                         <h:column>
-                            <h:selectBooleanCheckbox value="#{personalizzaPacchettoBean.escursioniScelte[escursione.codice_escursione]}" />
+                            <h:selectBooleanCheckbox value="#{modificaPacchettoBean.escursioniScelte[escursione.codice_escursione]}" />
                         </h:column>
                         <h:column>
                             <f:facet name="header">
@@ -171,7 +164,7 @@
             <section id="section-salva-personalizzazione">
                 <div class="container salva-personalizza">
                     <div class="input-div submit">
-                        <h:commandButton class="submit-button" value="Salva Pacchetto" action="#{personalizzaPacchettoBean.salvaPacchetto()}"/>
+                        <h:commandButton class="submit-button" value="Modifica Pacchetto" action="#{modificaPacchettoBean.salvaModifichePacchetto()}"/>
                     </div>
                 </div>
             </section>

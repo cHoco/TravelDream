@@ -6,6 +6,10 @@
                 xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough"
                 template="/WEB-INF/templates/default.xhtml">
 
+    <f:metadata>
+        <f:event type="preRenderView" listener="#{userContentBean.loadPacchettiPersonaliPartecipati()}"/>
+    </f:metadata>
+
     <ui:define name="htmlhead">
         <title>Mio Profilo - TravelDream</title>
     </ui:define>
@@ -21,16 +25,16 @@
 
             <div class="home-register profile-form">
                 <div class="form-codice">
-                    <h:form>
+                    <form action="#{request.contextPath}/mostraPacchetto.xhtml" method="get">
                         <div class="clear-fix">
                             <div class="input-codice">
-                                <h:inputText jsf:placeholder="Codice"/>
+                                <input type="text" placeholder="Codice" name="codicePacchettoSalvato"/>
                             </div>
                             <div class="submit-codice">
-                                <h:commandButton class="submit-button-codice" value="Vai al viaggio" action="#{userContentBean.test}"/>
+                                <input type="submit" class="submit-button-codice" value="Vai al viaggio"/>
                             </div>
                         </div>
-                    </h:form>
+                    </form>
                 </div>
             </div>
 
@@ -40,6 +44,48 @@
         <section id="pacchetti-personali">
             <div class="container">
                 <h2 class="profile-section-title">Pacchetti Personali</h2>
+                <h:dataTable value="#{userContentBean.pacchettiPersonali}" var="pacchettoPersonale">
+
+                    <h:column>
+                        <f:facet name="header">
+                            Nome
+                        </f:facet>
+                        #{userContentBean.getPacchettoOriginale(pacchettoPersonale).nome}
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">
+                            Località
+                        </f:facet>
+                        #{userContentBean.getPacchettoOriginale(pacchettoPersonale).localita}
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">
+                            Data Partenza
+                        </f:facet>
+                        #{pacchettoPersonale.dataPartenza}
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">
+                            Data Partenza
+                        </f:facet>
+                        #{pacchettoPersonale.dataRitorno}
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">
+                            Prenotato
+                        </f:facet>
+                        #{pacchettoPersonale.prenotato}
+                    </h:column>
+
+                    <h:column>
+                        <a href="#{request.contextPath}/mostraPacchetto.xhtml?codicePacchettoSalvato=#{pacchettoPersonale.codice_pacchettoSalvato}">Vai</a>
+                    </h:column>
+
+                </h:dataTable>
             </div>
 
         </section>
@@ -47,6 +93,47 @@
         <section id="pacchetti-partecipati">
             <div class="container">
                 <h2 class="profile-section-title">Pacchetti a cui partecipi</h2>
+                <h:dataTable value="#{userContentBean.pacchettiPartecipati}" var="pacchettoPartecipato">
+
+                    <h:column>
+                        <f:facet name="header">
+                            Nome
+                        </f:facet>
+                        #{userContentBean.getPacchettoOriginale(pacchettoPartecipato).nome}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            Località
+                        </f:facet>
+                        #{userContentBean.getPacchettoOriginale(pacchettoPartecipato).localita}
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">
+                            Data Partenza
+                        </f:facet>
+                        #{pacchettoPartecipato.dataPartenza}
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">
+                            Data Ritorno
+                        </f:facet>
+                        #{pacchettoPartecipato.dataRitorno}
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">
+                            Creato da
+                        </f:facet>
+                        #{pacchettoPartecipato.emailUserCreatore}
+                    </h:column>
+
+                    <h:column>
+                        <a href="#{request.contextPath}/mostraPacchetto.xhtml?codicePacchettoSalvato=#{pacchettoPartecipato.codice_pacchettoSalvato}">Vai</a>
+                    </h:column>
+
+                </h:dataTable>
             </div>
 
         </section>

@@ -1,16 +1,16 @@
 package it.polimi.traveldream.web.beans;
 
+import it.polimi.traveldream.ejb.ContentManager;
 import it.polimi.traveldream.ejb.UserContentManager;
 import it.polimi.traveldream.ejb.UserManager;
-import it.polimi.traveldream.ejb.dtos.PacchettoDTO;
-import it.polimi.traveldream.ejb.dtos.PacchettoSalvatoDTO;
-import it.polimi.traveldream.ejb.dtos.TrasportoDTO;
+import it.polimi.traveldream.ejb.dtos.*;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -28,37 +28,64 @@ public class MostraPacchettoBean {
     @EJB
     UserManager userManager;
 
-    String codicePacchetto;
+    @EJB
+    ContentManager contentManager;
 
-    String codicePacchettoSalvato;
+    private String codicePacchetto;
 
-    PacchettoDTO pacchettoDTO;
+    private String codicePacchettoSalvato;
 
-    PacchettoSalvatoDTO pacchettoSalvatoDTO;
+    private PacchettoDTO pacchettoDTO;
 
-    PacchettoDTO pacchettoSalvatoOriginaleDTO;
+    private PacchettoSalvatoDTO pacchettoSalvatoDTO;
 
-    Date dataPartenza;
+    private PacchettoDTO pacchettoSalvatoOriginaleDTO;
 
-    Date dataRitorno;
+    private Date dataPartenza;
 
-    String localitaPartenza;
+    private Date dataRitorno;
 
-    boolean cercato;
+    private String stringDataPartenza;
 
-    boolean salvato;
+    private String stringDataRitorno;
 
-    boolean invitato;
+    private String localitaPartenza;
 
-    boolean prenotato;
+    private boolean cercato;
+
+    private boolean salvato;
+
+    private boolean invitato;
+
+    private boolean prenotato;
+
+    private boolean partecipato;
+
+    private List<TrasportoDTO> listaTrasporti;
+
+    private List<HotelDTO> listaHotels;
+
+    private List<EscursioneDTO> listaEscursioni;
 
     public MostraPacchettoBean() {
         pacchettoDTO = new PacchettoDTO();
         pacchettoSalvatoDTO = new PacchettoSalvatoDTO();
+        listaEscursioni = new ArrayList<>();
+        listaHotels = new ArrayList<>();
+        listaTrasporti = new ArrayList<>();
         cercato = false;
         salvato = false;
         invitato = false;
         prenotato = false;
+        partecipato = false;
+    }
+
+    public boolean isPartecipato() {
+        return partecipato;
+    }
+
+    public void setPartecipato(boolean partecipato) {
+        this.partecipato = partecipato;
     }
 
     public String getCodicePacchetto() {
@@ -157,6 +184,48 @@ public class MostraPacchettoBean {
         this.localitaPartenza = localitaPartenza;
     }
 
+    public String getStringDataPartenza() {
+        String tempDataPartenza = new SimpleDateFormat("yyyyMMddHHmmzzz").format(dataPartenza);
+        return tempDataPartenza;
+    }
+
+    public String getStringDataRitorno() {
+        String tempDataRitorno = new SimpleDateFormat("yyyyMMddHHmmzzz").format(dataRitorno);
+        return tempDataRitorno;
+    }
+
+    public void setStringDataPartenza(String stringDataPartenza) {
+        this.stringDataPartenza = stringDataPartenza;
+    }
+
+    public void setStringDataRitorno(String stringDataRitorno) {
+        this.stringDataRitorno = stringDataRitorno;
+    }
+
+    public List<TrasportoDTO> getListaTrasporti() {
+        return listaTrasporti;
+    }
+
+    public void setListaTrasporti(List<TrasportoDTO> listaTrasporti) {
+        this.listaTrasporti = listaTrasporti;
+    }
+
+    public List<HotelDTO> getListaHotels() {
+        return listaHotels;
+    }
+
+    public void setListaHotels(List<HotelDTO> listaHotels) {
+        this.listaHotels = listaHotels;
+    }
+
+    public List<EscursioneDTO> getListaEscursioni() {
+        return listaEscursioni;
+    }
+
+    public void setListaEscursioni(List<EscursioneDTO> listaEscursioni) {
+        this.listaEscursioni = listaEscursioni;
+    }
+
     public boolean isLoggedIn(){
         if(FacesContext.getCurrentInstance().getExternalContext().getRemoteUser()!=null) {
             return true;
@@ -170,11 +239,37 @@ public class MostraPacchettoBean {
             pacchettoSalvatoDTO = userContentManager.getPacchettoSalvato(codicePacchettoSalvato);
             pacchettoSalvatoOriginaleDTO = userContentManager.getPacchetto(pacchettoSalvatoDTO.getCodicePacchettoOriginale());
 
+            for(String codice : pacchettoSalvatoDTO.getCodiciTrasporti()) {
+                TrasportoDTO temp = contentManager.getTrasporto(codice);
+                listaTrasporti.add(temp);
+            }
+
+            for(String codice : pacchettoSalvatoDTO.getCodiciHotels()) {
+                HotelDTO temp = contentManager.getHotel(codice);
+                listaHotels.add(temp);
+            }
+
+            for(String codice : pacchettoSalvatoDTO.getCodiciEscursioni()) {
+                EscursioneDTO temp = contentManager.getEscursione(codice);
+                listaEscursioni.add(temp);
+            }
+
             if(isLoggedIn()) {
                 if(pacchettoSalvatoDTO.getEmailUserCreatore().equals(userManager.getUserDTO().getEmail())) {
                     salvato = true;
                     if(pacchettoSalvatoDTO.isPrenotato()) {
                         prenotato = true;
+                    }
+                }
+                else {
+                    for(UserDTO userDTO : pacchettoSalvatoDTO.getUsersPartecipanti()) {
+                        System.out.println(userDTO);
+                        if(userDTO.getEmail().equals(userManager.getUserDTO().getEmail())) {
+                            partecipato = true;
+                        }
+                        else{
+                            invitato = true;
+                        }
                     }
                 }
             }
@@ -183,6 +278,22 @@ public class MostraPacchettoBean {
             }
         } else if(codicePacchetto!=null) {
             pacchettoDTO = userContentManager.getPacchetto(codicePacchetto);
+            for(String codice : pacchettoDTO.getTrasporti().keySet()) {
+                TrasportoDTO temp = contentManager.getTrasporto(codice);
+                if(temp.getLocalitaPartenza().equals(localitaPartenza)) {
+                    listaTrasporti.add(temp);
+                }
+            }
+
+            for(String codice : pacchettoDTO.getHotels().keySet()) {
+                HotelDTO temp = contentManager.getHotel(codice);
+                listaHotels.add(temp);
+            }
+
+            for(String codice : pacchettoDTO.getEscursioni().keySet()) {
+                EscursioneDTO temp = contentManager.getEscursione(codice);
+                listaEscursioni.add(temp);
+            }
             cercato = true;
         }
     }
@@ -198,5 +309,17 @@ public class MostraPacchettoBean {
         userContentManager.salvaPacchettoPredefinito(newPacchetto, localitaPartenza);
 
         return "user/salvaPacchettoSuccess?faces-redirect=true";
+    }
+
+    public String prenotaPacchetto() {
+        userContentManager.prenotaPacchetto(pacchettoSalvatoDTO);
+
+        return "user/prenotaPacchettoSuccess?faces-redirect=true";
+    }
+
+    public String partecipaPacchetto() {
+        userContentManager.aggiungiPartecipazione(pacchettoSalvatoDTO);
+
+        return "user/partecipaPacchettoSuccess?faces-redirect=true";
     }
 }

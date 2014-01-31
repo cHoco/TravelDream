@@ -13,6 +13,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -165,6 +166,36 @@ public class ContentManagerBean implements ContentManager{
         Escursione newEscursione = new Escursione(escursione);
         newEscursione.setId_escursione(oldEscursione.getId_escursione());
         em.merge(newEscursione);
+    }
+
+    @Override
+    public boolean isTrasportoUsed(TrasportoDTO trasporto) {
+        TypedQuery<Pacchetto> query = em.createQuery("select p from Pacchetto p join p.mezziTrasporto m where m.trasporto.codice_trasporto = :codice", Pacchetto.class).setParameter("codice", trasporto.getCodice_trasporto());
+        List<Pacchetto> pacchetti = query.getResultList();
+        if(pacchetti.isEmpty()) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean isHotelUsed(HotelDTO hotel) {
+        TypedQuery<Pacchetto> query = em.createQuery("select p from Pacchetto p join p.hotels m where m.hotel.codice_hotel = :codice", Pacchetto.class).setParameter("codice", hotel.getCodice_hotel());
+        List<Pacchetto> pacchetti = query.getResultList();
+        if(pacchetti.isEmpty()) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean isEscursioneUsed(EscursioneDTO escursione) {
+        TypedQuery<Pacchetto> query = em.createQuery("select p from Pacchetto p join p.escursioni m where m.escursione.codice_escursione = :codice", Pacchetto.class).setParameter("codice", escursione.getCodice_escursione());
+        List<Pacchetto> pacchetti = query.getResultList();
+        if(pacchetti.isEmpty()) {
+            return false;
+        }
+        return true;
     }
 
     @Override

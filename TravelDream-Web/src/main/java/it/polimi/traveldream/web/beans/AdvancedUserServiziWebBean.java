@@ -19,19 +19,19 @@ import java.util.Map;
 public class AdvancedUserServiziWebBean {
 
     @EJB
-    ContentManager contentManager;
+    private ContentManager contentManager;
 
-    String codiceServizioInModifica;
-
-
-    TrasportoDTO newTrasporto;
-
-    HotelDTO newHotel;
-
-    EscursioneDTO newEscursione;
+    private String codiceServizioInModifica;
 
 
-    String tipoServizio;
+    private TrasportoDTO newTrasporto;
+
+    private HotelDTO newHotel;
+
+    private EscursioneDTO newEscursione;
+
+
+    private String tipoServizio;
 
 
     public AdvancedUserServiziWebBean() {

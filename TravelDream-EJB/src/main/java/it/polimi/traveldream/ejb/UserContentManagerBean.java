@@ -113,7 +113,28 @@ public class UserContentManagerBean implements UserContentManager {
     }
 
     @Override
-    public void personalizzaPacchetto() {
+    public void modificaPacchettoSalvato(PacchettoSalvatoDTO pacchettoSalvatoDTO) {
+        PacchettoSalvato modifiedPacchetto = contentRepository.findPacchettoSalvatoByCodice(pacchettoSalvatoDTO.getCodice_pacchettoSalvato());
+
+        modifiedPacchetto.setDataPartenza(pacchettoSalvatoDTO.getDataPartenza());
+        modifiedPacchetto.setDataRitorno(pacchettoSalvatoDTO.getDataRitorno());
+        modifiedPacchetto.getTrasportiScelti().clear();
+        modifiedPacchetto.getHotelsScelti().clear();
+        modifiedPacchetto.getEscursioni().clear();
+
+        for(String codice_trasporto : pacchettoSalvatoDTO.getCodiciTrasporti()) {
+            modifiedPacchetto.getTrasportiScelti().add(contentRepository.findTrasportoByCodice(codice_trasporto));
+        }
+
+        for(String codice_hotel : pacchettoSalvatoDTO.getCodiciHotels()) {
+            modifiedPacchetto.getHotelsScelti().add(contentRepository.findHotelByCodice(codice_hotel));
+        }
+
+        for(String codice_escursione : pacchettoSalvatoDTO.getCodiciEscursioni()) {
+            modifiedPacchetto.getEscursioni().add(contentRepository.findEscursioneByCodice(codice_escursione));
+        }
+
+        em.merge(modifiedPacchetto);
 
     }
 
@@ -137,11 +158,14 @@ public class UserContentManagerBean implements UserContentManager {
     @Override
     public List<PacchettoSalvatoDTO> getPacchettiPersonali() {
         long idUserCreatore = userRepository.findUserByEmail(userManagerBean.getUserDTO().getEmail()).getId_user();
-        CriteriaBuilder cb = em.getCriteriaBuilder();
+        /*CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<PacchettoSalvato> c = cb.createQuery(PacchettoSalvato.class);
         Root<PacchettoSalvato> member = c.from(PacchettoSalvato.class);
         c.select(member).where(cb.equal(member.get("id_userCreatore"), idUserCreatore));
-        List<PacchettoSalvato> pacchettiPersonali = em.createQuery(c).getResultList();
+        List<PacchettoSalvato> pacchettiPersonali = em.createQuery(c).getResultList();*/
+
+        TypedQuery<PacchettoSalvato> query = em.createQuery("select p from PacchettoSalvato p where p.userCreatore.id_user = :id", PacchettoSalvato.class).setParameter("id", idUserCreatore);
+        List<PacchettoSalvato> pacchettiPersonali = query.getResultList();
         List<PacchettoSalvatoDTO> pacchettiPersonaliDTO = new ArrayList<>();
         for(PacchettoSalvato pacchettoSalvato : pacchettiPersonali) {
             pacchettiPersonaliDTO.add(dtOsConverter.convertPacchettoSalvatoToDTO(pacchettoSalvato));
@@ -175,10 +199,10 @@ public class UserContentManagerBean implements UserContentManager {
 
     @Override
     public List<PacchettoDTO> searchPacchetti(String partenza, String localita, Date dataPartenza, Date dateRitorno) {
-        TypedQuery<Pacchetto> query = em.createQuery("select p from Pacchetto p join p.mezziTrasporto m " +
+        TypedQuery<Pacchetto> query = em.createQuery("select distinct p from Pacchetto p join p.mezziTrasporto m " +
                 "where p.localita = :localita " +
-                "and p.inizioValidita < :dataPartenza " +
-                "and p.fineValidita > :dataRitorno " +
+                "and p.inizioValidita <= :dataPartenza " +
+                "and p.fineValidita >= :dataRitorno " +
                 "and m.trasporto.localitaPartenza = :partenza", Pacchetto.class).setParameter("localita", localita).
                                                                                     setParameter("partenza", partenza).
                                                                                     setParameter("dataPartenza", dataPartenza, TemporalType.DATE).
