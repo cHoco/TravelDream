@@ -1,6 +1,5 @@
 package it.polimi.traveldream.web.beans;
 
-import com.apple.jobjc.appkit._NSThreadPrivateOpaque;
 import it.polimi.traveldream.ejb.ContentManager;
 import it.polimi.traveldream.ejb.UserContentManager;
 import it.polimi.traveldream.ejb.UserManager;

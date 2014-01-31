@@ -684,6 +684,42 @@ form {
     padding: 5px 0;
 }
 
+#section-personalizza-trasporti {
+    border-top: 5px solid #DA9012;
+    background: rgb(243,169,43);
+    padding: 5px 0;
+}
+
+.personalizza-trasporti > h2 {
+    color: #C17700;
+    font-size: 2.05em;
+    padding-bottom: 30px;
+}
+
+#section-personalizza-hotels {
+    border-top: 5px solid #BA464C;
+    background: #D35F65;
+    padding: 5px 0;
+}
+
+.personalizza-hotels > h2 {
+    color: #A12D33;
+    font-size: 2.05em;
+    padding-bottom: 30px;
+}
+
+#section-personalizza-escursioni {
+    border-top: 5px solid #2FAC91;
+    background: rgb(95,197,174);
+    padding: 5px 0;
+}
+
+.personalizza-escursioni > h2 {
+    color: rgb(58,116,93);
+    font-size: 2.05em;
+    padding-bottom: 30px;
+}
+
 .tasti-mostra-pacchetto {
     text-align: center;
     box-sizing: border-box;

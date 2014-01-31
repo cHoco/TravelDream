@@ -262,8 +262,8 @@ public class MostraPacchettoBean {
                     }
                 }
                 else {
+
                     for(UserDTO userDTO : pacchettoSalvatoDTO.getUsersPartecipanti()) {
-                        System.out.println(userDTO);
                         if(userDTO.getEmail().equals(userManager.getUserDTO().getEmail())) {
                             partecipato = true;
                         }
@@ -271,6 +271,7 @@ public class MostraPacchettoBean {
                             invitato = true;
                         }
                     }
+                    invitato = true;
                 }
             }
             else {
