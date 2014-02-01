@@ -1,0 +1,7 @@
+Utilizzare il file TDMS-release.ear per il deploy dell'applicazione
+Utilizzare il file TDMS-sources.ear per importare l'app in eclipse
+
+Il progetto è stato sviluppato su IntelliJ IDEA e l'import in Eclipse potrebbe non andare a buon fine.
+Si consiglia di importare il progetto clonando il repository, come spiegato nel manuale di installazione e uso e utilizzare
+Maven per l'import delle dipendenze.
+
